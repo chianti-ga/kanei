@@ -1,0 +1,19 @@
+<hibernate-configuration xmlns="http://www.hibernate.org/xsd/orm/cfg">
+    <session-factory>
+        <!-- ##### HIBERNATE CONFIG ##### -->
+        <property name="hibernate.connection.driver_class">org.sqlite.JDBC</property>
+        <property name="hibernate.connection.url">jdbc:sqlite:data/javabot.db</property>
+        <property name="hibernate.dialect">org.hibernate.community.dialect.SQLiteDialect</property>
+        <!-- MYSQL
+        <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/javabot</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQL8Dialect</property>
+        -->
+        <property name="hibernate.hbm2ddl.auto">update</property>
+        <property name="hibernate.connection.username">mounak</property>
+        <property name="hibernate.connection.password">D4t4b4s3P4ssw0rd!</property>
+        <property name="hibernate.current_session_context_class">thread</property>
+        <!-- ##### C3P0 CONFIG ##### -->
+        <property name="hibernate.c3p0.timeout">1800</property>
+    </session-factory>
+</hibernate-configuration>
