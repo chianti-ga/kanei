@@ -1,0 +1,64 @@
+plugins {
+    id 'java'
+    id 'idea'
+
+    //Versioning
+    id "org.ajoberstar.reckon" version "0.16.1"
+    //Update deps
+    id "com.github.ben-manes.versions" version "0.46.0"
+
+    id "io.freefair.lombok" version "6.4.3"
+}
+
+group = 'fr.skitou'
+version = '1.0'
+
+repositories {
+    mavenCentral()
+    maven {
+        name "reposiliteRepositoryReleases"
+        url "http://45.155.169.234:4578/releases"
+        allowInsecureProtocol = true
+        credentials(PasswordCredentials)
+        authentication {
+            basic(BasicAuthentication)
+        }
+    }
+    maven {
+        url 'https://jitpack.io'
+    }
+}
+
+
+dependencies {
+    implementation "fr.skitou.botcore:botcore:0.1.0-beta.0.29+581f1ca"
+    implementation 'com.github.walkyst:lavaplayer-fork:1.4.2'
+
+    testImplementation platform('org.junit:junit-bom:5.9.1')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+}
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
+
+test {
+    useJUnitPlatform()
+}
+tasks.withType(JavaCompile) {
+    options.encoding('UTF-8')
+}
+compileTestJava {
+    //options.verbose(true)
+    options.deprecation(true)
+    options.compilerArgs.addAll(
+            "-Xlint"
+    )
+}
+
+jar {
+    destinationDirectory.set file('build/libs/')
+}
+javadoc {
+    options.encoding('UTF-8')
+}
