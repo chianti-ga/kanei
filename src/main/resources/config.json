@@ -1,0 +1,12 @@
+//This file is configured for dev/test purpose, please configure it when passing to production
+{
+  "bot.token": "ODgwOTIxMDc5NzY4NTUxNDc0.YSlTsA.TcX5SI55kCq3T6iH-74tN_Fd58c",
+  "admins": [
+    "374283393799553036",
+    // Skitou
+  ],
+  "bot.prefix": "^",
+  "commands.allowNonUser": "false",
+  "loggerUrl": "https://discord.com/api/webhooks/1080574417802895431/xgZYpaiMYz3Y6QuzimYg2gwpp9_ozbzrSmKNuS0PZn2xPn7y68Iu1VL63XWrpakSbU6a",
+  "sentryDns": "https://6425ab17c7b94f649b97f68a7653a97c@o4504765021814784.ingest.sentry.io/4504765023453184"
+}

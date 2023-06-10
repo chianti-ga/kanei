@@ -31,8 +31,11 @@ repositories {
 
 
 dependencies {
-    implementation "fr.skitou.botcore:botcore:0.1.0-beta.0.29+581f1ca"
+    implementation "fr.skitou.botcore:botcore:0.1.0-beta.0.41+20230610T181039Z"
+
     implementation 'com.github.walkyst:lavaplayer-fork:1.4.2'
+    implementation("net.dv8tion:JDA:5.0.0-beta.10")
+    implementation 'ch.qos.logback:logback-classic:1.4.7'
 
     testImplementation platform('org.junit:junit-bom:5.9.1')
     testImplementation 'org.junit.jupiter:junit-jupiter'
@@ -46,8 +49,10 @@ test {
     useJUnitPlatform()
 }
 tasks.withType(JavaCompile) {
+    new File(sourceSets.main.output.resourcesDir, "kaneiversion.txt").text = (this.version as String)
     options.encoding('UTF-8')
 }
+
 compileTestJava {
     //options.verbose(true)
     options.deprecation(true)
