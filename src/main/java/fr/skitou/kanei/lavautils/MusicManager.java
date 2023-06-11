@@ -13,7 +13,6 @@ public class MusicManager {
 
     public static void scheduleForRemoval(long guildId) {
 
-
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
