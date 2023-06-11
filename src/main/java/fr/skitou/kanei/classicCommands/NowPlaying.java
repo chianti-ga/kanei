@@ -2,7 +2,7 @@ package fr.skitou.kanei.classicCommands;
 
 import fr.skitou.botcore.commands.AbstractCommand;
 import fr.skitou.botcore.commands.CommandReceivedEvent;
-import fr.skitou.kanei.music.MusicManager;
+import fr.skitou.kanei.lavautils.MusicManager;
 import org.jetbrains.annotations.NotNull;
 
 public class NowPlaying extends AbstractCommand {

@@ -1,4 +1,4 @@
-package fr.skitou.kanei.music;
+package fr.skitou.kanei.lavautils;
 
 import java.time.Duration;
 import java.time.Instant;

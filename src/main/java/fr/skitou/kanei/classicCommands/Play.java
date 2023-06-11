@@ -6,8 +6,8 @@ import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import fr.skitou.botcore.commands.AbstractCommand;
 import fr.skitou.botcore.commands.CommandReceivedEvent;
-import fr.skitou.kanei.music.GuildMusic;
-import fr.skitou.kanei.music.MusicManager;
+import fr.skitou.kanei.lavautils.GuildMusic;
+import fr.skitou.kanei.lavautils.MusicManager;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.StringJoiner;
@@ -49,7 +49,7 @@ public class Play extends AbstractCommand {
 
         StringJoiner search = new StringJoiner(" ");
 
-        event.getArgs().stream().forEach(search::add);
+        event.getArgs().forEach(search::add);
 
         guildMusic.playerManager.loadItemOrdered(guildMusic, "ytsearch:" + search, new AudioLoadResultHandler() {
             @Override

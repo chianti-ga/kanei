@@ -1,4 +1,4 @@
-package fr.skitou.kanei.music;
+package fr.skitou.kanei.lavautils;
 
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.player.event.AudioEventAdapter;
