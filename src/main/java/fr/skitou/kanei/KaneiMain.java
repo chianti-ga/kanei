@@ -11,12 +11,15 @@ import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Collections;
+import java.util.ResourceBundle;
 import java.util.Set;
 
 public class KaneiMain {
     public static BotInstance botInstance;
     @Getter
     private static String version;
+    @Getter
+    private static final ResourceBundle langBundle = ResourceBundle.getBundle("lang");
 
     public static void main(String[] args) {
         try {
