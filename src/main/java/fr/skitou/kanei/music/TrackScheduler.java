@@ -4,25 +4,37 @@ import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.player.event.AudioEventAdapter;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason;
+import com.sedmelluq.discord.lavaplayer.track.AudioTrackInfo;
+import fr.skitou.botcore.core.BotInstance;
+import fr.skitou.kanei.TimeFormater;
+import lombok.Getter;
+import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
+import java.util.concurrent.LinkedBlockingQueue;
 
+
+// TODO: DOCUMENTATION
 public class TrackScheduler extends AudioEventAdapter {
+    final long guildId;
 
-    final AudioPlayer player;
-    final Queue<AudioTrack> queue;
-    AudioTrack lastTrack;
+    private final AudioPlayer player;
+    @Getter
+    private final LinkedBlockingQueue<AudioTrack> queue;
+    private AudioTrack lastTrack;
     private boolean repeating = false;
 
     /**
-     * @param player The audio player this scheduler uses
+     * @param guildId
+     * @param player  The audio player this scheduler uses
      */
-    public TrackScheduler(AudioPlayer player) {
+    public TrackScheduler(long guildId, AudioPlayer player) {
+        this.guildId = guildId;
         this.player = player;
-        this.queue = new LinkedList<>();
+        this.queue = new LinkedBlockingQueue<>();
+        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
     }
 
     /**
@@ -30,14 +42,42 @@ public class TrackScheduler extends AudioEventAdapter {
      *
      * @param track The track to play or add to queue.
      */
-    public void queue(AudioTrack track) {
+    public void queueTrack(AudioTrack track) {
 
         // Calling startTrack with the noInterrupt set to true will start the track only if nothing is currently playing. If
-        // something is playing, it returns false and does nothing. In that case the player was already playing so this
+        // something is playing, it returns false and does nothing. In the case the player was already playing so this
         // track goes to the queue instead.
+        BotInstance.logger.warn(String.valueOf(player.getPlayingTrack()));
+
         if (!player.startTrack(track, true)) {
             queue.offer(track);
         }
+    }
+
+    public void foreward(String formatedForewardPosition) {
+        long forewardPosition = TimeFormater.formatedDurationToMilis(formatedForewardPosition);
+
+        if (!(forewardPosition > player.getPlayingTrack().getDuration() || forewardPosition < player.getPlayingTrack().getDuration())) {
+            player.getPlayingTrack().setPosition(forewardPosition);
+        }
+    }
+
+    public void clearQueue() {
+        queue.clear();
+    }
+
+    public MessageEmbed nowPlaying() {
+        AudioTrackInfo info = player.getPlayingTrack().getInfo();
+
+        EmbedBuilder builder = new EmbedBuilder();
+        builder.setTitle(info.author)
+                .setDescription(info.title)
+                .setUrl(info.uri)
+                .setThumbnail("https://img.youtube.com/vi/" + player.getPlayingTrack().getIdentifier() + "/mqdefault.jpg")
+                .setFooter(TimeFormater.milisToFormatedDuration(info.length));
+
+        return builder.build();
+
     }
 
     /**
@@ -57,7 +97,7 @@ public class TrackScheduler extends AudioEventAdapter {
             if (repeating) {
                 player.startTrack(lastTrack.makeClone(), false);
             } else if (queue.isEmpty()) {
-                MusicManager.scheduleForRemoval(this);
+                MusicManager.scheduleForRemoval(guildId);
             } else {
                 nextTrack();
             }
