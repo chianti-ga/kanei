@@ -27,14 +27,13 @@ public class TrackScheduler extends AudioEventAdapter {
     private boolean repeating = false;
 
     /**
-     * @param guildId
+     * @param guildId Id of the guild
      * @param player  The audio player this scheduler uses
      */
     public TrackScheduler(long guildId, AudioPlayer player) {
         this.guildId = guildId;
         this.player = player;
         this.queue = new LinkedBlockingQueue<>();
-        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
     }
 
     /**
