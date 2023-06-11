@@ -15,11 +15,11 @@ import java.util.ResourceBundle;
 import java.util.Set;
 
 public class KaneiMain {
+    @Getter
+    private static final ResourceBundle langBundle = ResourceBundle.getBundle("lang");
     public static BotInstance botInstance;
     @Getter
     private static String version;
-    @Getter
-    private static final ResourceBundle langBundle = ResourceBundle.getBundle("lang");
 
     public static void main(String[] args) {
         try {
