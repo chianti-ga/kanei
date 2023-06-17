@@ -23,7 +23,6 @@ public class Queue implements ISlashCommand {
         if (!MusicManager.guildMusics.containsKey(event.getGuild().getIdLong())) {
             event.reply(KaneiMain.getLangBundle().getString("music.nothingplaying")).queue();
         }
-        event.replyEmbeds(MusicManager.guildMusics.get(event.getGuild().getIdLong()).scheduler.displayQueue())
-                /*.addActionRow(Button.primary())*/.queue();
+        event.replyEmbeds(MusicManager.guildMusics.get(event.getGuild().getIdLong()).scheduler.displayQueue()).queue();
     }
 }
