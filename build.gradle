@@ -1,9 +1,10 @@
 plugins {
     id 'java'
-    id 'idea'
-
     //Versioning
     id "org.ajoberstar.reckon" version "0.16.1"
+
+    id 'idea'
+
     //Update deps
     id "com.github.ben-manes.versions" version "0.46.0"
 
@@ -51,9 +52,10 @@ java {
 }
 
 reckon {
-    calcScopeFromProp()
+    scopeFromProp()
     stageFromProp('release', 'beta', 'dev')
 }
+
 
 test {
     useJUnitPlatform()
@@ -89,11 +91,15 @@ tasks.withType(org.gradle.jvm.tasks.Jar){
     new File(resourcesDir, "kaneiversion.txt").text = this.version
 }
 
-task copyJar(type: Copy, dependsOn: shadowJar) {
+task copyJar(type: Copy) {
     dependsOn 'jar'
-    from shadowJar.getArchiveFile()
+    from jar.getArchiveFile()
     into file('build/libs/')
     rename { String fileName ->
-        fileName.replace("-${project.version}", "")
+        fileName.replace(this.version as CharSequence, "")
     }
+}
+shadowJar {
+    dependsOn 'build'
+    archiveFileName = "kanei-all.jar"
 }
