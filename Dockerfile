@@ -4,7 +4,7 @@ WORKDIR /srv
 
 COPY . .
 
-RUN ["gradle", "--no-daemon", "build"]
+RUN ["gradle", "--no-daemon", "shadowjar"]
 
 RUN ["cp", "./build/libs/kanei-all.jar", "/srv/kanei-all.jar"]
 
