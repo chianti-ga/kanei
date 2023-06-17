@@ -1,4 +1,4 @@
-package fr.skitou.kanei;
+package fr.skitou.kanei.utils;
 
 public class TimeFormater {
 
@@ -38,7 +38,7 @@ public class TimeFormater {
         } else if (minutes > 0) {
             return String.format("%02d:%02d", minutes, seconds);
         } else {
-            return String.format("%02d", seconds);
+            return String.format("%02d", seconds).concat("s");
         }
     }
 }
