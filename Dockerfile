@@ -1,10 +1,10 @@
-FROM eclipse-temurin:17.0.7_7-jre-jammy AS builder
+FROM gradle:7-jdk-jammy AS builder
 
 WORKDIR /srv
 
 COPY . .
 
-RUN ["gradlew", "--no-daemon", "shadowjar"]
+RUN ["gradle", "--no-daemon", "shadowjar"]
 
 RUN ["cp", "./build/libs/kanei-all.jar", "/srv/kanei-all.jar"]
 
