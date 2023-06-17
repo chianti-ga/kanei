@@ -50,6 +50,10 @@ public class TrackScheduler extends AudioEventAdapter {
         }
     }
 
+    public void removeFromQueueWithIndex(int index) {
+        ((List<?>) queue).remove(index);
+    }
+
     public void foreward(String formatedForewardPosition) {
         long forewardPosition = TimeFormater.formatedDurationToMilis(formatedForewardPosition);
 
