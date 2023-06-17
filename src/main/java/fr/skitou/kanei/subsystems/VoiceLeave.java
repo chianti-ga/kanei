@@ -17,7 +17,13 @@ public class VoiceLeave extends AbstractSubsystem {
     }
 
     @Override
+    public boolean isEnabledByDefault() {
+        return true;
+    }
+
+    @Override
     public void onGuildVoiceUpdate(GuildVoiceUpdateEvent event) {
+        if (event.getChannelLeft() == null) return;
         if (event.getChannelLeft().asVoiceChannel().getMembers().isEmpty()) {
             MusicManager.scheduleForRemoval(event.getGuild().getIdLong());
         }
