@@ -1,4 +1,4 @@
-FROM gradle:8-jdk8 AS builder
+FROM eclipse-temurin:17-jdk AS builder
 
 WORKDIR /srv
 
@@ -8,7 +8,7 @@ RUN ["gradle", "--no-daemon", "shadowjar"]
 
 RUN ["cp", "./build/libs/kanei-all.jar", "/srv/kanei-all.jar"]
 
-FROM eclipse-temurin:17
+FROM eclipse-temurin:17-jre
 
 WORKDIR /srv
 
