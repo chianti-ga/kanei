@@ -51,8 +51,8 @@ java {
 }
 
 reckon {
-    scopeFromProp()
-    stageFromProp('release', 'dev')
+    calcScopeFromProp()
+    stageFromProp('release', 'beta', 'dev')
 }
 
 test {
