@@ -91,7 +91,7 @@ public class TrackScheduler extends AudioEventAdapter {
                 .append("`");
 
         EmbedBuilder builder = new EmbedBuilder();
-        builder.setTitle(info.title)
+        builder.setTitle(":speaker: Now Playing : " + info.title)
                 .setDescription(sb)
                 .setUrl(info.uri)
                 .setThumbnail("https://img.youtube.com/vi/" + player.getPlayingTrack().getIdentifier() + "/mqdefault.jpg")
