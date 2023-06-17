@@ -8,11 +8,13 @@ import fr.skitou.botcore.slashcommand.ISlashCommand;
 import fr.skitou.kanei.KaneiMain;
 import fr.skitou.kanei.lavautils.GuildMusic;
 import fr.skitou.kanei.lavautils.MusicManager;
+import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.List;
 import java.util.Set;
 
 public class Play implements ISlashCommand {
@@ -55,14 +57,7 @@ public class Play implements ISlashCommand {
             @Override
             public void trackLoaded(AudioTrack track) {
                 guildMusic.scheduler.queueTrack(track);
-                if (guildMusic.scheduler.getQueue().isEmpty()) {
-                    event.getHook().sendMessageEmbeds(guildMusic.scheduler.nowPlaying()).queue();
-                } else {
-                    event.getHook().sendMessage("").addEmbeds(guildMusic.scheduler.displayQueue().get(0)).queue(); //event.getHook().sendMessageEmbeds(guildMusic.scheduler.dysplayQueue()).queue();
-                    guildMusic.scheduler.displayQueue().remove(0);
-                    guildMusic.scheduler.displayQueue().forEach(messageEmbed -> event.getChannel().sendMessageEmbeds(messageEmbed).queue());
-                }
-
+                event.getHook().sendMessageEmbeds(guildMusic.scheduler.embedTracInfo(track.getInfo())).queue();
 
             }
 
@@ -73,9 +68,11 @@ public class Play implements ISlashCommand {
                     event.getHook().sendMessageEmbeds(guildMusic.scheduler.nowPlaying()).queue();
                 } else {
                     playlist.getTracks().forEach(guildMusic.scheduler::queueTrack);
-                    event.getHook().sendMessage("").addEmbeds(guildMusic.scheduler.displayQueue().get(0)).queue(); //event.getHook().sendMessageEmbeds(guildMusic.scheduler.dysplayQueue()).queue();
-                    guildMusic.scheduler.displayQueue().remove(0);
-                    guildMusic.scheduler.displayQueue().forEach(messageEmbed -> event.getChannel().sendMessageEmbeds(messageEmbed).queue());
+                    List<MessageEmbed> queueEmbeds = guildMusic.scheduler.displayQueue();
+                    event.getHook().sendMessage("").addEmbeds(queueEmbeds.get(0)).queue();
+                    queueEmbeds.remove(0);
+                    if (!queueEmbeds.isEmpty())
+                        guildMusic.scheduler.displayQueue().forEach(messageEmbed -> event.getChannel().sendMessageEmbeds(messageEmbed).queue());
                 }
             }
 

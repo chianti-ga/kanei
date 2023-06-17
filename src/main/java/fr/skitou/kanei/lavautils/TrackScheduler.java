@@ -6,7 +6,7 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackInfo;
 import fr.skitou.botcore.utils.QuickColors;
-import fr.skitou.kanei.TimeFormater;
+import fr.skitou.kanei.utils.TimeFormater;
 import lombok.Getter;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageEmbed;
@@ -60,6 +60,16 @@ public class TrackScheduler extends AudioEventAdapter {
 
     public void clearQueue() {
         queue.clear();
+    }
+
+    public MessageEmbed embedTracInfo(AudioTrackInfo info) {
+        EmbedBuilder builder = new EmbedBuilder();
+        builder.setTitle(info.title)
+                .setDescription("**Duration : " + TimeFormater.milisToFormatedDuration(info.length) + "**")
+                .setUrl(info.uri)
+                .setThumbnail("https://img.youtube.com/vi/" + player.getPlayingTrack().getIdentifier() + "/mqdefault.jpg")
+                .setFooter(info.author);
+        return builder.build();
     }
 
     public MessageEmbed nowPlaying() {
@@ -135,7 +145,7 @@ public class TrackScheduler extends AudioEventAdapter {
 
         queue.forEach(audioTrack -> {
             i.getAndIncrement();
-            sb.append("**`").append(i.get()).append("`** | ")
+            sb.append("**`").append(String.format("%02d", i.get())).append("`** | ")
                     .append("`[").append(TimeFormater.milisToFormatedDuration(audioTrack.getDuration()))
                     .append("]` ")
                     .append(audioTrack.getInfo().title.length() > 40 ? audioTrack.getInfo().title.substring(0, 40).concat("`...`") : audioTrack.getInfo().title)
