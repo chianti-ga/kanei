@@ -52,7 +52,7 @@ java {
 
 reckon {
     scopeFromProp()
-    stageFromProp('release', 'beta', 'dev')
+    stageFromProp('release', 'dev')
 }
 
 test {
@@ -89,3 +89,11 @@ tasks.withType(org.gradle.jvm.tasks.Jar){
     new File(resourcesDir, "kaneiversion.txt").text = this.version
 }
 
+task copyJar(type: Copy, dependsOn: shadowJar) {
+    dependsOn 'jar'
+    from shadowJar.getArchiveFile()
+    into file('build/libs/')
+    rename { String fileName ->
+        fileName.replace("-${project.version}", "")
+    }
+}
