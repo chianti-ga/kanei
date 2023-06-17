@@ -1,4 +1,4 @@
-FROM gradle:jdk8-jammy AS builder
+FROM gradle:8-jdk8 AS builder
 
 WORKDIR /srv
 
