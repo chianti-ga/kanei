@@ -17,9 +17,9 @@ public class MusicManager {
             @Override
             public void run() {
                 if (guildMusics.containsKey(guildId)) {
-
-                    if (guildMusics.get(guildId).scheduler.getQueue().isEmpty()) {
-                        guildMusics.get(guildId).destroy();
+                    GuildMusic guildMusic = guildMusics.get(guildId);
+                    if (guildMusic.scheduler.getQueue().isEmpty() && guildMusic.player.getPlayingTrack() == null) {
+                        guildMusic.destroy();
                         guildMusics.remove(guildId);
                     }
                 }
