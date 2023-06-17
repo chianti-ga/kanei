@@ -4,6 +4,7 @@ import fr.skitou.botcore.core.BotInstance;
 import fr.skitou.botcore.slashcommand.ISlashCommand;
 import fr.skitou.botcore.utils.QuickColors;
 import fr.skitou.kanei.KaneiMain;
+import fr.skitou.kanei.lavautils.MusicManager;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import org.jetbrains.annotations.NotNull;
@@ -35,7 +36,7 @@ public class About implements ISlashCommand {
                 .setDescription("This is a music bot made for me and my friends using JDA and lavaplayer.\n Type /help to see all commands available.")
                 .addField("Versions:", "JDA5\nCore:" + BotInstance.getCoreVersion() + "\n" + BotInstance.getJda().getSelfUser().getName() + ":" + KaneiMain.getVersion(), true)
                 .addField("Total servers:", String.valueOf(BotInstance.getJda().getGuilds().size()), true)
-                .addField("Total stream:", "", true)
+                .addField("Total stream:", String.valueOf(MusicManager.guildMusics.size()), true)
                 .setColor(QuickColors.LIGHT_BLUE)
                 .setFooter("Running on Java " + Runtime.version() + " | Uptime:" + timeInHHMMSS);
         event.replyEmbeds(builder.build()).queue();
