@@ -13,17 +13,17 @@ import org.jetbrains.annotations.NotNull;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-import java.util.function.Function;
+import java.util.function.Consumer;
 
 public class ComponentInteractionListener extends AbstractSubsystem {
 
     @Getter
-    private static final Map<String, Function<StringSelectInteractionEvent, Void>> selectMenuInteraction = new HashMap<>();
+    private static final Map<String, Consumer<StringSelectInteractionEvent>> selectMenuInteraction = new HashMap<>();
 
     @Getter
     private static final Map<String, Runnable> buttonInteraction = new HashMap<>();
 
-    public static StringSelectMenu createStringSelectMenuInteraction(StringSelectMenu selectMenu, Function<StringSelectInteractionEvent, Void> function) {
+    public static StringSelectMenu createStringSelectMenuInteraction(StringSelectMenu selectMenu, Consumer<StringSelectInteractionEvent> function) {
         String id = UUID.randomUUID().toString();
         selectMenuInteraction.put(id, function);
         return selectMenu.createCopy().setId(id).build();
@@ -35,7 +35,7 @@ public class ComponentInteractionListener extends AbstractSubsystem {
         return button.withId(id);
     }
 
-    public static EntitySelectMenu createEntitySelectMenuInteraction(EntitySelectMenu selectMenu, Function<StringSelectInteractionEvent, Void> function) {
+    public static EntitySelectMenu createEntitySelectMenuInteraction(EntitySelectMenu selectMenu, Consumer<StringSelectInteractionEvent> function) {
         String id = UUID.randomUUID().toString();
         selectMenuInteraction.put(id, function);
         return selectMenu.createCopy().setId(id).build();
@@ -58,10 +58,11 @@ public class ComponentInteractionListener extends AbstractSubsystem {
 
     @Override
     public void onStringSelectInteraction(StringSelectInteractionEvent event) {
-        System.out.println(event.getComponentId());
         if (selectMenuInteraction.containsKey(event.getComponentId())) {
-            selectMenuInteraction.get(event.getComponentId()).apply(event);
+            selectMenuInteraction.get(event.getComponentId()).accept(event);
             BotInstance.logger.info("Trigger StringSelectInteractionEvent(" + event.getComponentId() + ").");
+
+            selectMenuInteraction.remove(event.getComponentId());
         }
     }
 
@@ -70,6 +71,7 @@ public class ComponentInteractionListener extends AbstractSubsystem {
         if (buttonInteraction.containsKey(event.getComponentId())) {
             buttonInteraction.get(event.getComponentId()).run();
             BotInstance.logger.info("Trigger ButtonInteraction(" + event.getComponentId() + ").");
+            buttonInteraction.remove(event.getComponentId());
         }
     }
 }
