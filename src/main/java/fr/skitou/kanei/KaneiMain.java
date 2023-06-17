@@ -38,6 +38,6 @@ public class KaneiMain {
                 .setDisabledcacheFlags(Collections.singleton(CacheFlag.MEMBER_OVERRIDES))
                 .setDisabledintents(Set.of());
         botInstance = builder.build();
-        BotInstance.getJda().getPresence().setActivity(Activity.listening("/help"));
+        BotInstance.getJda().getPresence().setActivity(Activity.listening("some music!"));
     }
 }
