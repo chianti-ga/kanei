@@ -24,7 +24,6 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Search implements ISlashCommand {
-    //TODO: Faire apparaître les 5 premiers résultats de la recherche et naviguer avec les bouton :)
     @Override
     public @NotNull String getName() {
         return "search";
@@ -77,7 +76,6 @@ public class Search implements ISlashCommand {
                             AudioTrack track = playlist.getTracks().get(Integer.parseInt(interactionEvent.getSelectedOptions().get(0).getLabel()) - 1);
                             guildMusic.scheduler.queueTrack(track);
                             interactionEvent.replyEmbeds(guildMusic.scheduler.embedTracInfo(track.getInfo())).queue();
-                            return null;
                         })).queue();
             }
 
