@@ -2,6 +2,12 @@ package fr.skitou.kanei.utils;
 
 public class TimeFormater {
 
+    /**
+     * Converts a formatted duration string to milliseconds.
+     *
+     * @param formatedDuration The formatted duration string in the format "HH:MM:SS" or "MM:SS" or "SS".
+     * @return The duration in milliseconds.
+     */
     public static long formatedDurationToMilis(String formatedDuration) {
         String[] splited = formatedDuration.split(":");
         long hours = 0;
@@ -24,6 +30,12 @@ public class TimeFormater {
         return (hours * 60 * 60 * 1000) + (minutes * 60 * 1000) + (seconds * 1000);
     }
 
+    /**
+     * Converts milliseconds to a formatted duration string.
+     *
+     * @param milliseconds The duration in milliseconds.
+     * @return The formatted duration string in the format "HH:MM:SS" or "MM:SS" or "SS".
+     */
     public static String milisToFormatedDuration(long milliseconds) {
         long seconds = milliseconds / 1000;
         long minutes = seconds / 60;
