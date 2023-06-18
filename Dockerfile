@@ -15,6 +15,5 @@ WORKDIR /srv
 COPY --from=builder /srv/kanei-all.jar /srv/
 
 VOLUME /data
-WORKDIR /data
 
 CMD ["java", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseG1GC", "-XX:+UseStringDeduplication", "-Xms10M", "-Xmx500M", "-jar", "kanei-all.jar"]
