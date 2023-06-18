@@ -40,6 +40,6 @@ public class Skip implements ISlashCommand {
         if (guildMusic.player.getPlayingTrack() != null) {
             event.getHook().sendMessageEmbeds(guildMusic.scheduler.nowPlaying()).queue();
         } else guildMusic.destroy();
-
+        event.getHook().sendMessage(KaneiMain.getLangBundle().getString("music.emptyqueue")).queue();
     }
 }
