@@ -15,4 +15,4 @@ WORKDIR /srv
 COPY --from=builder /srv/kanei-all.jar /srv/
 
 
-CMD ["java", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseG1GC", "-XX:+UseStringDeduplication", "-Xms10M", "-Xmx500M", "-jar", "kanei-all.jar"]
+CMD ["java", "-XX:+UnlockExperimentalVMOptions", "-XX:+UseG1GC", "-XX:+UseStringDeduplication","-XX:+OptimizeStringConcat", "-XX:+UseParallelGC", "-XX:+UseCompressedOops", "-Xms10M", "-Xmx500M", "-jar", "kanei-all.jar"]
