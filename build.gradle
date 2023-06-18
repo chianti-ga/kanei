@@ -73,6 +73,9 @@ compileTestJava {
 }
 
 jar {
+    def resourcesDir = sourceSets.main.output.resourcesDir
+    resourcesDir.mkdirs()
+    new File(resourcesDir, "kaneiversion.txt").text = this.version
     manifest {
         attributes(
                 'Main-Class': 'fr.skitou.kanei.KaneiMain'
@@ -83,12 +86,6 @@ jar {
 }
 javadoc {
     options.encoding('UTF-8')
-}
-
-tasks.withType(org.gradle.jvm.tasks.Jar){
-    def resourcesDir = sourceSets.main.output.resourcesDir
-    resourcesDir.mkdirs()
-    new File(resourcesDir, "kaneiversion.txt").text = this.version
 }
 
 task copyJar(type: Copy) {

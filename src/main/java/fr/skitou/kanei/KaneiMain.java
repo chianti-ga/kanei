@@ -30,7 +30,6 @@ public class KaneiMain {
                 .setDisabledintents(Set.of());
         botInstance = builder.build();
         BotInstance.getJda().getPresence().setActivity(Activity.listening("some music!"));
-
         try {
             version = new String(ClassLoader.getSystemResourceAsStream("kaneiversion.txt").readAllBytes());
         } catch (IOException e) {

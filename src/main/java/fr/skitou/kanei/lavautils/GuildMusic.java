@@ -1,5 +1,6 @@
 package fr.skitou.kanei.lavautils;
 
+import com.sedmelluq.discord.lavaplayer.filter.equalizer.EqualizerFactory;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
@@ -25,6 +26,24 @@ import java.util.stream.Collectors;
  * Holder for both the player and a track scheduler for one guild.
  */
 public class GuildMusic {
+
+    public static final float[] BASS_BOOST = {
+            0.2f,
+            0.15f,
+            0.1f,
+            0.05f,
+            0.0f,
+            -0.05f,
+            -0.1f,
+            -0.1f,
+            -0.1f,
+            -0.1f,
+            -0.1f,
+            -0.1f,
+            -0.1f,
+            -0.1f,
+            -0.1f
+    };
     public final long guildId;
 
     /**
@@ -43,6 +62,8 @@ public class GuildMusic {
     public final AudioPlayerManager playerManager;
 
     private final AudioManager audioManager;
+
+    private final EqualizerFactory equalizer = new EqualizerFactory();
 
     /**
      * Creates a player and a track scheduler.
@@ -84,6 +105,8 @@ public class GuildMusic {
         playerSettings.forEach(settings -> player.setVolume(settings.getVolume()));
         //player.setVolume(100);
         player.addListener(scheduler);
+        player.setFilterFactory(equalizer);
+        player.setFrameBufferDuration(500);
 
         MusicManager.guildMusics.put(guildId, this);
     }
@@ -92,5 +115,13 @@ public class GuildMusic {
         player.destroy();
         scheduler.clearQueue();
         audioManager.closeAudioConnection();
+    }
+
+    public void bassBoost(float percentage) {
+        final float multiplier = percentage / 100.00f;
+
+        for (int i = 0; i < BASS_BOOST.length; i++) {
+            equalizer.setGain(i, BASS_BOOST[i] * multiplier);
+        }
     }
 }

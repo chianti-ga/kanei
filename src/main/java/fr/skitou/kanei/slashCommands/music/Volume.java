@@ -25,14 +25,14 @@ public class Volume implements ISlashCommand {
 
     @Override
     public Set<OptionData> getOptionData() {
-        return Set.of(new OptionData(OptionType.INTEGER, "volume", "0 to 150", true));
+        return Set.of(new OptionData(OptionType.INTEGER, "volume", "0 to 300", true));
     }
 
     @Override
     public void onCommandReceived(SlashCommandInteractionEvent event) {
         event.deferReply().queue();
 
-        if (event.getOption("volume").getAsInt() < 0 || event.getOption("volume").getAsInt() > 150) {
+        if (event.getOption("volume").getAsInt() < 0 || event.getOption("volume").getAsInt() > 300) {
             event.getHook().sendMessage(KaneiMain.getLangBundle().getString("music.invalidvolume")).queue();
             return;
         }
