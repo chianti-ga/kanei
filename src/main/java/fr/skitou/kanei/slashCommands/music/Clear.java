@@ -7,6 +7,7 @@ import fr.skitou.kanei.lavautils.MusicManager;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import org.jetbrains.annotations.NotNull;
 
+@SuppressWarnings({"DuplicatedCode", "unused"})
 public class Clear implements ISlashCommand {
     @Override
     public @NotNull String getName() {
@@ -36,7 +37,7 @@ public class Clear implements ISlashCommand {
             return;
         }
 
-        if (guildMusic.scheduler.getQueue().isEmpty()) {
+        if (!guildMusic.scheduler.getQueue().isEmpty()) {
             guildMusic.scheduler.clearQueue();
             event.getHook().sendMessage(KaneiMain.getLangBundle().getString("music.clearedqueue")).queue();
         } else event.getHook().sendMessage(KaneiMain.getLangBundle().getString("music.emptyqueue")).queue();

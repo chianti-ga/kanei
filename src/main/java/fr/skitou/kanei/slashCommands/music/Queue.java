@@ -9,6 +9,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
+@SuppressWarnings("unused")
 public class Queue implements ISlashCommand {
 
     @Override
@@ -25,7 +26,7 @@ public class Queue implements ISlashCommand {
     public void onCommandReceived(SlashCommandInteractionEvent event) {
         event.deferReply().queue();
         if (!MusicManager.guildMusics.containsKey(event.getGuild().getIdLong())) {
-            event.reply(KaneiMain.getLangBundle().getString("music.nothingplaying")).queue();
+            event.getHook().sendMessage(KaneiMain.getLangBundle().getString("music.nothingplaying")).queue();
             return;
         }
         if (MusicManager.guildMusics.get(event.getGuild().getIdLong()).scheduler.getQueue().isEmpty()) {

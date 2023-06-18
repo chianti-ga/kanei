@@ -12,6 +12,7 @@ import org.jetbrains.annotations.NotNull;
 import java.lang.management.ManagementFactory;
 import java.time.Duration;
 
+@SuppressWarnings("unused")
 public class About implements ISlashCommand {
     @Override
     public @NotNull String getName() {

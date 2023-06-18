@@ -6,6 +6,7 @@ import fr.skitou.kanei.lavautils.MusicManager;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import org.jetbrains.annotations.NotNull;
 
+@SuppressWarnings("unused")
 public class Shuffle implements ISlashCommand {
     @Override
     public @NotNull String getName() {

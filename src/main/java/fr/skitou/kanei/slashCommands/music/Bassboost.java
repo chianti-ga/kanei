@@ -10,6 +10,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Set;
 
+@SuppressWarnings("unused")
 public class Bassboost implements ISlashCommand {
     @Override
     public @NotNull String getName() {

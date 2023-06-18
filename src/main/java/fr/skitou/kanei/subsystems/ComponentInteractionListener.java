@@ -15,6 +15,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.function.Consumer;
 
+@SuppressWarnings("unused")
 public class ComponentInteractionListener extends AbstractSubsystem {
 
     /**
@@ -49,6 +50,7 @@ public class ComponentInteractionListener extends AbstractSubsystem {
      * @param runnable The runnable to be executed when the interaction occurs.
      * @return The created Button interaction.
      */
+    @SuppressWarnings("unused")
     public static Button createButtonInteraction(Button button, Runnable runnable) {
         String id = UUID.randomUUID().toString();
         buttonInteraction.put(id, runnable);
@@ -62,6 +64,7 @@ public class ComponentInteractionListener extends AbstractSubsystem {
      * @param function   The function to be executed when the interaction occurs.
      * @return The created Entity Select Menu interaction.
      */
+    @SuppressWarnings("unused")
     public static EntitySelectMenu createEntitySelectMenuInteraction(EntitySelectMenu selectMenu, Consumer<StringSelectInteractionEvent> function) {
         String id = UUID.randomUUID().toString();
         selectMenuInteraction.put(id, function);

@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
+@SuppressWarnings({"DuplicatedCode", "unused"})
 public class Search implements ISlashCommand {
     @Override
     public @NotNull String getName() {
