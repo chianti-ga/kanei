@@ -1,4 +1,4 @@
-FROM eclipse-temurin:17-jdk AS builder
+FROM gradle:8 AS builder
 
 WORKDIR /srv
 
