@@ -106,7 +106,7 @@ public class GuildMusic {
         //player.setVolume(100);
         player.addListener(scheduler);
         player.setFilterFactory(equalizer);
-        player.setFrameBufferDuration(500);
+        //player.setFrameBufferDuration(500);
 
         MusicManager.guildMusics.put(guildId, this);
     }
