@@ -72,7 +72,7 @@ public class Play implements ISlashCommand {
                     event.getHook().sendMessage("").addEmbeds(queueEmbeds.get(0)).queue();
                     queueEmbeds.remove(0);
                     if (!queueEmbeds.isEmpty())
-                        guildMusic.scheduler.displayQueue().forEach(messageEmbed -> event.getChannel().sendMessageEmbeds(messageEmbed).queue());
+                        queueEmbeds.forEach(messageEmbed -> event.getChannel().sendMessageEmbeds(messageEmbed).queue());
                 }
             }
 
