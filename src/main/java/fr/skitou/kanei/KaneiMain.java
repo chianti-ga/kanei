@@ -19,12 +19,6 @@ public class KaneiMain {
     private static String version;
 
     public static void main(String[] args) {
-        try {
-            version = new String(ClassLoader.getSystemResourceAsStream("kaneiversion.txt").readAllBytes());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
         BotInstance.BotInstanceBuilder builder = new BotInstance.BotInstanceBuilder(args);
         builder.setCMDPackage("fr.skitou.kanei.classicCommands")
                 .setSlashCMDPackage("fr.skitou.kanei.slashCommands")
@@ -36,5 +30,11 @@ public class KaneiMain {
                 .setDisabledintents(Set.of());
         botInstance = builder.build();
         BotInstance.getJda().getPresence().setActivity(Activity.listening("some music!"));
+
+        try {
+            version = new String(ClassLoader.getSystemResourceAsStream("kaneiversion.txt").readAllBytes());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
