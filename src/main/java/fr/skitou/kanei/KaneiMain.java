@@ -7,9 +7,6 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.Collections;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -23,8 +20,8 @@ public class KaneiMain {
 
     public static void main(String[] args) {
         try {
-            version = Files.readAllLines(Path.of(ClassLoader.getSystemResource("kaneiversion.txt").toURI())).get(0);
-        } catch (IOException | URISyntaxException e) {
+            version = new String(ClassLoader.getSystemResourceAsStream("kaneiversion.txt").readAllBytes());
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
