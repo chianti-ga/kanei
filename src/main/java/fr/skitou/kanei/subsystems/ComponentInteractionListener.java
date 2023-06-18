@@ -10,9 +10,9 @@ import net.dv8tion.jda.api.interactions.components.selections.EntitySelectMenu;
 import net.dv8tion.jda.api.interactions.components.selections.StringSelectMenu;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 import java.util.function.Consumer;
 
 public class ComponentInteractionListener extends AbstractSubsystem {
@@ -21,13 +21,13 @@ public class ComponentInteractionListener extends AbstractSubsystem {
      * A map that holds the registered String Select Menu interactions.
      */
     @Getter
-    private static final Map<String, Consumer<StringSelectInteractionEvent>> selectMenuInteraction = new HashMap<>();
+    private static final ConcurrentMap<String, Consumer<StringSelectInteractionEvent>> selectMenuInteraction = new ConcurrentHashMap<>();
 
     /**
      * A map that holds the registered Button interactions.
      */
     @Getter
-    private static final Map<String, Runnable> buttonInteraction = new HashMap<>();
+    private static final ConcurrentMap<String, Runnable> buttonInteraction = new ConcurrentHashMap<>();
 
     /**
      * Creates a String Select Menu interaction and registers it.

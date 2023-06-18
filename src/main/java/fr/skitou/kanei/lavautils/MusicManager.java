@@ -3,12 +3,13 @@ package fr.skitou.kanei.lavautils;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 public class MusicManager {
-    public static final HashMap<Long, GuildMusic> guildMusics = new HashMap<>();
+    public static final ConcurrentMap<Long, GuildMusic> guildMusics = new ConcurrentHashMap<>();
     private static final Timer timer = new Timer();
 
     public static void scheduleForRemoval(long guildId) {

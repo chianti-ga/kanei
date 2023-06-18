@@ -23,8 +23,13 @@ public class Queue implements ISlashCommand {
 
     @Override
     public void onCommandReceived(SlashCommandInteractionEvent event) {
+        event.deferReply().queue();
         if (!MusicManager.guildMusics.containsKey(event.getGuild().getIdLong())) {
             event.reply(KaneiMain.getLangBundle().getString("music.nothingplaying")).queue();
+            return;
+        }
+        if (MusicManager.guildMusics.get(event.getGuild().getIdLong()).scheduler.getQueue().isEmpty()) {
+            event.getHook().sendMessage(KaneiMain.getLangBundle().getString("music.emptyqueue")).queue();
             return;
         }
         List<MessageEmbed> queueEmbeds = MusicManager.guildMusics.get(event.getGuild().getIdLong()).scheduler.displayQueue();
