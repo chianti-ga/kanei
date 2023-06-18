@@ -8,6 +8,7 @@ import net.dv8tion.jda.api.utils.cache.CacheFlag;
 
 import java.io.IOException;
 import java.util.Collections;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.Set;
 
@@ -20,7 +21,7 @@ public class KaneiMain {
 
     public static void main(String[] args) {
         try {
-            version = new String(ClassLoader.getSystemResourceAsStream("kaneiversion.txt").readAllBytes());
+            version = new String(Objects.requireNonNull(ClassLoader.getSystemResourceAsStream("kaneiversion.txt")).readAllBytes());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
