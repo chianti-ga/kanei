@@ -66,11 +66,17 @@ public class Search implements ISlashCommand {
             public void playlistLoaded(AudioPlaylist playlist) {
                 StringSelectMenu.Builder selectMenu = StringSelectMenu.create("selectMenu");
                 AtomicInteger i = new AtomicInteger();
-
-                playlist.getTracks().subList(0, 4).forEach(audioTrack -> {
-                    i.getAndIncrement();
-                    selectMenu.addOption(String.valueOf(i.get()), String.valueOf(i.get()), audioTrack.getInfo().title);
-                });
+                if (playlist.getTracks().size() < 4) {
+                    playlist.getTracks().subList(0, playlist.getTracks().size() - 1).forEach(audioTrack -> {
+                        i.getAndIncrement();
+                        selectMenu.addOption(String.valueOf(i.get()), String.valueOf(i.get()), audioTrack.getInfo().title);
+                    });
+                } else {
+                    playlist.getTracks().subList(0, 4).forEach(audioTrack -> {
+                        i.getAndIncrement();
+                        selectMenu.addOption(String.valueOf(i.get()), String.valueOf(i.get()), audioTrack.getInfo().title);
+                    });
+                }
 
                 event.getHook().sendMessageEmbeds(displaySearchResult(playlist.getTracks().subList(0, 4)))
                         .addActionRow(ComponentInteractionListener.createStringSelectMenuInteraction(selectMenu.build(), interactionEvent -> {
