@@ -1,8 +1,5 @@
 plugins {
     id 'java'
-    //Versioning
-    id "org.ajoberstar.reckon" version "0.16.1"
-
     id 'idea'
 
     //Update deps
@@ -51,12 +48,6 @@ java {
     withSourcesJar()
 }
 
-reckon {
-    scopeFromProp()
-    stageFromProp('release', 'beta', 'dev')
-}
-
-
 test {
     useJUnitPlatform()
 }
@@ -73,13 +64,13 @@ compileTestJava {
 }
 
 jar {
-    def resourcesDir = sourceSets.main.output.resourcesDir
-    resourcesDir.mkdirs()
-    new File(resourcesDir, "kaneiversion.txt").text = this.version
     manifest {
         attributes(
-                'Main-Class': 'fr.skitou.kanei.KaneiMain'
+                'Main-Class': 'fr.skitou.kanei.KaneiMain',
+                'Implementation-Title': project.name,
+                'Implementation-Version': project.version
         )
+
     }
 
     destinationDirectory.set file('build/libs/')
@@ -96,7 +87,24 @@ task copyJar(type: Copy) {
         fileName.replace(this.version as CharSequence, "")
     }
 }
+
+task getVersionFromGit() {
+    def command = 'git describe --tags --abbrev=0'
+    def version = command.execute().text.trim()
+    println "Application version: ${version}"
+}
+tasks.named('build') {
+    dependsOn('getVersionFromGit')
+}
+
 shadowJar {
     dependsOn 'build'
     archiveFileName = "kanei-all.jar"
+
+    minimize {
+        exclude("fr.skitou.*")
+        exclude(dependency('ch.qos.logback:.*:.*'))
+        exclude(dependency('fr.skitou.botcore:.*:.*'))
+    }
 }
+

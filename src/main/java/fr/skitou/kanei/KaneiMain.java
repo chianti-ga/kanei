@@ -6,7 +6,6 @@ import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
 
-import java.io.IOException;
 import java.util.Collections;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -16,9 +15,10 @@ public class KaneiMain {
     private static final ResourceBundle langBundle = ResourceBundle.getBundle("lang");
     public static BotInstance botInstance;
     @Getter
-    private static String version;
+    private static String version = KaneiMain.class.getPackage().getImplementationVersion();
 
     public static void main(String[] args) {
+
         BotInstance.BotInstanceBuilder builder = new BotInstance.BotInstanceBuilder(args);
         builder.setCMDPackage("fr.skitou.kanei.classicCommands")
                 .setSlashCMDPackage("fr.skitou.kanei.slashCommands")
@@ -30,10 +30,5 @@ public class KaneiMain {
                 .setDisabledintents(Set.of());
         botInstance = builder.build();
         BotInstance.getJda().getPresence().setActivity(Activity.listening("some music!"));
-        try {
-            version = new String(ClassLoader.getSystemResourceAsStream("kaneiversion.txt").readAllBytes());
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 }
