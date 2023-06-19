@@ -1,7 +1,8 @@
+import java.util.jar.JarFile
+
 plugins {
     id 'java'
     id 'idea'
-
     //Update deps
     id "com.github.ben-manes.versions" version "0.46.0"
 
@@ -29,7 +30,7 @@ repositories {
 
 
 dependencies {
-    implementation "fr.skitou.botcore:botcore:1.1.4-2"
+    implementation "fr.skitou.botcore:botcore:1.1.5"
 
     implementation 'com.github.walkyst:lavaplayer-fork:1.4.2'
     implementation("net.dv8tion:JDA:5.0.0-beta.10")
@@ -42,6 +43,14 @@ dependencies {
 
     testImplementation platform('org.junit:junit-bom:5.9.2')
     testImplementation 'org.junit.jupiter:junit-jupiter:5.9.2'
+}
+idea {
+    module {
+        downloadJavadoc = true
+    }
+}
+dependencyUpdates {
+    revision = "dev"
 }
 java {
     withJavadocJar()
@@ -68,6 +77,7 @@ jar {
         attributes(
                 'Main-Class': 'fr.skitou.kanei.KaneiMain',
                 'Implementation-Title': project.name,
+                'BotCore-Version': getBotCoreVersion()
         )
     }
 
@@ -102,11 +112,22 @@ tasks.named('build') {
 shadowJar {
     dependsOn 'build'
     archiveFileName = "kanei-all.jar"
-
-    minimize {
-        exclude("fr.skitou.*")
-        exclude(dependency('ch.qos.logback:.*:.*'))
-        exclude(dependency('fr.skitou.botcore:.*:.*'))
-    }
 }
 
+def getBotCoreVersion() {
+    def artifactId = "botcore"
+    def dependency = configurations.compileClasspath
+            .getFiles()
+            .find { it.name.contains(artifactId) }
+
+    if (dependency) {
+        def jarFile = new JarFile(dependency)
+        def manifest = jarFile.getManifest()
+        def botCoreVersion = manifest.mainAttributes.getValue("BotCore-Version")
+        jarFile.close()
+
+        return botCoreVersion
+    } else {
+        throw new GradleException("Dependency not found: $artifactId")
+    }
+}
