@@ -4,9 +4,11 @@ WORKDIR /srv
 
 COPY . .
 
+
 RUN ["gradle", "--no-daemon", "shadowjar", "-PreposiliteRepositoryReleasesUsername=skitou", "-PreposiliteRepositoryReleasesPassword=s3r0bvRZRyqSo6wmG+UQwhVJRjsx5UIAVSFwH7q1ZnFEr2MZWhKJ7iIDpk6u1Fb2"]
 
 RUN ["cp", "./build/libs/kanei-all.jar", "/srv/kanei-all.jar"]
+RUN ["apt","install","git", "-y"]
 
 FROM eclipse-temurin:20-jdk
 

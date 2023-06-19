@@ -68,9 +68,7 @@ jar {
         attributes(
                 'Main-Class': 'fr.skitou.kanei.KaneiMain',
                 'Implementation-Title': project.name,
-                'Implementation-Version': project.version
         )
-
     }
 
     destinationDirectory.set file('build/libs/')
@@ -90,8 +88,11 @@ task copyJar(type: Copy) {
 
 task getVersionFromGit() {
     def command = 'git describe --tags'
-    project.version = command.execute().text.trim()
-    println "Application version: ${project.version}"
+    def version = command.execute().text.trim()
+    println "Application version: ${version}"
+
+    project.version = version
+    jar.manifest.attributes['Implementation-Version'] = version
 
 }
 tasks.named('build') {
