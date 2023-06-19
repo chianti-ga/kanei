@@ -15,7 +15,7 @@ public class KaneiMain {
     private static final ResourceBundle langBundle = ResourceBundle.getBundle("lang");
     public static BotInstance botInstance;
     @Getter
-    private static String version = KaneiMain.class.getPackage().getImplementationVersion();
+    private static final String version = KaneiMain.class.getPackage().getImplementationVersion();
 
     public static void main(String[] args) {
 
