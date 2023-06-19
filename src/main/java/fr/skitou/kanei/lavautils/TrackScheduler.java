@@ -70,7 +70,7 @@ public class TrackScheduler extends AudioEventAdapter {
         builder.setTitle(info.title)
                 .setDescription("**Duration : " + TimeFormater.milisToFormatedDuration(info.length) + "**")
                 .setUrl(info.uri)
-                .setThumbnail("https://img.youtube.com/vi/" + player.getPlayingTrack().getIdentifier() + "/mqdefault.jpg")
+                .setThumbnail("https://img.youtube.com/vi/" + info.identifier + "/mqdefault.jpg")
                 .setFooter(info.author);
         return builder.build();
     }
