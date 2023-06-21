@@ -6,7 +6,7 @@ COPY . .
 
 RUN ["apt","install","git", "-y"]
 
-RUN ["gradle", "--no-daemon", "shadowjar", "-PreposiliteRepositoryReleasesUsername=skitou", "-PreposiliteRepositoryReleasesPassword=s3r0bvRZRyqSo6wmG+UQwhVJRjsx5UIAVSFwH7q1ZnFEr2MZWhKJ7iIDpk6u1Fb2"]
+RUN ["gradle", "--no-daemon", "shadowjar", "-PreposiliteRepositoryReleasesUsername=git", "-PreposiliteRepositoryReleasesPassword=5ox9JiyZRJbLkWfn+WwLdmDtFs43pYj5iHGHN8RC3YIEwpXulPwS7r2GPrReHY/P"]
 
 RUN ["cp", "./build/libs/kanei-all.jar", "/srv/kanei-all.jar"]
 
