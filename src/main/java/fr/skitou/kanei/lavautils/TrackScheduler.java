@@ -56,7 +56,7 @@ public class TrackScheduler extends AudioEventAdapter {
     public void foreward(String formatedForewardPosition) {
         long forewardPosition = TimeFormater.formatedDurationToMilis(formatedForewardPosition);
 
-        if (!(forewardPosition > player.getPlayingTrack().getDuration() || forewardPosition < player.getPlayingTrack().getDuration())) {
+        if (!(forewardPosition > player.getPlayingTrack().getDuration() || forewardPosition < 0)) {
             player.getPlayingTrack().setPosition(forewardPosition);
         }
     }
