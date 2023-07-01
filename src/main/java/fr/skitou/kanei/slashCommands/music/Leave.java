@@ -10,7 +10,7 @@ public class Leave implements ISlashCommand {
 
     @Override
     public @NotNull String getName() {
-        return "Leave";
+        return "leave";
     }
 
     @Override
