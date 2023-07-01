@@ -21,7 +21,6 @@ public class MusicManager {
                     GuildMusic guildMusic = guildMusics.get(guildId);
                     if (guildMusic.scheduler.getQueue().isEmpty() && guildMusic.player.getPlayingTrack() == null) {
                         guildMusic.destroy();
-                        guildMusics.remove(guildId);
                     }
                 }
 
