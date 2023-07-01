@@ -26,8 +26,7 @@ import java.util.stream.Collectors;
  * Holder for both the player and a track scheduler for one guild.
  */
 public class GuildMusic {
-
-    public static final float[] BASS_BOOST = {
+    private static final float[] BASS_BOOST = {
             0.2f,
             0.15f,
             0.1f,
@@ -121,6 +120,7 @@ public class GuildMusic {
         final float multiplier = percentage / 100.00f;
 
         for (int i = 0; i < BASS_BOOST.length; i++) {
+            equalizer.getGain(i, BASS_BOOST[i];
             equalizer.setGain(i, BASS_BOOST[i] * multiplier);
         }
     }
