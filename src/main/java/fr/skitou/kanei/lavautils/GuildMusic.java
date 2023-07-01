@@ -114,6 +114,7 @@ public class GuildMusic {
         player.destroy();
         scheduler.clearQueue();
         audioManager.closeAudioConnection();
+        MusicManager.guildMusics.remove(guildId);
     }
 
     public void bassBoost(float percentage) {
