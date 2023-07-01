@@ -120,7 +120,6 @@ public class GuildMusic {
         final float multiplier = percentage / 100.00f;
 
         for (int i = 0; i < BASS_BOOST.length; i++) {
-            equalizer.getGain(i, BASS_BOOST[i];
             equalizer.setGain(i, BASS_BOOST[i] * multiplier);
         }
     }
