@@ -10,12 +10,12 @@ public class Leave implements ISlashCommand {
 
     @Override
     public @NotNull String getName() {
-        return null;
+        return "Leave";
     }
 
     @Override
     public @NotNull String getHelp() {
-        return null;
+        return "Disconnect the bot.";
     }
 
     @Override

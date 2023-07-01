@@ -10,12 +10,12 @@ import org.jetbrains.annotations.NotNull;
 public class Pause implements ISlashCommand {
     @Override
     public @NotNull String getName() {
-        return null;
+        return "Pause";
     }
 
     @Override
     public @NotNull String getHelp() {
-        return null;
+        return "Pause the player.";
     }
 
     @Override
