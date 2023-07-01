@@ -40,6 +40,7 @@ public class Pause implements ISlashCommand {
             event.getHook().sendMessage(KaneiMain.getLangBundle().getString("music.nothingplaying")).queue();
             return;
         }
+
         if (guildMusic.player.isPaused()) {
             event.getHook().sendMessage(KaneiMain.getLangBundle().getString("music.resumed")).queue();
             guildMusic.player.setPaused(false);

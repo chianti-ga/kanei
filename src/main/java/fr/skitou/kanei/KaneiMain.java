@@ -13,9 +13,9 @@ import java.util.Set;
 public class KaneiMain {
     @Getter
     private static final ResourceBundle langBundle = ResourceBundle.getBundle("lang");
-    public static BotInstance botInstance;
     @Getter
     private static final String version = KaneiMain.class.getPackage().getImplementationVersion();
+    public static BotInstance botInstance;
 
     public static void main(String[] args) {
         long start = System.currentTimeMillis();
