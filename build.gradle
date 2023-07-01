@@ -30,7 +30,7 @@ repositories {
 
 
 dependencies {
-    implementation "fr.skitou.botcore:botcore:1.1.5"
+    implementation "fr.skitou.botcore:botcore:1.1.5-5-g0889eb3"
 
     implementation 'com.github.walkyst:lavaplayer-fork:1.4.2'
     implementation("net.dv8tion:JDA:5.0.0-beta.10")

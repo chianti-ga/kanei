@@ -66,7 +66,7 @@ public class Play implements ISlashCommand {
             public void playlistLoaded(AudioPlaylist playlist) {
                 if (search.startsWith("ytsearch:")) {
                     guildMusic.scheduler.queueTrack(playlist.getTracks().get(0));
-                    event.getHook().sendMessageEmbeds(guildMusic.scheduler.nowPlaying()).queue();
+                    event.getHook().sendMessageEmbeds(guildMusic.scheduler.embedTracInfo(playlist.getTracks().get(0).getInfo())).queue();
                 } else {
                     playlist.getTracks().forEach(guildMusic.scheduler::queueTrack);
                     List<MessageEmbed> queueEmbeds = guildMusic.scheduler.displayQueue();

@@ -18,7 +18,7 @@ public class KaneiMain {
     private static final String version = KaneiMain.class.getPackage().getImplementationVersion();
 
     public static void main(String[] args) {
-
+        long start = System.currentTimeMillis();
         BotInstance.BotInstanceBuilder builder = new BotInstance.BotInstanceBuilder(args);
         builder.setCMDPackage("fr.skitou.kanei.classicCommands")
                 .setSlashCMDPackage("fr.skitou.kanei.slashCommands")
@@ -29,6 +29,8 @@ public class KaneiMain {
                 .setDisabledcacheFlags(Collections.singleton(CacheFlag.MEMBER_OVERRIDES))
                 .setDisabledintents(Set.of());
         botInstance = builder.build();
+        long end = System.currentTimeMillis();
+        System.out.println("Start time : " + (end - start) + "ms");
         BotInstance.getJda().getPresence().setActivity(Activity.listening("some music!"));
     }
 }
