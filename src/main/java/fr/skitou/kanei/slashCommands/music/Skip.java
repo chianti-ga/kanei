@@ -37,10 +37,12 @@ public class Skip implements ISlashCommand {
             event.getHook().sendMessage(KaneiMain.getLangBundle().getString("music.nothingplaying")).queue();
             return;
         }
+
         guildMusic.scheduler.nextTrack();
         if (guildMusic.player.getPlayingTrack() != null) {
             event.getHook().sendMessageEmbeds(guildMusic.scheduler.nowPlaying()).queue();
-        } else guildMusic.destroy();
-        event.getHook().sendMessage(KaneiMain.getLangBundle().getString("music.emptyqueue")).queue();
+        } else {
+            event.getHook().sendMessage(KaneiMain.getLangBundle().getString("music.emptyqueue")).queue();
+        }
     }
 }
