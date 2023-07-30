@@ -150,7 +150,7 @@ public class TrackScheduler extends AudioEventAdapter {
             sb.append("**`").append(String.format("%02d", i.get())).append("`** | ")
                     .append("`[").append(TimeFormater.milisToFormatedDuration(audioTrack.getDuration()))
                     .append("]` ")
-                    .append(audioTrack.getInfo().title.length() > 40 ? audioTrack.getInfo().title.substring(0, 40).concat("`...`") : audioTrack.getInfo().title)
+                    .append(audioTrack.getInfo().title.length() > 40 ? audioTrack.getInfo().title.substring(0, 40).concat("...") : audioTrack.getInfo().title)
                     .append("\n");
 
             trackList.add(sb.toString());
@@ -158,8 +158,8 @@ public class TrackScheduler extends AudioEventAdapter {
         });
 
         EmbedBuilder builder = new EmbedBuilder();
-        builder.setTitle(":speaker: " + player.getPlayingTrack().getInfo().title)
-                .setFooter("Queue size:" + queue.size())
+        builder.setTitle(":speaker: Now playing: " + player.getPlayingTrack().getInfo().title)
+                .setFooter("Queue size: " + queue.size())
                 .setColor(QuickColors.CYAN);
 
 
