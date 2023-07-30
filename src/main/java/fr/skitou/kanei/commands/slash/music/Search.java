@@ -1,15 +1,15 @@
-package fr.skitou.kanei.commands.classic.slash.music;
+package fr.skitou.kanei.commands.slash.music;
 
 import com.sedmelluq.discord.lavaplayer.player.AudioLoadResultHandler;
 import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
 import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import fr.skitou.botcore.commands.slash.ISlashCommand;
+import fr.skitou.botcore.subsystems.internal.ComponentInteractionListener;
 import fr.skitou.botcore.utils.QuickColors;
 import fr.skitou.kanei.KaneiMain;
 import fr.skitou.kanei.lavautils.GuildMusic;
 import fr.skitou.kanei.lavautils.MusicManager;
-import fr.skitou.kanei.subsystems.ComponentInteractionListener;
 import fr.skitou.kanei.utils.TimeFormater;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageEmbed;

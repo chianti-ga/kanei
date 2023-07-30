@@ -1,4 +1,4 @@
-package fr.skitou.kanei.commands.classic.slash.music;
+package fr.skitou.kanei.commands.slash.music;
 
 import fr.skitou.botcore.commands.slash.ISlashCommand;
 import fr.skitou.kanei.KaneiMain;
@@ -7,15 +7,16 @@ import fr.skitou.kanei.lavautils.MusicManager;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import org.jetbrains.annotations.NotNull;
 
-public class Pause implements ISlashCommand {
+@SuppressWarnings({"DuplicatedCode", "unused"})
+public class Clear implements ISlashCommand {
     @Override
     public @NotNull String getName() {
-        return "pause";
+        return "clear";
     }
 
     @Override
     public @NotNull String getHelp() {
-        return "Pause/resume the player.";
+        return "Clear the current queue.";
     }
 
     @Override
@@ -36,17 +37,9 @@ public class Pause implements ISlashCommand {
             return;
         }
 
-        if (guildMusic.player.getPlayingTrack() == null) {
-            event.getHook().sendMessage(KaneiMain.getLangBundle().getString("music.nothingplaying")).queue();
-            return;
-        }
-
-        if (guildMusic.player.isPaused()) {
-            event.getHook().sendMessage(KaneiMain.getLangBundle().getString("music.resumed")).queue();
-            guildMusic.player.setPaused(false);
-        } else {
-            event.getHook().sendMessage(KaneiMain.getLangBundle().getString("music.paused")).queue();
-            guildMusic.player.setPaused(true);
-        }
+        if (!guildMusic.scheduler.getQueue().isEmpty()) {
+            guildMusic.scheduler.clearQueue();
+            event.getHook().sendMessage(KaneiMain.getLangBundle().getString("music.clearedqueue")).queue();
+        } else event.getHook().sendMessage(KaneiMain.getLangBundle().getString("music.emptyqueue")).queue();
     }
 }

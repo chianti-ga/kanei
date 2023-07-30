@@ -1,4 +1,4 @@
-package fr.skitou.kanei.commands.classic.slash.music;
+package fr.skitou.kanei.commands.slash.music;
 
 import fr.skitou.botcore.commands.slash.ISlashCommand;
 import fr.skitou.kanei.KaneiMain;

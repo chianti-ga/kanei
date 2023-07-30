@@ -1,4 +1,4 @@
-package fr.skitou.kanei.commands.classic.slash.music;
+package fr.skitou.kanei.commands.slash.music;
 
 import fr.skitou.botcore.commands.slash.ISlashCommand;
 import fr.skitou.kanei.KaneiMain;
@@ -6,32 +6,29 @@ import fr.skitou.kanei.lavautils.MusicManager;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import org.jetbrains.annotations.NotNull;
 
-public class Leave implements ISlashCommand {
-
+@SuppressWarnings("unused")
+public class Shuffle implements ISlashCommand {
     @Override
     public @NotNull String getName() {
-        return "leave";
+        return "shuffle";
     }
 
     @Override
     public @NotNull String getHelp() {
-        return "Disconnect the bot.";
+        return "Shuffle the queue content";
     }
 
     @Override
     public void onCommandReceived(SlashCommandInteractionEvent event) {
-        event.deferReply(false).queue();
-
+        event.deferReply().queue();
         if (!event.getMember().getVoiceState().inAudioChannel()) {
             event.getHook().sendMessage(KaneiMain.getLangBundle().getString("music.notinchanel")).queue();
             return;
         }
 
         if (MusicManager.guildMusics.containsKey(event.getGuild().getIdLong())) {
-            MusicManager.guildMusics.get(event.getGuild().getIdLong()).destroy();
-            event.getHook().sendMessage(":white_check_mark:").queue();
-        } else {
-            event.getHook().sendMessage(KaneiMain.getLangBundle().getString("music.nothingplaying")).queue();
-        }
+            MusicManager.guildMusics.get(event.getGuild().getIdLong()).scheduler.shuffle();
+            event.getHook().sendMessage(KaneiMain.getLangBundle().getString("music.queueshuffled")).queue();
+        } else event.reply(KaneiMain.getLangBundle().getString("music.nothingplaying")).queue();
     }
 }

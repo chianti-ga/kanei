@@ -20,8 +20,8 @@ public class KaneiMain {
     public static void main(String[] args) {
         long start = System.currentTimeMillis();
         BotInstance.BotInstanceBuilder builder = new BotInstance.BotInstanceBuilder(args);
-        builder.setCMDPackage("fr.skitou.kanei.classicCommands")
-                .setSlashCMDPackage("fr.skitou.kanei.slashCommands")
+        builder.setCMDPackage("fr.skitou.kanei.commands.classic")
+                .setSlashCMDPackage("fr.skitou.kanei.commands.slash")
                 .setSubsystemPackage("fr.skitou.kanei.subsystems")
                 .setEntitiesPackagePackage("fr.skitou.kanei.databaseentities")
                 .setEnabledintents(Set.of(GatewayIntent.DIRECT_MESSAGES, GatewayIntent.GUILD_MESSAGES, GatewayIntent.GUILD_MESSAGE_REACTIONS, GatewayIntent.MESSAGE_CONTENT, GatewayIntent.GUILD_MEMBERS))

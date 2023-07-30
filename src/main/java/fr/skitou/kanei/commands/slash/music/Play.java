@@ -1,4 +1,4 @@
-package fr.skitou.kanei.commands.classic.slash.music;
+package fr.skitou.kanei.commands.slash.music;
 
 import com.sedmelluq.discord.lavaplayer.player.AudioLoadResultHandler;
 import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;

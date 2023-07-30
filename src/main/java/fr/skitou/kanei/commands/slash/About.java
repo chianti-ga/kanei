@@ -1,5 +1,6 @@
-package fr.skitou.kanei.commands.classic.slash;
+package fr.skitou.kanei.commands.slash;
 
+import fr.skitou.botcore.commands.classic.ICommand;
 import fr.skitou.botcore.commands.slash.ISlashCommand;
 import fr.skitou.botcore.core.BotInstance;
 import fr.skitou.botcore.utils.QuickColors;
@@ -26,12 +27,12 @@ public class About implements ISlashCommand {
     @Override
     public void onCommandReceived(SlashCommandInteractionEvent event) {
         EmbedBuilder builder = new EmbedBuilder();
-        builder.setTitle(BotInstance.getJda().getSelfUser().getName() + "Music Bot Infos")
-                .setDescription("This is a music bot made for me and my friends using JDA and lavaplayer.\n Type /help to see all commands available.")
+        builder.setTitle(BotInstance.getJda().getSelfUser().getName() + " Music Bot Infos")
+                .setDescription("This is a music bot made for me and my friends using JDA and lavaplayer.\n Type `" + ICommand.PREFIX + "help` to see classic commands list!.")
                 .addField("Versions:", "JDA5\nCore:" + BotInstance.getCoreVersion() + "\n" + BotInstance.getJda().getSelfUser().getName() + ":" + KaneiMain.getVersion(), true)
                 .addField("Total servers:", String.valueOf(BotInstance.getJda().getGuilds().size()), true)
                 .addField("Total stream:", String.valueOf(MusicManager.guildMusics.size()), true)
-                .addField("RAM:", (Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) * Math.pow(10, -6) + "/" + Runtime.getRuntime().totalMemory() * Math.pow(10, -6), false)
+                .addField("RAM:", Math.round((Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) * Math.pow(2, -20)) + "/" + Math.round(Runtime.getRuntime().totalMemory() * Math.pow(2, -20)), false)
                 .setColor(QuickColors.LIGHT_BLUE)
                 .setFooter("Running on Java " + Runtime.version() + " | Uptime:" + TimeFormater.milisToFormatedDuration(System.currentTimeMillis()));
         event.replyEmbeds(builder.build()).queue();
