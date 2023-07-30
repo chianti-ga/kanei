@@ -1,6 +1,6 @@
-package fr.skitou.kanei.slashCommands.music;
+package fr.skitou.kanei.commands.classic.slash.music;
 
-import fr.skitou.botcore.slashcommand.ISlashCommand;
+import fr.skitou.botcore.commands.slash.ISlashCommand;
 import fr.skitou.kanei.KaneiMain;
 import fr.skitou.kanei.lavautils.GuildMusic;
 import fr.skitou.kanei.lavautils.MusicManager;
@@ -11,20 +11,21 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Set;
 
-public class Loop implements ISlashCommand {
+@SuppressWarnings("unused")
+public class Foreward implements ISlashCommand {
     @Override
     public @NotNull String getName() {
-        return "loop";
+        return "foreward";
     }
 
     @Override
     public @NotNull String getHelp() {
-        return "Enable or disable track repetition.";
+        return "Foreward to a specific position of the track";
     }
 
     @Override
     public Set<OptionData> getOptionData() {
-        return Set.of(new OptionData(OptionType.BOOLEAN, "loop", getHelp(), true));
+        return Set.of(new OptionData(OptionType.STRING, "position", "Position in [HH:MM:SS] format"));
     }
 
     @Override
@@ -45,11 +46,9 @@ public class Loop implements ISlashCommand {
             event.getHook().sendMessage(KaneiMain.getLangBundle().getString("music.nothingplaying")).queue();
             return;
         }
-        guildMusic.scheduler.setRepeating(event.getOption("loop").getAsBoolean());
-        if (event.getOption("loop").getAsBoolean()) {
-            event.getHook().sendMessage(KaneiMain.getLangBundle().getString("music.loopon")).queue();
-        } else {
-            event.getHook().sendMessage(KaneiMain.getLangBundle().getString("music.loopoff")).queue();
-        }
+
+        guildMusic.scheduler.foreward(event.getOption("position").getAsString());
+        event.getHook().sendMessageEmbeds(guildMusic.scheduler.nowPlaying()).queue();
+
     }
 }

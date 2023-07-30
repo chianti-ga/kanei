@@ -1,6 +1,6 @@
-package fr.skitou.kanei.slashCommands.music;
+package fr.skitou.kanei.commands.classic.slash.music;
 
-import fr.skitou.botcore.slashcommand.ISlashCommand;
+import fr.skitou.botcore.commands.slash.ISlashCommand;
 import fr.skitou.kanei.KaneiMain;
 import fr.skitou.kanei.lavautils.MusicManager;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
@@ -29,6 +29,7 @@ public class Leave implements ISlashCommand {
 
         if (MusicManager.guildMusics.containsKey(event.getGuild().getIdLong())) {
             MusicManager.guildMusics.get(event.getGuild().getIdLong()).destroy();
+            event.getHook().sendMessage(":white_check_mark:").queue();
         } else {
             event.getHook().sendMessage(KaneiMain.getLangBundle().getString("music.nothingplaying")).queue();
         }

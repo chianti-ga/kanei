@@ -1,10 +1,10 @@
-package fr.skitou.kanei.slashCommands.music;
+package fr.skitou.kanei.commands.classic.slash.music;
 
 import com.sedmelluq.discord.lavaplayer.player.AudioLoadResultHandler;
 import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
 import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
-import fr.skitou.botcore.slashcommand.ISlashCommand;
+import fr.skitou.botcore.commands.slash.ISlashCommand;
 import fr.skitou.kanei.KaneiMain;
 import fr.skitou.kanei.lavautils.GuildMusic;
 import fr.skitou.kanei.lavautils.MusicManager;

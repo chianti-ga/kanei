@@ -30,7 +30,7 @@ public class KaneiMain {
                 .setDisabledintents(Set.of());
         botInstance = builder.build();
         long end = System.currentTimeMillis();
-        System.out.println("Start time : " + (end - start) + "ms");
+        BotInstance.logger.info("Start time : {}ms", (end - start));
         BotInstance.getJda().getPresence().setActivity(Activity.listening("some music!"));
     }
 }
