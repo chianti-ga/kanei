@@ -45,7 +45,7 @@ dependencies {
     implementation 'org.hibernate.orm:hibernate-community-dialects:6.3.0.CR1'
     implementation group: 'org.xerial', name: 'sqlite-jdbc', version: '3.40.1.0'
 
-    testImplementation platform('org.junit:junit-bom:5.9.2')
+    testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter:5.9.2'
     implementation 'com.google.code.gson:gson:2.10.1'
     implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.13.0'
