@@ -31,10 +31,12 @@ public class Queue implements ISlashCommand {
         }
         if (MusicManager.guildMusics.get(event.getGuild().getIdLong()).scheduler.getQueue().isEmpty()) {
             event.getHook().sendMessage(KaneiMain.getLangBundle().getString("music.emptyqueue")).queue();
+            if(MusicManager.guildMusics.get(event.getGuild().getIdLong()).player.getPlayingTrack() != null)
+                event.getChannel().sendMessageEmbeds(MusicManager.guildMusics.get(event.getGuild().getIdLong()).scheduler.nowPlaying()).queue();
             return;
         }
         List<MessageEmbed> queueEmbeds = MusicManager.guildMusics.get(event.getGuild().getIdLong()).scheduler.displayQueue();
-        event.getHook().sendMessage("").addEmbeds(queueEmbeds.get(0)).queue();
+        event.getHook().sendMessageEmbeds(queueEmbeds.get(0)).queue();
         queueEmbeds.remove(0);
         if (!queueEmbeds.isEmpty())
             queueEmbeds.forEach(messageEmbed -> event.getChannel().sendMessageEmbeds(messageEmbed).queue());
