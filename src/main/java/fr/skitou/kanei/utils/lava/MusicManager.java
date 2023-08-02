@@ -1,4 +1,4 @@
-package fr.skitou.kanei.lavautils;
+package fr.skitou.kanei.utils.lava;
 
 import java.time.Duration;
 import java.time.Instant;

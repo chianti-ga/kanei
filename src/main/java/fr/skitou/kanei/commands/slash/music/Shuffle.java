@@ -2,7 +2,7 @@ package fr.skitou.kanei.commands.slash.music;
 
 import fr.skitou.botcore.commands.slash.ISlashCommand;
 import fr.skitou.kanei.KaneiMain;
-import fr.skitou.kanei.lavautils.MusicManager;
+import fr.skitou.kanei.utils.lava.MusicManager;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import org.jetbrains.annotations.NotNull;
 

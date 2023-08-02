@@ -12,7 +12,6 @@ import java.util.Set;
 
 
 public class KaneiMain {
-
     @Getter
     private static final ResourceBundle langBundle = ResourceBundle.getBundle("lang");
     @Getter

@@ -4,7 +4,7 @@ import fr.skitou.botcore.commands.slash.ISlashCommand;
 import fr.skitou.botcore.hibernate.Database;
 import fr.skitou.kanei.KaneiMain;
 import fr.skitou.kanei.databaseentities.GuildMusicSettings;
-import fr.skitou.kanei.lavautils.MusicManager;
+import fr.skitou.kanei.utils.lava.MusicManager;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;

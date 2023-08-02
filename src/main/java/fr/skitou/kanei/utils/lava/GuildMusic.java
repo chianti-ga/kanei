@@ -1,4 +1,4 @@
-package fr.skitou.kanei.lavautils;
+package fr.skitou.kanei.utils.lava;
 
 import com.github.topisenpai.lavasrc.spotify.SpotifySourceManager;
 import com.sedmelluq.discord.lavaplayer.filter.equalizer.EqualizerFactory;

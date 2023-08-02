@@ -1,4 +1,4 @@
-package fr.skitou.kanei.lavautils;
+package fr.skitou.kanei.utils.lava;
 
 import com.github.topisenpai.lavasrc.spotify.SpotifySourceManager;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
@@ -115,7 +115,7 @@ public class TrackScheduler extends AudioEventAdapter {
                 final JsonBrowser jsonBrowser = ((SpotifySourceManager) player.getPlayingTrack().getSourceManager()).getJson("https://api.spotify.com/v1/tracks/" + player.getPlayingTrack().getIdentifier());
                 builder.setThumbnail(jsonBrowser.get("album").get("images").index(0).get("url").text());
             } catch(IOException e) {
-                logger.error("Enable to retrieve spotify image {}: {}",
+                logger.error("Unable to retrieve spotify image {}: {}",
                         e.getClass().getSimpleName(), e.getMessage());
                 Sentry.captureException(e);
             }
