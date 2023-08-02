@@ -21,12 +21,12 @@ public class Shuffle implements ISlashCommand {
     @Override
     public void onCommandReceived(SlashCommandInteractionEvent event) {
         event.deferReply().queue();
-        if (!event.getMember().getVoiceState().inAudioChannel()) {
+        if(!event.getMember().getVoiceState().inAudioChannel()) {
             event.getHook().sendMessage(KaneiMain.getLangBundle().getString("music.notinchanel")).queue();
             return;
         }
 
-        if (MusicManager.guildMusics.containsKey(event.getGuild().getIdLong())) {
+        if(MusicManager.guildMusics.containsKey(event.getGuild().getIdLong())) {
             MusicManager.guildMusics.get(event.getGuild().getIdLong()).scheduler.shuffle();
             event.getHook().sendMessage(KaneiMain.getLangBundle().getString("music.queueshuffled")).queue();
         } else event.reply(KaneiMain.getLangBundle().getString("music.nothingplaying")).queue();

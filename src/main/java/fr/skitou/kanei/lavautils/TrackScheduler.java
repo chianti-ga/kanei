@@ -9,9 +9,12 @@ import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackInfo;
 import fr.skitou.botcore.utils.QuickColors;
 import fr.skitou.kanei.utils.TimeFormater;
+import io.sentry.Sentry;
 import lombok.Getter;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageEmbed;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.*;
@@ -20,6 +23,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 // TODO: DOCUMENTATION
 public class TrackScheduler extends AudioEventAdapter {
+    private static final Logger logger = LoggerFactory.getLogger(TrackScheduler.class);
     final long guildId;
 
     private final AudioPlayer player;
@@ -48,7 +52,7 @@ public class TrackScheduler extends AudioEventAdapter {
         // Calling startTrack with the noInterrupt set to true will start the track only if nothing is currently playing. If
         // something is playing, it returns false and does nothing. In the case the player was already playing so this
         // track goes to the queue instead.
-        if (!player.startTrack(track, true)) {
+        if(!player.startTrack(track, true)) {
             queue.offer(track);
         }
     }
@@ -60,7 +64,7 @@ public class TrackScheduler extends AudioEventAdapter {
     public void foreward(String formatedForewardPosition) {
         long forewardPosition = TimeFormater.formatedDurationToMilis(formatedForewardPosition);
 
-        if (!(forewardPosition > player.getPlayingTrack().getDuration() || forewardPosition < 0)) {
+        if(!(forewardPosition > player.getPlayingTrack().getDuration() || forewardPosition < 0)) {
             player.getPlayingTrack().setPosition(forewardPosition);
         }
     }
@@ -111,7 +115,9 @@ public class TrackScheduler extends AudioEventAdapter {
                 final JsonBrowser jsonBrowser = ((SpotifySourceManager) player.getPlayingTrack().getSourceManager()).getJson("https://api.spotify.com/v1/tracks/" + player.getPlayingTrack().getIdentifier());
                 builder.setThumbnail(jsonBrowser.get("album").get("images").index(0).get("url").text());
             } catch(IOException e) {
-                throw new RuntimeException(e);
+                logger.error("Enable to retrieve spotify image {}: {}",
+                        e.getClass().getSimpleName(), e.getMessage());
+                Sentry.captureException(e);
             }
         } else {
             builder.setThumbnail("https://img.youtube.com/vi/" + player.getPlayingTrack().getIdentifier() + "/mqdefault.jpg");
@@ -132,10 +138,10 @@ public class TrackScheduler extends AudioEventAdapter {
     @Override
     public void onTrackEnd(AudioPlayer player, AudioTrack track, AudioTrackEndReason endReason) {
         // Only start the next track if the end reason is suitable for it (FINISHED or LOAD_FAILED)
-        if (endReason.mayStartNext) {
-            if (repeating) {
+        if(endReason.mayStartNext) {
+            if(repeating) {
                 player.startTrack(track.makeClone(), false);
-            } else if (queue.isEmpty()) {
+            } else if(queue.isEmpty()) {
                 MusicManager.scheduleForRemoval(guildId);
             } else {
                 nextTrack();
@@ -149,7 +155,7 @@ public class TrackScheduler extends AudioEventAdapter {
     }
 
     public void shuffle() {
-        if (!queue.isEmpty()) Collections.shuffle((List<?>) queue);
+        if(!queue.isEmpty()) Collections.shuffle((List<?>) queue);
     }
 
     public List<MessageEmbed> displayQueue() {
@@ -183,7 +189,6 @@ public class TrackScheduler extends AudioEventAdapter {
                 builder.setDescription(null).setTitle("Queue");
             }
             builder.appendDescription(s);
-            System.out.println(builder.getDescriptionBuilder());
         });
 
 

@@ -39,7 +39,7 @@ public class Play implements ISlashCommand {
     public void onCommandReceived(SlashCommandInteractionEvent event) {
         event.deferReply(false).queue();
 
-        if (!event.getMember().getVoiceState().inAudioChannel()) {
+        if(!event.getMember().getVoiceState().inAudioChannel()) {
             event.getHook().sendMessage(KaneiMain.getLangBundle().getString("music.notinchanel")).queue();
             return;
         }
@@ -47,14 +47,14 @@ public class Play implements ISlashCommand {
 
         GuildMusic guildMusic;
 
-        if (MusicManager.guildMusics.containsKey(event.getGuild().getIdLong())) {
+        if(MusicManager.guildMusics.containsKey(event.getGuild().getIdLong())) {
             guildMusic = MusicManager.guildMusics.get(event.getGuild().getIdLong());
         } else
             guildMusic = new GuildMusic(event.getGuild().getAudioManager(), event.getMember().getVoiceState().getChannel(), event.getGuild().getIdLong());
 
         String search = event.getOption("track").getAsString().startsWith("http") ? event.getOption("track").getAsString() : "ytsearch:" + event.getOption("track").getAsString();
 
-        guildMusic.playerManager.loadItemOrdered(guildMusic, search, new AudioLoadResultHandler() {
+        GuildMusic.playerManager.loadItemOrdered(guildMusic, search, new AudioLoadResultHandler() {
             @Override
             public void trackLoaded(AudioTrack track) {
                 guildMusic.scheduler.queueTrack(track);
@@ -64,7 +64,7 @@ public class Play implements ISlashCommand {
 
             @Override
             public void playlistLoaded(AudioPlaylist playlist) {
-                if (search.startsWith("ytsearch:")) {
+                if(search.startsWith("ytsearch:")) {
                     guildMusic.scheduler.queueTrack(playlist.getTracks().get(0));
                     event.getHook().sendMessageEmbeds(guildMusic.scheduler.embedTracInfo(playlist.getTracks().get(0).getInfo())).queue();
                 } else {
@@ -72,7 +72,7 @@ public class Play implements ISlashCommand {
                     List<MessageEmbed> queueEmbeds = guildMusic.scheduler.displayQueue();
                     event.getHook().sendMessage("").addEmbeds(queueEmbeds.get(0)).queue();
                     queueEmbeds.remove(0);
-                    if (!queueEmbeds.isEmpty())
+                    if(!queueEmbeds.isEmpty())
                         queueEmbeds.forEach(messageEmbed -> event.getChannel().sendMessageEmbeds(messageEmbed).queue());
                 }
             }

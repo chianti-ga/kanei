@@ -29,17 +29,17 @@ public class Bassboost implements ISlashCommand {
 
     @Override
     public void onCommandReceived(SlashCommandInteractionEvent event) {
-        if (!MusicManager.guildMusics.containsKey(event.getGuild().getIdLong())) {
+        if(!MusicManager.guildMusics.containsKey(event.getGuild().getIdLong())) {
             event.reply(KaneiMain.getLangBundle().getString("music.nothingplaying")).queue();
             return;
         }
         event.deferReply().queue();
-        if (event.getOption("bassboostlevel").getAsInt() < 0 || event.getOption("bassboostlevel").getAsInt() > 200) {
+        if(event.getOption("bassboostlevel").getAsInt() < 0 || event.getOption("bassboostlevel").getAsInt() > 200) {
             event.getHook().sendMessage(KaneiMain.getLangBundle().getString("music.invalidbassboost")).queue();
             return;
         }
 
-        if (MusicManager.guildMusics.containsKey(event.getGuild().getIdLong())) {
+        if(MusicManager.guildMusics.containsKey(event.getGuild().getIdLong())) {
             MusicManager.guildMusics.get(event.getGuild().getIdLong()).bassBoost(event.getOption("bassboostlevel").getAsInt());
         }
         event.getHook().sendMessage(KaneiMain.getLangBundle().getString("music.bassbooset") + " " + event.getOption("bassboostlevel").getAsInt()).queue();

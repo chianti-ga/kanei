@@ -24,13 +24,13 @@ public class MusicListener extends AbstractSubsystem {
 
     @Override
     public void onGuildVoiceUpdate(GuildVoiceUpdateEvent event) {
-        if (event.getChannelLeft() == null) return;
-        if (event.getChannelLeft().asVoiceChannel().getMembers().isEmpty()) {
+        if(event.getChannelLeft() == null) return;
+        if(event.getChannelLeft().asVoiceChannel().getMembers().isEmpty()) {
             MusicManager.scheduleForRemoval(event.getGuild().getIdLong());
         }
 
-        if (!event.getGuild().getSelfMember().getVoiceState().inAudioChannel()) {
-            if (MusicManager.guildMusics.containsKey(event.getGuild().getIdLong())) {
+        if(!event.getGuild().getSelfMember().getVoiceState().inAudioChannel()) {
+            if(MusicManager.guildMusics.containsKey(event.getGuild().getIdLong())) {
                 MusicManager.guildMusics.get(event.getGuild().getIdLong()).destroy();
                 MusicManager.guildMusics.remove(event.getGuild().getIdLong());
             }

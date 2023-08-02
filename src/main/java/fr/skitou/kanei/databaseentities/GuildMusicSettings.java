@@ -9,12 +9,12 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+@Getter
 @ToString
 @Entity
 @Table(name = "guildMusicSettings")
 public class GuildMusicSettings {
     @Id
-    @Getter
     @Setter(AccessLevel.PRIVATE)
     private long guild;
 

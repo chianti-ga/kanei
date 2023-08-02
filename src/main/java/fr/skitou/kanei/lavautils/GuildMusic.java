@@ -20,6 +20,7 @@ import java.util.stream.Collectors;
  * Holder for both the player and a track scheduler for one guild.
  */
 public class GuildMusic {
+    public static final AudioPlayerManager playerManager = initPlayerManager();
     private static final float[] BASS_BOOST = {
             0.2f,
             0.15f,
@@ -38,7 +39,6 @@ public class GuildMusic {
             -0.1f
     };
     public final long guildId;
-
     /**
      * Audio player for the guild.
      */
@@ -51,9 +51,6 @@ public class GuildMusic {
      * Wrapper around AudioPlayer to use it as an AudioSendHandler.
      */
     public final AudioPlayerSendHandler sendHandler;
-
-    public static final AudioPlayerManager playerManager = initPlayerManager();
-
     private final AudioManager audioManager;
 
     private final EqualizerFactory equalizer = new EqualizerFactory();
@@ -63,7 +60,7 @@ public class GuildMusic {
      *
      * @param audioManager {@link AudioManager} to use for creating the player.
      * @param audioChannel {@link AudioChannelUnion}
-     * @param guildId id of the guild
+     * @param guildId      id of the guild
      */
     public GuildMusic(AudioManager audioManager, AudioChannelUnion audioChannel, long guildId) {
         this.guildId = guildId;
@@ -72,7 +69,7 @@ public class GuildMusic {
         Set<GuildMusicSettings> playerSettings = Database.getAll(GuildMusicSettings.class).stream()
                 .filter(settings -> settings.getGuild() == audioChannel.getGuild().getIdLong())
                 .collect(Collectors.toSet());
-        if (playerSettings.isEmpty()) {
+        if(playerSettings.isEmpty()) {
             Database.saveOrUpdate(new GuildMusicSettings(guildId, 100));
         }
 
@@ -101,7 +98,7 @@ public class GuildMusic {
     public void bassBoost(float percentage) {
         final float multiplier = percentage / 100.00f;
 
-        for (int i = 0; i < BASS_BOOST.length; i++) {
+        for(int i = 0; i < BASS_BOOST.length; i++) {
             equalizer.setGain(i, BASS_BOOST[i] * multiplier);
         }
     }

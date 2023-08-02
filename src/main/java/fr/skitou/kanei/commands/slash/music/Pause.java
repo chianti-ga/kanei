@@ -22,26 +22,26 @@ public class Pause implements ISlashCommand {
     public void onCommandReceived(SlashCommandInteractionEvent event) {
         event.deferReply(false).queue();
 
-        if (!event.getMember().getVoiceState().inAudioChannel()) {
+        if(!event.getMember().getVoiceState().inAudioChannel()) {
             event.getHook().sendMessage(KaneiMain.getLangBundle().getString("music.notinchanel")).queue();
             return;
         }
 
         GuildMusic guildMusic;
 
-        if (MusicManager.guildMusics.containsKey(event.getGuild().getIdLong())) {
+        if(MusicManager.guildMusics.containsKey(event.getGuild().getIdLong())) {
             guildMusic = MusicManager.guildMusics.get(event.getGuild().getIdLong());
         } else {
             event.getHook().sendMessage(KaneiMain.getLangBundle().getString("music.nothingplaying")).queue();
             return;
         }
 
-        if (guildMusic.player.getPlayingTrack() == null) {
+        if(guildMusic.player.getPlayingTrack() == null) {
             event.getHook().sendMessage(KaneiMain.getLangBundle().getString("music.nothingplaying")).queue();
             return;
         }
 
-        if (guildMusic.player.isPaused()) {
+        if(guildMusic.player.isPaused()) {
             event.getHook().sendMessage(KaneiMain.getLangBundle().getString("music.resumed")).queue();
             guildMusic.player.setPaused(false);
         } else {

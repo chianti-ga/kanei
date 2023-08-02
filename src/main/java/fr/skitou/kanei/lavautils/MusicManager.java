@@ -12,14 +12,18 @@ public class MusicManager {
     public static final ConcurrentMap<Long, GuildMusic> guildMusics = new ConcurrentHashMap<>();
     private static final Timer timer = new Timer();
 
+    private MusicManager() {
+        throw new IllegalStateException("Utility class");
+    }
+
     public static void scheduleForRemoval(long guildId) {
 
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
-                if (guildMusics.containsKey(guildId)) {
+                if(guildMusics.containsKey(guildId)) {
                     GuildMusic guildMusic = guildMusics.get(guildId);
-                    if (guildMusic.scheduler.getQueue().isEmpty() && guildMusic.player.getPlayingTrack() == null) {
+                    if(guildMusic.scheduler.getQueue().isEmpty() && guildMusic.player.getPlayingTrack() == null) {
                         guildMusic.destroy();
                     }
                 }

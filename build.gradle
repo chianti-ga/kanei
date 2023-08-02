@@ -31,6 +31,7 @@ repositories {
 
 dependencies {
     implementation "fr.skitou.botcore:botcore:1.1.7-6-gafcdaf4"
+    implementation 'io.sentry:sentry:6.27.0'
 
     //Disc
     implementation 'com.github.walkyst:lavaplayer-fork:1.4.2'

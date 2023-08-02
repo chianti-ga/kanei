@@ -33,12 +33,12 @@ public class Volume implements ISlashCommand {
     public void onCommandReceived(SlashCommandInteractionEvent event) {
         event.deferReply().queue();
 
-        if (event.getOption("volume").getAsInt() < 0 || event.getOption("volume").getAsInt() > 300) {
+        if(event.getOption("volume").getAsInt() < 0 || event.getOption("volume").getAsInt() > 300) {
             event.getHook().sendMessage(KaneiMain.getLangBundle().getString("music.invalidvolume")).queue();
             return;
         }
 
-        if (MusicManager.guildMusics.containsKey(event.getGuild().getIdLong())) {
+        if(MusicManager.guildMusics.containsKey(event.getGuild().getIdLong())) {
             MusicManager.guildMusics.get(event.getGuild().getIdLong()).player.setVolume(event.getOption("volume").getAsInt());
         }
         Database.saveOrUpdate(new GuildMusicSettings(event.getGuild().getIdLong(), event.getOption("volume").getAsInt()));
