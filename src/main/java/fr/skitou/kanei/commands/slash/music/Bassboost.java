@@ -19,7 +19,7 @@ public class Bassboost implements ISlashCommand {
 
     @Override
     public @NotNull String getHelp() {
-        return "Set the bassboost effect value (0 to disable)";
+        return "Set the bassboost effect value (up to 200, 0 to disable)";
     }
 
     @Override
