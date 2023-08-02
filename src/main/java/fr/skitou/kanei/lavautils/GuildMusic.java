@@ -1,16 +1,12 @@
 package fr.skitou.kanei.lavautils;
 
+import com.github.topisenpai.lavasrc.spotify.SpotifySourceManager;
 import com.sedmelluq.discord.lavaplayer.filter.equalizer.EqualizerFactory;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.source.AudioSourceManagers;
-import com.sedmelluq.discord.lavaplayer.source.bandcamp.BandcampAudioSourceManager;
-import com.sedmelluq.discord.lavaplayer.source.http.HttpAudioSourceManager;
-import com.sedmelluq.discord.lavaplayer.source.local.LocalAudioSourceManager;
-import com.sedmelluq.discord.lavaplayer.source.twitch.TwitchStreamAudioSourceManager;
-import com.sedmelluq.discord.lavaplayer.source.vimeo.VimeoAudioSourceManager;
-import com.sedmelluq.discord.lavaplayer.source.youtube.YoutubeAudioSourceManager;
+import fr.skitou.botcore.core.Config;
 import fr.skitou.botcore.hibernate.Database;
 import fr.skitou.kanei.databaseentities.GuildMusicSettings;
 import net.dv8tion.jda.api.entities.channel.unions.AudioChannelUnion;
@@ -19,8 +15,6 @@ import net.dv8tion.jda.api.managers.AudioManager;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-
-//TODO: DOCUMENTATION
 
 /**
  * Holder for both the player and a track scheduler for one guild.
@@ -58,7 +52,7 @@ public class GuildMusic {
      */
     public final AudioPlayerSendHandler sendHandler;
 
-    public final AudioPlayerManager playerManager;
+    public static final AudioPlayerManager playerManager = initPlayerManager();
 
     private final AudioManager audioManager;
 
@@ -69,30 +63,11 @@ public class GuildMusic {
      *
      * @param audioManager {@link AudioManager} to use for creating the player.
      * @param audioChannel {@link AudioChannelUnion}
-     * @param guildId
-     * @param audioManager
+     * @param guildId id of the guild
      */
     public GuildMusic(AudioManager audioManager, AudioChannelUnion audioChannel, long guildId) {
         this.guildId = guildId;
         this.audioManager = audioManager;
-        playerManager = new DefaultAudioPlayerManager();
-        player = playerManager.createPlayer();
-        scheduler = new TrackScheduler(guildId, player);
-        sendHandler = new AudioPlayerSendHandler(player);
-
-        audioManager.openAudioConnection(audioChannel);
-        audioManager.setSelfDeafened(true);
-        audioManager.setSendingHandler(sendHandler);
-
-        playerManager.registerSourceManager(new YoutubeAudioSourceManager());
-        //playerManager.registerSourceManager(new SoundCloudAudioSourceManager());
-        playerManager.registerSourceManager(new BandcampAudioSourceManager());
-        playerManager.registerSourceManager(new VimeoAudioSourceManager());
-        playerManager.registerSourceManager(new TwitchStreamAudioSourceManager());
-        playerManager.registerSourceManager(new HttpAudioSourceManager());
-        playerManager.registerSourceManager(new LocalAudioSourceManager());
-
-        AudioSourceManagers.registerRemoteSources(playerManager);
 
         Set<GuildMusicSettings> playerSettings = Database.getAll(GuildMusicSettings.class).stream()
                 .filter(settings -> settings.getGuild() == audioChannel.getGuild().getIdLong())
@@ -101,11 +76,17 @@ public class GuildMusic {
             Database.saveOrUpdate(new GuildMusicSettings(guildId, 100));
         }
 
+        player = playerManager.createPlayer();
+        scheduler = new TrackScheduler(guildId, player);
+        sendHandler = new AudioPlayerSendHandler(player);
         playerSettings.forEach(settings -> player.setVolume(settings.getVolume()));
-        //player.setVolume(100);
         player.addListener(scheduler);
         player.setFilterFactory(equalizer);
-        //player.setFrameBufferDuration(500);
+
+        audioManager.openAudioConnection(audioChannel);
+        audioManager.setSelfDeafened(true);
+        audioManager.setSendingHandler(sendHandler);
+
 
         MusicManager.guildMusics.put(guildId, this);
     }
@@ -123,5 +104,18 @@ public class GuildMusic {
         for (int i = 0; i < BASS_BOOST.length; i++) {
             equalizer.setGain(i, BASS_BOOST[i] * multiplier);
         }
+    }
+
+    /**
+     * Initializes and configures the AudioPlayerManager with audio source managers. THIS PREVENT DUPLICATION OF INSTANCES
+     *
+     * @return An instance of AudioPlayerManager configured
+     */
+    public static AudioPlayerManager initPlayerManager() {
+        AudioPlayerManager playerManager = new DefaultAudioPlayerManager();
+        playerManager.registerSourceManager(new SpotifySourceManager(null, Config.CONFIG.getPropertyOrDefault("spotify.id"),
+                Config.CONFIG.getPropertyOrDefault("spotify.secret"), "FR", playerManager));
+        AudioSourceManagers.registerRemoteSources(playerManager);
+        return playerManager;
     }
 }

@@ -8,5 +8,7 @@
   "bot.prefix": "^",
   "commands.allowNonUser": "false",
   "loggerUrl": "https://discord.com/api/webhooks/1080574417802895431/xgZYpaiMYz3Y6QuzimYg2gwpp9_ozbzrSmKNuS0PZn2xPn7y68Iu1VL63XWrpakSbU6a",
-  "sentryDns": "https://6425ab17c7b94f649b97f68a7653a97c@o4504765021814784.ingest.sentry.io/4504765023453184"
+  "sentryDns": "https://6425ab17c7b94f649b97f68a7653a97c@o4504765021814784.ingest.sentry.io/4504765023453184",
+  "spotify.id": "a9e65346b24e4a689d59a58621c40aed",
+  "spotify.secret": "a43085e24fd04758bb32b78df9bd51a8"
 }

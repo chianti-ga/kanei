@@ -1,7 +1,9 @@
 package fr.skitou.kanei.lavautils;
 
+import com.github.topisenpai.lavasrc.spotify.SpotifySourceManager;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.player.event.AudioEventAdapter;
+import com.sedmelluq.discord.lavaplayer.tools.JsonBrowser;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackInfo;
@@ -11,6 +13,7 @@ import lombok.Getter;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 
+import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -22,6 +25,7 @@ public class TrackScheduler extends AudioEventAdapter {
     private final AudioPlayer player;
     @Getter
     private final Queue<AudioTrack> queue;
+    @Getter
     private boolean repeating = false;
 
     /**
@@ -71,6 +75,7 @@ public class TrackScheduler extends AudioEventAdapter {
                 .setDescription("**Duration : " + TimeFormater.milisToFormatedDuration(info.length) + "**")
                 .setUrl(info.uri)
                 .setThumbnail("https://img.youtube.com/vi/" + info.identifier + "/mqdefault.jpg")
+                .setColor(QuickColors.LIGHT_BLUE)
                 .setFooter(info.author);
         return builder.build();
     }
@@ -97,8 +102,21 @@ public class TrackScheduler extends AudioEventAdapter {
         builder.setTitle(":speaker: Now Playing : " + info.title)
                 .setDescription(sb)
                 .setUrl(info.uri)
-                .setThumbnail("https://img.youtube.com/vi/" + player.getPlayingTrack().getIdentifier() + "/mqdefault.jpg")
+                .setColor(QuickColors.LIGHT_BLUE)
                 .setFooter(info.author);
+
+
+        if(player.getPlayingTrack().getSourceManager().getSourceName().equalsIgnoreCase("spotify")) {
+            try {
+                final JsonBrowser jsonBrowser = ((SpotifySourceManager) player.getPlayingTrack().getSourceManager()).getJson("https://api.spotify.com/v1/tracks/" + player.getPlayingTrack().getIdentifier());
+                builder.setThumbnail(jsonBrowser.get("album").get("images").index(0).get("url").text());
+            } catch(IOException e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+            builder.setThumbnail("https://img.youtube.com/vi/" + player.getPlayingTrack().getIdentifier() + "/mqdefault.jpg");
+        }
+
         return builder.build();
     }
 
@@ -124,10 +142,6 @@ public class TrackScheduler extends AudioEventAdapter {
             }
         }
 
-    }
-
-    public boolean isRepeating() {
-        return repeating;
     }
 
     public void setRepeating(boolean repeating) {
@@ -159,20 +173,22 @@ public class TrackScheduler extends AudioEventAdapter {
 
         EmbedBuilder builder = new EmbedBuilder();
         builder.setTitle(":speaker: Now playing: " + player.getPlayingTrack().getInfo().title)
-                .setFooter("Queue size: " + queue.size())
+                .setFooter("Queue size: " + queue.size() + (isRepeating() ? " :repeat:" : ""))
                 .setColor(QuickColors.CYAN);
 
 
         trackList.forEach(s -> {
-            if ((builder.getDescriptionBuilder() + s).length() > 4096) {
+            if(builder.getDescriptionBuilder().length() + s.length() > 4096 || builder.length() + s.length() > MessageEmbed.EMBED_MAX_LENGTH_BOT) {
                 queueEmbeds.add(builder.build());
                 builder.setDescription(null).setTitle("Queue");
             }
             builder.appendDescription(s);
+            System.out.println(builder.getDescriptionBuilder());
         });
 
 
         queueEmbeds.add(builder.build()); // Add last embed
         return queueEmbeds;
+
     }
 }
