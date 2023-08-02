@@ -29,7 +29,7 @@ public class MusicListener extends AbstractSubsystem {
             MusicManager.scheduleForRemoval(event.getGuild().getIdLong());
         }
 
-        if(!event.getGuild().getSelfMember().getVoiceState().inAudioChannel() && MusicManager.guildMusics.containsKey(event.getGuild().getIdLong())
+        if(!event.getGuild().getSelfMember().getVoiceState().inAudioChannel() && MusicManager.guildMusics.containsKey(event.getGuild().getIdLong()))
         {
                 MusicManager.guildMusics.get(event.getGuild().getIdLong()).destroy();
                 MusicManager.guildMusics.remove(event.getGuild().getIdLong());
