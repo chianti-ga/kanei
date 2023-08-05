@@ -1,4 +1,4 @@
-FROM eclipse-temurin:20-jdk AS builder
+FROM gradle:8.2.1-jdk AS builder
 
 WORKDIR /srv
 
@@ -6,7 +6,7 @@ COPY . .
 
 RUN ["apt","install","git", "-y"]
 
-RUN [".\gradlew", "--no-daemon", "shadowjar", "-PreposiliteRepositoryReleasesUsername=git", "-PreposiliteRepositoryReleasesPassword=5ox9JiyZRJbLkWfn+WwLdmDtFs43pYj5iHGHN8RC3YIEwpXulPwS7r2GPrReHY/P"]
+RUN ["gradle", "--no-daemon", "shadowjar", "-PreposiliteRepositoryReleasesUsername=git", "-PreposiliteRepositoryReleasesPassword=5ox9JiyZRJbLkWfn+WwLdmDtFs43pYj5iHGHN8RC3YIEwpXulPwS7r2GPrReHY/P"]
 
 RUN ["cp", "./build/libs/kanei-all.jar", "/srv/kanei-all.jar"]
 
