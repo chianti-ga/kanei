@@ -2,6 +2,7 @@ package fr.skitou.kanei.utils.lava;
 
 import com.github.topisenpai.lavasrc.spotify.SpotifySourceManager;
 import com.sedmelluq.discord.lavaplayer.filter.equalizer.EqualizerFactory;
+import com.sedmelluq.discord.lavaplayer.player.AudioConfiguration;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
@@ -20,7 +21,7 @@ import java.util.stream.Collectors;
  * Holder for both the player and a track scheduler for one guild.
  */
 public class GuildMusic {
-    public static final AudioPlayerManager playerManager = initPlayerManager();
+    public static AudioPlayerManager playerManager = initPlayerManager();
     private static final float[] BASS_BOOST = {
             0.2f,
             0.15f,
@@ -110,8 +111,11 @@ public class GuildMusic {
      */
     public static AudioPlayerManager initPlayerManager() {
         AudioPlayerManager playerManager = new DefaultAudioPlayerManager();
-        playerManager.registerSourceManager(new SpotifySourceManager(null, Config.CONFIG.getPropertyOrDefault("spotify.id"),
-                Config.CONFIG.getPropertyOrDefault("spotify.secret"), "FR", playerManager));
+
+        playerManager.registerSourceManager(new SpotifySourceManager(null, Config.CONFIG.getPropertyOrDefault("spotify.id"), Config.CONFIG.getPropertyOrDefault("spotify.secret"), "FR", playerManager));
+        playerManager.getConfiguration().setOpusEncodingQuality(AudioConfiguration.OPUS_QUALITY_MAX);
+        playerManager.getConfiguration().setResamplingQuality(AudioConfiguration.ResamplingQuality.HIGH);
+
         AudioSourceManagers.registerRemoteSources(playerManager);
         return playerManager;
     }
