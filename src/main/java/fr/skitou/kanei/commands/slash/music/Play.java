@@ -84,8 +84,8 @@ public class Play implements ISlashCommand {
 
             @Override
             public void loadFailed(FriendlyException exception) {
-                GuildMusic.playerManager = null;
-                GuildMusic.playerManager = GuildMusic.initPlayerManager(); //Reset playermanager if error occurred (token expiration, etc...)
+                //GuildMusic.playerManager = null;
+                //GuildMusic.playerManager = GuildMusic.initPlayerManager(); //Reset playermanager if error occurred (token expiration, etc...)
                 event.getHook().sendMessage(KaneiMain.getLangBundle().getString("music.cantplay") + exception.getMessage()).queue();
             }
         });

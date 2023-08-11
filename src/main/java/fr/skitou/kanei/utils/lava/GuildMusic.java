@@ -21,7 +21,6 @@ import java.util.stream.Collectors;
  * Holder for both the player and a track scheduler for one guild.
  */
 public class GuildMusic {
-    public static AudioPlayerManager playerManager = initPlayerManager();
     private static final float[] BASS_BOOST = {
             0.2f,
             0.15f,
@@ -39,6 +38,7 @@ public class GuildMusic {
             -0.1f,
             -0.1f
     };
+    public static AudioPlayerManager playerManager = initPlayerManager();
     public final long guildId;
     /**
      * Audio player for the guild.
