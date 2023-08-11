@@ -54,7 +54,7 @@ public class Play implements ISlashCommand {
 
         String search = event.getOption("track").getAsString().startsWith("http") ? event.getOption("track").getAsString() : "ytsearch:" + event.getOption("track").getAsString();
 
-        GuildMusic.playerManager.loadItemOrdered(guildMusic, search, new AudioLoadResultHandler() {
+        guildMusic.playerManager.loadItemOrdered(guildMusic, search, new AudioLoadResultHandler() {
             @Override
             public void trackLoaded(AudioTrack track) {
                 guildMusic.scheduler.queueTrack(track);
@@ -84,8 +84,6 @@ public class Play implements ISlashCommand {
 
             @Override
             public void loadFailed(FriendlyException exception) {
-                GuildMusic.playerManager = null;
-                GuildMusic.playerManager = GuildMusic.initPlayerManager(); //Reset playermanager if error occurred (token expiration, etc...)
                 event.getHook().sendMessage(KaneiMain.getLangBundle().getString("music.cantplay") + exception.getMessage()).queue();
             }
         });

@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
  * Holder for both the player and a track scheduler for one guild.
  */
 public class GuildMusic {
-    public static AudioPlayerManager playerManager = initPlayerManager();
+
     private static final float[] BASS_BOOST = {
             0.2f,
             0.15f,
@@ -39,6 +39,7 @@ public class GuildMusic {
             -0.1f,
             -0.1f
     };
+    public final AudioPlayerManager playerManager;
     public final long guildId;
     /**
      * Audio player for the guild.
@@ -67,24 +68,29 @@ public class GuildMusic {
         this.guildId = guildId;
         this.audioManager = audioManager;
 
+        playerManager = new DefaultAudioPlayerManager();
+        playerManager.registerSourceManager(new SpotifySourceManager(null, Config.CONFIG.getPropertyOrDefault("spotify.id"), Config.CONFIG.getPropertyOrDefault("spotify.secret"), "FR", playerManager));
+        playerManager.getConfiguration().setOpusEncodingQuality(AudioConfiguration.OPUS_QUALITY_MAX);
+        playerManager.getConfiguration().setResamplingQuality(AudioConfiguration.ResamplingQuality.HIGH);
+        AudioSourceManagers.registerRemoteSources(playerManager);
+
+        this.player = playerManager.createPlayer();
+        scheduler = new TrackScheduler(guildId, player);
+        sendHandler = new AudioPlayerSendHandler(player);
+        player.addListener(scheduler);
+        player.setFilterFactory(equalizer);
+
         Set<GuildMusicSettings> playerSettings = Database.getAll(GuildMusicSettings.class).stream()
                 .filter(settings -> settings.getGuild() == audioChannel.getGuild().getIdLong())
                 .collect(Collectors.toSet());
         if(playerSettings.isEmpty()) {
             Database.saveOrUpdate(new GuildMusicSettings(guildId, 100));
         }
-
-        player = playerManager.createPlayer();
-        scheduler = new TrackScheduler(guildId, player);
-        sendHandler = new AudioPlayerSendHandler(player);
         playerSettings.forEach(settings -> player.setVolume(settings.getVolume()));
-        player.addListener(scheduler);
-        player.setFilterFactory(equalizer);
 
         audioManager.openAudioConnection(audioChannel);
         audioManager.setSelfDeafened(true);
         audioManager.setSendingHandler(sendHandler);
-
 
         MusicManager.guildMusics.put(guildId, this);
     }
@@ -102,21 +108,5 @@ public class GuildMusic {
         for(int i = 0; i < BASS_BOOST.length; i++) {
             equalizer.setGain(i, BASS_BOOST[i] * multiplier);
         }
-    }
-
-    /**
-     * Initializes and configures the AudioPlayerManager with audio source managers. THIS PREVENT DUPLICATION OF INSTANCES
-     *
-     * @return An instance of AudioPlayerManager configured
-     */
-    public static AudioPlayerManager initPlayerManager() {
-        AudioPlayerManager playerManager = new DefaultAudioPlayerManager();
-
-        playerManager.registerSourceManager(new SpotifySourceManager(null, Config.CONFIG.getPropertyOrDefault("spotify.id"), Config.CONFIG.getPropertyOrDefault("spotify.secret"), "FR", playerManager));
-        playerManager.getConfiguration().setOpusEncodingQuality(AudioConfiguration.OPUS_QUALITY_MAX);
-        playerManager.getConfiguration().setResamplingQuality(AudioConfiguration.ResamplingQuality.HIGH);
-
-        AudioSourceManagers.registerRemoteSources(playerManager);
-        return playerManager;
     }
 }
