@@ -56,7 +56,7 @@ public class Search implements ISlashCommand {
         } else
             guildMusic = new GuildMusic(event.getGuild().getAudioManager(), event.getMember().getVoiceState().getChannel(), event.getGuild().getIdLong());
 
-        GuildMusic.playerManager.loadItemOrdered(guildMusic, "ytsearch:" + event.getOption("search").getAsString(), new AudioLoadResultHandler() {
+        guildMusic.playerManager.loadItemOrdered(guildMusic, "ytsearch:" + event.getOption("search").getAsString(), new AudioLoadResultHandler() {
             @Override
             public void trackLoaded(AudioTrack track) {
                 // this is a search command
