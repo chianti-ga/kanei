@@ -9,6 +9,7 @@ import fr.skitou.kanei.utils.TimeFormater;
 import fr.skitou.kanei.utils.lava.MusicManager;
 import lombok.SneakyThrows;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.User;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import org.apache.commons.lang3.SystemUtils;
 import org.jetbrains.annotations.NotNull;
@@ -33,7 +34,7 @@ public class About implements ISlashCommand {
     public void onCommandReceived(SlashCommandInteractionEvent event) {
         EmbedBuilder builder = new EmbedBuilder();
         builder.setTitle(BotInstance.getJda().getSelfUser().getName() + " Music Bot Infos")
-                .setDescription("This is a music bot made for me and my friends using JDA and lavaplayer.\n Type `" + ICommand.PREFIX + "help` to see classic commands list!.")
+                .setDescription("This is a music bot made for me and my friends using JDA and lavaplayer.\n Type `" + ICommand.PREFIX + "help` to see classic commands list!.\n **Bot made by " + User.fromId("374283393799553036").getAsMention() + "**")
                 .addField("Versions:", "JDA5\nCore:" + BotInstance.getCoreVersion() + "\n" + BotInstance.getJda().getSelfUser().getName() + ":" + KaneiMain.getVersion(), true)
                 .addField("Total server:", String.valueOf(BotInstance.getJda().getGuilds().size()), true)
                 .addField("Total stream:", String.valueOf(MusicManager.guildMusics.size()), true)

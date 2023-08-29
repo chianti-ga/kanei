@@ -52,7 +52,7 @@ public class TrackScheduler extends AudioEventAdapter {
         // Calling startTrack with the noInterrupt set to true will start the track only if nothing is currently playing. If
         // something is playing, it returns false and does nothing. In the case the player was already playing so this
         // track goes to the queue instead.
-        if(!player.startTrack(track, true)) {
+        if (!player.startTrack(track, true)) {
             queue.offer(track);
         }
     }
@@ -64,7 +64,7 @@ public class TrackScheduler extends AudioEventAdapter {
     public void foreward(String formatedForewardPosition) {
         long forewardPosition = TimeFormater.formatedDurationToMilis(formatedForewardPosition);
 
-        if(!(forewardPosition > player.getPlayingTrack().getDuration() || forewardPosition < 0)) {
+        if (!(forewardPosition > player.getPlayingTrack().getDuration() || forewardPosition < 0)) {
             player.getPlayingTrack().setPosition(forewardPosition);
         }
     }
@@ -110,11 +110,11 @@ public class TrackScheduler extends AudioEventAdapter {
                 .setFooter(info.author);
 
 
-        if(player.getPlayingTrack().getSourceManager().getSourceName().equalsIgnoreCase("spotify")) {
+        if (player.getPlayingTrack().getSourceManager().getSourceName().equalsIgnoreCase("spotify")) {
             try {
                 final JsonBrowser jsonBrowser = ((SpotifySourceManager) player.getPlayingTrack().getSourceManager()).getJson("https://api.spotify.com/v1/tracks/" + player.getPlayingTrack().getIdentifier());
                 builder.setThumbnail(jsonBrowser.get("album").get("images").index(0).get("url").text());
-            } catch(IOException e) {
+            } catch (IOException e) {
                 logger.error("Unable to retrieve spotify image {}: {}",
                         e.getClass().getSimpleName(), e.getMessage());
                 Sentry.captureException(e);
@@ -138,10 +138,10 @@ public class TrackScheduler extends AudioEventAdapter {
     @Override
     public void onTrackEnd(AudioPlayer player, AudioTrack track, AudioTrackEndReason endReason) {
         // Only start the next track if the end reason is suitable for it (FINISHED or LOAD_FAILED)
-        if(endReason.mayStartNext) {
-            if(repeating) {
+        if (endReason.mayStartNext) {
+            if (repeating) {
                 player.startTrack(track.makeClone(), false);
-            } else if(queue.isEmpty()) {
+            } else if (queue.isEmpty()) {
                 MusicManager.scheduleForRemoval(guildId);
             } else {
                 nextTrack();
@@ -155,7 +155,7 @@ public class TrackScheduler extends AudioEventAdapter {
     }
 
     public void shuffle() {
-        if(!queue.isEmpty()) Collections.shuffle((List<?>) queue);
+        if (!queue.isEmpty()) Collections.shuffle((List<?>) queue);
     }
 
     public List<MessageEmbed> displayQueue() {
@@ -184,7 +184,7 @@ public class TrackScheduler extends AudioEventAdapter {
 
 
         trackList.forEach(s -> {
-            if(builder.getDescriptionBuilder().length() + s.length() > 4096 || builder.length() + s.length() > MessageEmbed.EMBED_MAX_LENGTH_BOT) {
+            if (builder.getDescriptionBuilder().length() + s.length() > 4096 || builder.length() + s.length() > MessageEmbed.EMBED_MAX_LENGTH_BOT) {
                 queueEmbeds.add(builder.build());
                 builder.setDescription(null).setTitle("Queue");
             }

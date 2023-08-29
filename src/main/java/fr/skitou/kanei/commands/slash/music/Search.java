@@ -44,19 +44,19 @@ public class Search implements ISlashCommand {
     public void onCommandReceived(SlashCommandInteractionEvent event) {
         event.deferReply(false).queue();
 
-        if(!event.getMember().getVoiceState().inAudioChannel()) {
+        if (!event.getMember().getVoiceState().inAudioChannel()) {
             event.getHook().sendMessage(KaneiMain.getLangBundle().getString("music.notinchanel")).queue();
             return;
         }
 
         GuildMusic guildMusic;
 
-        if(MusicManager.guildMusics.containsKey(event.getGuild().getIdLong())) {
+        if (MusicManager.guildMusics.containsKey(event.getGuild().getIdLong())) {
             guildMusic = MusicManager.guildMusics.get(event.getGuild().getIdLong());
         } else
             guildMusic = new GuildMusic(event.getGuild().getAudioManager(), event.getMember().getVoiceState().getChannel(), event.getGuild().getIdLong());
 
-        guildMusic.playerManager.loadItemOrdered(guildMusic, "ytsearch:" + event.getOption("search").getAsString(), new AudioLoadResultHandler() {
+        GuildMusic.playerManager.loadItemOrdered(guildMusic, "ytsearch:" + event.getOption("search").getAsString(), new AudioLoadResultHandler() {
             @Override
             public void trackLoaded(AudioTrack track) {
                 // this is a search command
@@ -66,7 +66,7 @@ public class Search implements ISlashCommand {
             public void playlistLoaded(AudioPlaylist playlist) {
                 StringSelectMenu.Builder selectMenu = StringSelectMenu.create("selectMenu");
                 AtomicInteger i = new AtomicInteger();
-                if(playlist.getTracks().size() < 4) {
+                if (playlist.getTracks().size() < 4) {
                     playlist.getTracks().subList(0, playlist.getTracks().size() - 1).forEach(audioTrack -> {
                         i.getAndIncrement();
                         selectMenu.addOption(String.valueOf(i.get()), String.valueOf(i.get()), audioTrack.getInfo().title);

@@ -25,20 +25,20 @@ public class Queue implements ISlashCommand {
     @Override
     public void onCommandReceived(SlashCommandInteractionEvent event) {
         event.deferReply().queue();
-        if(!MusicManager.guildMusics.containsKey(event.getGuild().getIdLong())) {
+        if (!MusicManager.guildMusics.containsKey(event.getGuild().getIdLong())) {
             event.getHook().sendMessage(KaneiMain.getLangBundle().getString("music.nothingplaying")).queue();
             return;
         }
-        if(MusicManager.guildMusics.get(event.getGuild().getIdLong()).scheduler.getQueue().isEmpty()) {
+        if (MusicManager.guildMusics.get(event.getGuild().getIdLong()).scheduler.getQueue().isEmpty()) {
             event.getHook().sendMessage(KaneiMain.getLangBundle().getString("music.emptyqueue")).queue();
-            if(MusicManager.guildMusics.get(event.getGuild().getIdLong()).player.getPlayingTrack() != null)
+            if (MusicManager.guildMusics.get(event.getGuild().getIdLong()).player.getPlayingTrack() != null)
                 event.getChannel().sendMessageEmbeds(MusicManager.guildMusics.get(event.getGuild().getIdLong()).scheduler.nowPlaying()).queue();
             return;
         }
         List<MessageEmbed> queueEmbeds = MusicManager.guildMusics.get(event.getGuild().getIdLong()).scheduler.displayQueue();
         event.getHook().sendMessageEmbeds(queueEmbeds.get(0)).queue();
         queueEmbeds.remove(0);
-        if(!queueEmbeds.isEmpty())
+        if (!queueEmbeds.isEmpty())
             queueEmbeds.forEach(messageEmbed -> event.getChannel().sendMessageEmbeds(messageEmbed).queue());
     }
 }

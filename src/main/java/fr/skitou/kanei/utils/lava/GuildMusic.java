@@ -70,7 +70,7 @@ public class GuildMusic {
         Set<GuildMusicSettings> playerSettings = Database.getAll(GuildMusicSettings.class).stream()
                 .filter(settings -> settings.getGuild() == audioChannel.getGuild().getIdLong())
                 .collect(Collectors.toSet());
-        if(playerSettings.isEmpty()) {
+        if (playerSettings.isEmpty()) {
             Database.saveOrUpdate(new GuildMusicSettings(guildId, 100));
         }
 
@@ -89,21 +89,6 @@ public class GuildMusic {
         MusicManager.guildMusics.put(guildId, this);
     }
 
-    public void destroy() {
-        player.destroy();
-        scheduler.clearQueue();
-        audioManager.closeAudioConnection();
-        MusicManager.guildMusics.remove(guildId);
-    }
-
-    public void bassBoost(float percentage) {
-        final float multiplier = percentage / 100.00f;
-
-        for(int i = 0; i < BASS_BOOST.length; i++) {
-            equalizer.setGain(i, BASS_BOOST[i] * multiplier);
-        }
-    }
-
     /**
      * Initializes and configures the AudioPlayerManager with audio source managers. THIS PREVENT DUPLICATION OF INSTANCES
      *
@@ -118,5 +103,20 @@ public class GuildMusic {
 
         AudioSourceManagers.registerRemoteSources(playerManager);
         return playerManager;
+    }
+
+    public void destroy() {
+        player.destroy();
+        scheduler.clearQueue();
+        audioManager.closeAudioConnection();
+        MusicManager.guildMusics.remove(guildId);
+    }
+
+    public void bassBoost(float percentage) {
+        final float multiplier = percentage / 100.00f;
+
+        for (int i = 0; i < BASS_BOOST.length; i++) {
+            equalizer.setGain(i, BASS_BOOST[i] * multiplier);
+        }
     }
 }

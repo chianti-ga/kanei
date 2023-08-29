@@ -35,3 +35,4 @@ public class KaneiMain {
         BotInstance.getJda().getPresence().setActivity(Activity.listening("some music!"));
     }
 }
+

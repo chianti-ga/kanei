@@ -20,7 +20,7 @@ public class AudioPlayerSendHandler implements AudioSendHandler {
 
     @Override
     public boolean canProvide() {
-        if(lastFrame == null) {
+        if (lastFrame == null) {
             lastFrame = audioPlayer.provide();
         }
 
@@ -29,7 +29,7 @@ public class AudioPlayerSendHandler implements AudioSendHandler {
 
     @Override
     public ByteBuffer provide20MsAudio() {
-        if(lastFrame == null) {
+        if (lastFrame == null) {
             lastFrame = audioPlayer.provide();
         }
 

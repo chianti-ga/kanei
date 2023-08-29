@@ -22,12 +22,12 @@ public class Leave implements ISlashCommand {
     public void onCommandReceived(SlashCommandInteractionEvent event) {
         event.deferReply(false).queue();
 
-        if(!event.getMember().getVoiceState().inAudioChannel()) {
+        if (!event.getMember().getVoiceState().inAudioChannel()) {
             event.getHook().sendMessage(KaneiMain.getLangBundle().getString("music.notinchanel")).queue();
             return;
         }
 
-        if(MusicManager.guildMusics.containsKey(event.getGuild().getIdLong())) {
+        if (MusicManager.guildMusics.containsKey(event.getGuild().getIdLong())) {
             MusicManager.guildMusics.get(event.getGuild().getIdLong()).destroy();
             event.getHook().sendMessage(":white_check_mark:").queue();
         } else {
