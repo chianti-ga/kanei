@@ -1,4 +1,4 @@
-FROM gradle:8.2.1-jdk AS builder
+FROM gradle:8.4.0-jdk20 AS builder
 
 WORKDIR /srv
 
