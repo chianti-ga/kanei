@@ -78,10 +78,24 @@ public class TrackScheduler extends AudioEventAdapter {
         builder.setTitle(info.title)
                 .setDescription("**Duration : " + TimeFormater.milisToFormatedDuration(info.length) + "**")
                 .setUrl(info.uri)
-                .setThumbnail("https://img.youtube.com/vi/" + info.identifier + "/mqdefault.jpg")
+                .setThumbnail(getThumb())
                 .setColor(QuickColors.LIGHT_BLUE)
                 .setFooter(info.author);
         return builder.build();
+    }
+
+    private String getThumb() {
+        if (player.getPlayingTrack().getSourceManager().getSourceName().equalsIgnoreCase("spotify")) {
+            try {
+                final JsonBrowser jsonBrowser = ((SpotifySourceManager) player.getPlayingTrack().getSourceManager()).getJson("https://api.spotify.com/v1/tracks/" + player.getPlayingTrack().getIdentifier());
+                return jsonBrowser.get("album").get("images").index(0).get("url").text();
+            } catch (IOException e) {
+                logger.error("Unable to retrieve spotify image {}: {}",
+                        e.getClass().getSimpleName(), e.getMessage());
+                Sentry.captureException(e);
+            }
+        }
+        return "https://img.youtube.com/vi/" + player.getPlayingTrack().getIdentifier() + "/mqdefault.jpg";
     }
 
     public MessageEmbed nowPlaying() {
@@ -107,22 +121,8 @@ public class TrackScheduler extends AudioEventAdapter {
                 .setDescription(sb)
                 .setUrl(info.uri)
                 .setColor(QuickColors.LIGHT_BLUE)
-                .setFooter(info.author);
-
-
-        if (player.getPlayingTrack().getSourceManager().getSourceName().equalsIgnoreCase("spotify")) {
-            try {
-                final JsonBrowser jsonBrowser = ((SpotifySourceManager) player.getPlayingTrack().getSourceManager()).getJson("https://api.spotify.com/v1/tracks/" + player.getPlayingTrack().getIdentifier());
-                builder.setThumbnail(jsonBrowser.get("album").get("images").index(0).get("url").text());
-            } catch (IOException e) {
-                logger.error("Unable to retrieve spotify image {}: {}",
-                        e.getClass().getSimpleName(), e.getMessage());
-                Sentry.captureException(e);
-            }
-        } else {
-            builder.setThumbnail("https://img.youtube.com/vi/" + player.getPlayingTrack().getIdentifier() + "/mqdefault.jpg");
-        }
-
+                .setFooter(info.author)
+                .setThumbnail(getThumb());
         return builder.build();
     }
 

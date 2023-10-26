@@ -23,7 +23,7 @@ public class Clear implements ISlashCommand {
     public void onCommandReceived(SlashCommandInteractionEvent event) {
         event.deferReply(false).queue();
 
-        if (!event.getMember().getVoiceState().inAudioChannel()) {
+        if (!event.getMember().getVoiceState().inAudioChannel() || event.getMember().getVoiceState().getChannel().asVoiceChannel() != event.getGuild().getSelfMember().getVoiceState().getChannel().asVoiceChannel()) {
             event.getHook().sendMessage(KaneiMain.getLangBundle().getString("music.notinchanel")).queue();
             return;
         }

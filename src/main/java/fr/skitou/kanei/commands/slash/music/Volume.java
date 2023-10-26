@@ -1,7 +1,6 @@
 package fr.skitou.kanei.commands.slash.music;
 
 import fr.skitou.botcore.commands.slash.ISlashCommand;
-import fr.skitou.botcore.hibernate.Database;
 import fr.skitou.kanei.KaneiMain;
 import fr.skitou.kanei.databaseentities.GuildMusicSettings;
 import fr.skitou.kanei.utils.lava.MusicManager;
@@ -33,15 +32,15 @@ public class Volume implements ISlashCommand {
     public void onCommandReceived(SlashCommandInteractionEvent event) {
         event.deferReply().queue();
 
-        if (event.getOption("volume").getAsInt() < 0 || event.getOption("volume").getAsInt() > 300) {
-            event.getHook().sendMessage(KaneiMain.getLangBundle().getString("music.invalidvolume")).queue();
+        if (!event.getMember().getVoiceState().inAudioChannel() || event.getMember().getVoiceState().getChannel().asVoiceChannel() != event.getGuild().getSelfMember().getVoiceState().getChannel().asVoiceChannel()) {
+            event.getHook().sendMessage(KaneiMain.getLangBundle().getString("music.notinchanel")).queue();
             return;
         }
 
         if (MusicManager.guildMusics.containsKey(event.getGuild().getIdLong())) {
             MusicManager.guildMusics.get(event.getGuild().getIdLong()).player.setVolume(event.getOption("volume").getAsInt());
         }
-        Database.saveOrUpdate(new GuildMusicSettings(event.getGuild().getIdLong(), event.getOption("volume").getAsInt()));
+        new GuildMusicSettings(event.getGuild().getIdLong(), event.getOption("volume").getAsInt());
         event.getHook().sendMessage(KaneiMain.getLangBundle().getString("music.volumeSet") + " " + event.getOption("volume").getAsInt()).queue();
     }
 }

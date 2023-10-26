@@ -21,7 +21,7 @@ public class Shuffle implements ISlashCommand {
     @Override
     public void onCommandReceived(SlashCommandInteractionEvent event) {
         event.deferReply().queue();
-        if (!event.getMember().getVoiceState().inAudioChannel()) {
+        if (!event.getMember().getVoiceState().inAudioChannel() || event.getMember().getVoiceState().getChannel().asVoiceChannel() != event.getGuild().getSelfMember().getVoiceState().getChannel().asVoiceChannel()) {
             event.getHook().sendMessage(KaneiMain.getLangBundle().getString("music.notinchanel")).queue();
             return;
         }

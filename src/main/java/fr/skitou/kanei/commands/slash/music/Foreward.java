@@ -25,7 +25,7 @@ public class Foreward implements ISlashCommand {
 
     @Override
     public Set<OptionData> getOptionData() {
-        return Set.of(new OptionData(OptionType.STRING, "position", "Position in [HH:MM:SS] format"));
+        return Set.of(new OptionData(OptionType.STRING, "position", "Position in [HH:MM:SS] format", true));
     }
 
     @Override
@@ -33,7 +33,7 @@ public class Foreward implements ISlashCommand {
         //noinspection DuplicatedCode
         event.deferReply(false).queue();
 
-        if (!event.getMember().getVoiceState().inAudioChannel()) {
+        if (!event.getMember().getVoiceState().inAudioChannel() || event.getMember().getVoiceState().getChannel().asVoiceChannel() != event.getGuild().getSelfMember().getVoiceState().getChannel().asVoiceChannel()) {
             event.getHook().sendMessage(KaneiMain.getLangBundle().getString("music.notinchanel")).queue();
             return;
         }

@@ -71,7 +71,7 @@ public class GuildMusic {
                 .filter(settings -> settings.getGuild() == audioChannel.getGuild().getIdLong())
                 .collect(Collectors.toSet());
         if (playerSettings.isEmpty()) {
-            Database.saveOrUpdate(new GuildMusicSettings(guildId, 100));
+            new GuildMusicSettings(guildId, 100);
         }
 
         player = playerManager.createPlayer();
