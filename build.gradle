@@ -30,7 +30,7 @@ repositories {
 
 
 dependencies {
-    implementation "fr.skitou.botcore:botcore:1.2-14-g4f6e70c"
+    implementation "fr.skitou.botcore:botcore:1.2-16-gdd660cb"
     implementation 'io.sentry:sentry:6.28.0'
 
     //Disc

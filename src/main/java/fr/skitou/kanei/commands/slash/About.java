@@ -37,7 +37,7 @@ public class About implements ISlashCommand {
                 .setDescription("This is a music bot made for me and my friends using JDA and lavaplayer.\n Type `" + ICommand.PREFIX + "help` to see classic commands list!.\n **Bot made by " + User.fromId("374283393799553036").getAsMention() + "**")
                 .addField("Versions:", "JDA5\nCore:" + BotInstance.getCoreVersion() + "\n" + BotInstance.getJda().getSelfUser().getName() + ":" + KaneiMain.getVersion(), true)
                 .addField("Total servers:", String.valueOf(BotInstance.getJda().getGuilds().size()), true)
-                .addField("Total users:", String.valueOf(BotInstance.getJda().getUsers().size()), true)
+                .addField("Total cached users:", String.valueOf(BotInstance.getJda().getUsers().size()), true)
                 .addField("Total streams:", String.valueOf(MusicManager.guildMusics.size()), true)
                 .addField("RAM:", Math.round((Runtime.getRuntime().totalMemory() - Runtime.getRuntime().freeMemory()) * Math.pow(2, -20)) + "/" + Math.round(Runtime.getRuntime().totalMemory() * Math.pow(2, -20)), true)
                 .addField("Host:", SystemUtils.getHostName() + " | " + SystemUtils.OS_NAME + " " + SystemUtils.OS_VERSION + " " + SystemUtils.OS_ARCH, true)

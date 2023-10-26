@@ -20,9 +20,16 @@ public class NowPlaying implements ISlashCommand {
 
     @Override
     public void onCommandReceived(SlashCommandInteractionEvent event) {
-        if (!event.getMember().getVoiceState().inAudioChannel() || event.getMember().getVoiceState().getChannel().asVoiceChannel() != event.getGuild().getSelfMember().getVoiceState().getChannel().asVoiceChannel()) {
+        if (!event.getMember().getVoiceState().inAudioChannel()) {
             event.getHook().sendMessage(KaneiMain.getLangBundle().getString("music.notinchanel")).queue();
             return;
+        }
+
+        if (event.getGuild().getSelfMember().getVoiceState().getChannel() != null) {
+            if (event.getMember().getVoiceState().getChannel().asVoiceChannel() != event.getGuild().getSelfMember().getVoiceState().getChannel().asVoiceChannel()) {
+                event.getHook().sendMessage(KaneiMain.getLangBundle().getString("music.notinchanel")).queue();
+                return;
+            }
         }
 
         if (MusicManager.guildMusics.containsKey(event.getGuild().getIdLong())) {
