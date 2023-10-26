@@ -44,6 +44,11 @@ public class Play implements ISlashCommand {
             return;
         }
 
+        if (event.getMember().getVoiceState().getChannel().asVoiceChannel() != event.getGuild().getSelfMember().getVoiceState().getChannel().asVoiceChannel()) {
+            event.getHook().sendMessage(KaneiMain.getLangBundle().getString("music.notinchanel")).queue();
+            return;
+        }
+
 
         GuildMusic guildMusic;
 
