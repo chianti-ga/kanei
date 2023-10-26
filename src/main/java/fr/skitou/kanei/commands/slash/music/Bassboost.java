@@ -42,10 +42,10 @@ public class Bassboost implements ISlashCommand {
         }
 
         if (!MusicManager.guildMusics.containsKey(event.getGuild().getIdLong())) {
-            event.reply(KaneiMain.getLangBundle().getString("music.nothingplaying")).queue();
+            event.getHook().sendMessage(KaneiMain.getLangBundle().getString("music.nothingplaying")).queue();
             return;
         }
-        event.deferReply().queue();
+
         if (event.getOption("bassboostlevel").getAsInt() < 0 || event.getOption("bassboostlevel").getAsInt() > 200) {
             event.getHook().sendMessage(KaneiMain.getLangBundle().getString("music.invalidbassboost")).queue();
             return;

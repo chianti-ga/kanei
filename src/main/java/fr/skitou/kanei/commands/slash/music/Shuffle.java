@@ -35,6 +35,6 @@ public class Shuffle implements ISlashCommand {
         if (MusicManager.guildMusics.containsKey(event.getGuild().getIdLong())) {
             MusicManager.guildMusics.get(event.getGuild().getIdLong()).scheduler.shuffle();
             event.getHook().sendMessage(KaneiMain.getLangBundle().getString("music.queueshuffled")).queue();
-        } else event.reply(KaneiMain.getLangBundle().getString("music.nothingplaying")).queue();
+        } else event.getHook().sendMessage(KaneiMain.getLangBundle().getString("music.nothingplaying")).queue();
     }
 }

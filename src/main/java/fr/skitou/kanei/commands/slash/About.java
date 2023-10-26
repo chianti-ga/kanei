@@ -43,6 +43,6 @@ public class About implements ISlashCommand {
                 .addField("Host:", SystemUtils.getHostName() + " | " + SystemUtils.OS_NAME + " " + SystemUtils.OS_VERSION + " " + SystemUtils.OS_ARCH, true)
                 .setColor(QuickColors.LIGHT_BLUE)
                 .setFooter("Running on Java " + Runtime.version() + " | Uptime: " + TimeFormater.milisToFormatedDuration(ManagementFactory.getRuntimeMXBean().getUptime()));
-        event.replyEmbeds(builder.build()).queue();
+        event.getHook().sendMessageEmbeds(builder.build()).queue();
     }
 }
