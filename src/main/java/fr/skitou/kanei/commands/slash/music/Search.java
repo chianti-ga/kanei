@@ -87,7 +87,7 @@ public class Search implements ISlashCommand {
                         .addActionRow(ComponentInteractionListener.createStringSelectMenuInteraction(selectMenu.build(), interactionEvent -> {
                             AudioTrack track = playlist.getTracks().get(Integer.parseInt(interactionEvent.getSelectedOptions().get(0).getLabel()) - 1);
                             guildMusic.scheduler.queueTrack(track);
-                            interactionEvent.replyEmbeds(guildMusic.scheduler.embedTracInfo(track.getInfo())).queue();
+                            interactionEvent.replyEmbeds(guildMusic.scheduler.embedTracInfo(track)).queue();
                         })).queue();
             }
 

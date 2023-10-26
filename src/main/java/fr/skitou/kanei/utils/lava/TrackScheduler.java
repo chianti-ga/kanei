@@ -73,21 +73,21 @@ public class TrackScheduler extends AudioEventAdapter {
         queue.clear();
     }
 
-    public MessageEmbed embedTracInfo(AudioTrackInfo info) {
+    public MessageEmbed embedTracInfo(AudioTrack track) {
         EmbedBuilder builder = new EmbedBuilder();
-        builder.setTitle(info.title)
-                .setDescription("**Duration : " + TimeFormater.milisToFormatedDuration(info.length) + "**")
-                .setUrl(info.uri)
-                .setThumbnail(getThumb())
+        builder.setTitle(track.getInfo().title)
+                .setDescription("**Duration : " + TimeFormater.milisToFormatedDuration(track.getInfo().length) + "**")
+                .setUrl(track.getInfo().uri)
+                .setThumbnail(getThumb(track))
                 .setColor(QuickColors.LIGHT_BLUE)
-                .setFooter(info.author);
+                .setFooter(track.getInfo().author);
         return builder.build();
     }
 
-    private String getThumb() {
-        if (player.getPlayingTrack().getSourceManager().getSourceName().equalsIgnoreCase("spotify")) {
+    private String getThumb(AudioTrack track) {
+        if (track.getSourceManager().getSourceName().equalsIgnoreCase("spotify")) {
             try {
-                final JsonBrowser jsonBrowser = ((SpotifySourceManager) player.getPlayingTrack().getSourceManager()).getJson("https://api.spotify.com/v1/tracks/" + player.getPlayingTrack().getIdentifier());
+                final JsonBrowser jsonBrowser = ((SpotifySourceManager)track.getSourceManager()).getJson("https://api.spotify.com/v1/tracks/" + track.getIdentifier());
                 return jsonBrowser.get("album").get("images").index(0).get("url").text();
             } catch (IOException e) {
                 logger.error("Unable to retrieve spotify image {}: {}",
@@ -95,7 +95,7 @@ public class TrackScheduler extends AudioEventAdapter {
                 Sentry.captureException(e);
             }
         }
-        return "https://img.youtube.com/vi/" + player.getPlayingTrack().getIdentifier() + "/mqdefault.jpg";
+        return "https://img.youtube.com/vi/" +track.getIdentifier() + "/mqdefault.jpg";
     }
 
     public MessageEmbed nowPlaying() {
@@ -122,7 +122,7 @@ public class TrackScheduler extends AudioEventAdapter {
                 .setUrl(info.uri)
                 .setColor(QuickColors.LIGHT_BLUE)
                 .setFooter(info.author)
-                .setThumbnail(getThumb());
+                .setThumbnail(getThumb(player.getPlayingTrack()));
         return builder.build();
     }
 
