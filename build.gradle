@@ -31,7 +31,7 @@ repositories {
 
 dependencies {
     implementation "fr.skitou.botcore:botcore:1.2-16-gdd660cb"
-    implementation 'io.sentry:sentry:6.28.0'
+    implementation 'io.sentry:sentry:6.33.1'
 
     //Disc
     implementation 'dev.arbjerg:lavaplayer:2.0.1'
