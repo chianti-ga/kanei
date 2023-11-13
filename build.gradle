@@ -34,7 +34,7 @@ dependencies {
     implementation 'io.sentry:sentry:6.33.1'
 
     //Disc
-    implementation 'dev.arbjerg:lavaplayer:2.0.1'
+    implementation 'dev.arbjerg:lavaplayer:2.0.3'
     implementation "com.github.topi314.lavasrc:lavasrc:3.2.9"
     implementation("net.dv8tion:JDA:5.0.0-beta.17")
 
