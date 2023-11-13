@@ -23,11 +23,11 @@ public class Deaf extends AbstractCommand {
     public void onCommandReceived(CommandReceivedEvent event) {
         if (event.getArgs().getFirst().equals("un")){
             event.getArgs().stream().skip(1).forEach(s -> event.getGuild().getMemberById(s).mute(false).queue());
-        }else event.getArgs().forEach(s -> event.getGuild().getMemberById(s).mute(false).queue());
+        }else event.getArgs().forEach(s -> event.getGuild().getMemberById(s).mute(true).queue());
     }
 
     @Override
     public Predicate<Member> isSenderAllowed() {
-        return IsSenderAllowed.BotAdmin;
+        return IsSenderAllowed.BotAdmin.or(member -> member.getId().equalsIgnoreCase("588381876989853697"));
     }
 }
