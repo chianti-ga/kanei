@@ -87,7 +87,7 @@ public class TrackScheduler extends AudioEventAdapter {
     private String getThumb(AudioTrack track) {
         if (track.getSourceManager().getSourceName().equalsIgnoreCase("spotify")) {
             try {
-                final JsonBrowser jsonBrowser = ((SpotifySourceManager)track.getSourceManager()).getJson("https://api.spotify.com/v1/tracks/" + track.getIdentifier());
+                final JsonBrowser jsonBrowser = ((SpotifySourceManager) track.getSourceManager()).getJson("https://api.spotify.com/v1/tracks/" + track.getIdentifier());
                 return jsonBrowser.get("album").get("images").index(0).get("url").text();
             } catch (IOException e) {
                 logger.error("Unable to retrieve spotify image {}: {}",
@@ -95,7 +95,7 @@ public class TrackScheduler extends AudioEventAdapter {
                 Sentry.captureException(e);
             }
         }
-        return "https://img.youtube.com/vi/" +track.getIdentifier() + "/mqdefault.jpg";
+        return "https://img.youtube.com/vi/" + track.getIdentifier() + "/mqdefault.jpg";
     }
 
     public MessageEmbed nowPlaying() {
