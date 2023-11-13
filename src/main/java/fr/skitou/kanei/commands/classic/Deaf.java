@@ -21,9 +21,9 @@ public class Deaf extends AbstractCommand {
 
     @Override
     public void onCommandReceived(CommandReceivedEvent event) {
-        if (event.getArgs().getFirst().equals("un")){
+        if (event.getArgs().getFirst().equals("un")) {
             event.getArgs().stream().skip(1).forEach(s -> event.getGuild().getMemberById(s).mute(false).queue());
-        }else event.getArgs().forEach(s -> event.getGuild().getMemberById(s).mute(true).queue());
+        } else event.getArgs().forEach(s -> event.getGuild().getMemberById(s).mute(true).queue());
     }
 
     @Override
