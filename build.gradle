@@ -16,8 +16,7 @@ repositories {
     mavenCentral()
     maven {
         name "reposiliteRepositoryReleases"
-        url "http://45.155.169.234:4578/releases"
-        allowInsecureProtocol = true
+        url "https://reposilite.skitou.fr/releases"
         credentials(PasswordCredentials)
         authentication {
             basic(BasicAuthentication)
@@ -30,8 +29,10 @@ repositories {
 
 
 dependencies {
-    implementation "fr.skitou.botcore:botcore:1.2-28-gb49ed5d"
+    implementation "fr.skitou.botcore:botcore:1.2.1-16-g32933d9"
     implementation 'io.sentry:sentry:7.0.0'
+
+    implementation group: 'org.knowm.xchart', name: 'xchart', version: '3.8.5'
 
     //Disc
     implementation 'dev.arbjerg:lavaplayer:2.0.4'
