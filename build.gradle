@@ -32,7 +32,7 @@ dependencies {
     implementation "fr.skitou.botcore:botcore:1.2.1-27-g9037e8c"
     implementation 'io.sentry:sentry:7.1.0'
 
-    implementation group: 'org.knowm.xchart', name: 'xchart', version: '3.8.5'
+    implementation group: 'org.knowm.xchart', name: 'xchart', version: '3.8.7'
 
     //Disc
     implementation 'dev.arbjerg:lavaplayer:2.0.4'
