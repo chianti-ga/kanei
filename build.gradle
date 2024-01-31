@@ -35,7 +35,7 @@ dependencies {
     implementation group: 'org.knowm.xchart', name: 'xchart', version: '3.8.7'
 
     //Disc
-    implementation 'dev.arbjerg:lavaplayer:2.0.4'
+    implementation 'dev.arbjerg:lavaplayer:2.1.0'
     implementation "com.github.topi314.lavasrc:lavasrc:4.0.1"
     implementation("net.dv8tion:JDA:5.0.0-beta.20")
 
