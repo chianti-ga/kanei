@@ -1,6 +1,10 @@
+/*
+ * Copyright (c) Skitou 2024.
+ */
+
 package fr.skitou.kanei.utils.lava;
 
-import com.github.topisenpai.lavasrc.spotify.SpotifySourceManager;
+import com.github.topi314.lavasrc.spotify.SpotifySourceManager;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.player.event.AudioEventAdapter;
 import com.sedmelluq.discord.lavaplayer.tools.JsonBrowser;

@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) Skitou 2024.
+ */
+
 package fr.skitou.kanei.commands.slash.stats;
 
 import fr.skitou.botcore.commands.slash.ISlashCommand;
@@ -31,7 +35,7 @@ public class Stats implements ISlashCommand {
         List<Double> xData = new ArrayList<>();
         List<Double> yData = new ArrayList<>();
 
-        for (double i = 0; i <50; i += 0.01) {
+        for (double i = 0; i < 50; i += 0.01) {
             xData.add(new BigDecimal(i).setScale(2, RoundingMode.HALF_UP).doubleValue());
             yData.add(Math.sin(i));
         }

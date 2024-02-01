@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) Skitou 2024.
+ */
+
 package fr.skitou.kanei.commands.classic;
 
 import fr.skitou.botcore.commands.classic.AbstractCommand;

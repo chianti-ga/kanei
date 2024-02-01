@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) Skitou 2024.
+ */
+
 package fr.skitou.kanei.subsystems;
 
 import fr.skitou.botcore.subsystems.AbstractSubsystem;

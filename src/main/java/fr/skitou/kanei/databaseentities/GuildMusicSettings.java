@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) Skitou 2024.
+ */
+
 package fr.skitou.kanei.databaseentities;
 
 import fr.skitou.botcore.hibernate.Database;

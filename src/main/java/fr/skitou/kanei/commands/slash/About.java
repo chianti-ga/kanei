@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) Skitou 2024.
+ */
+
 package fr.skitou.kanei.commands.slash;
 
 import fr.skitou.botcore.commands.classic.ICommand;

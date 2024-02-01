@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) Skitou 2024.
+ */
+
 package fr.skitou.kanei;
 
 import fr.skitou.botcore.core.BotInstance;
@@ -9,7 +13,6 @@ import net.dv8tion.jda.api.utils.cache.CacheFlag;
 import java.util.Collections;
 import java.util.ResourceBundle;
 import java.util.Set;
-
 
 public class KaneiMain {
     @Getter

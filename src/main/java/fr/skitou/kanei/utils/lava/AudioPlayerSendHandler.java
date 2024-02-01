@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) Skitou 2024.
+ */
+
 package fr.skitou.kanei.utils.lava;
 
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
