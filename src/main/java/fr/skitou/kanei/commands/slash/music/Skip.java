@@ -9,7 +9,11 @@ import fr.skitou.kanei.KaneiMain;
 import fr.skitou.kanei.utils.lava.GuildMusic;
 import fr.skitou.kanei.utils.lava.MusicManager;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
+import net.dv8tion.jda.api.interactions.commands.OptionType;
+import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.Set;
 
 @SuppressWarnings({"DuplicatedCode", "unused"})
 public class Skip implements ISlashCommand {
@@ -22,6 +26,11 @@ public class Skip implements ISlashCommand {
     @Override
     public @NotNull String getHelp() {
         return "skip";
+    }
+
+    @Override
+    public Set<OptionData> getOptionData() {
+        return Set.of(new OptionData(OptionType.INTEGER, "track_number", getHelp(), false));
     }
 
     @Override
@@ -47,11 +56,21 @@ public class Skip implements ISlashCommand {
             return;
         }
 
-        guildMusic.scheduler.nextTrack();
-        if (guildMusic.player.getPlayingTrack() != null) {
-            event.getHook().sendMessageEmbeds(guildMusic.scheduler.nowPlaying()).queue();
+        if (event.getOption("track_number") != null) {
+            if (guildMusic.scheduler.getQueue().isEmpty() || event.getOption("track_number").getAsInt() <= 0 || event.getOption("track_number").getAsInt() > guildMusic.scheduler.getQueue().size()) {
+                event.getHook().sendMessage(KaneiMain.getLangBundle().getString("music.invalidskip")).queue();
+            } else {
+                guildMusic.scheduler.skiptoIndex(event.getOption("track_number").getAsInt() - 1);
+                guildMusic.scheduler.nextTrack();
+                event.getHook().sendMessageEmbeds(guildMusic.scheduler.nowPlaying()).queue();
+            }
         } else {
-            event.getHook().sendMessage(KaneiMain.getLangBundle().getString("music.emptyqueue")).queue();
+            guildMusic.scheduler.nextTrack();
+            if (guildMusic.player.getPlayingTrack() != null) {
+                event.getHook().sendMessageEmbeds(guildMusic.scheduler.nowPlaying()).queue();
+            } else {
+                event.getHook().sendMessage(KaneiMain.getLangBundle().getString("music.emptyqueue")).queue();
+            }
         }
     }
 }
