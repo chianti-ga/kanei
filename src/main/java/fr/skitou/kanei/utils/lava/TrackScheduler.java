@@ -15,6 +15,7 @@ import fr.skitou.botcore.utils.QuickColors;
 import fr.skitou.kanei.utils.TimeFormater;
 import io.sentry.Sentry;
 import lombok.Getter;
+import lombok.Setter;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import org.slf4j.Logger;
@@ -23,6 +24,7 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 
 
 // TODO: DOCUMENTATION
@@ -33,6 +35,7 @@ public class TrackScheduler extends AudioEventAdapter {
     private final AudioPlayer player;
     @Getter
     private final Queue<AudioTrack> queue;
+    @Setter
     @Getter
     private boolean repeating = false;
 
@@ -158,10 +161,6 @@ public class TrackScheduler extends AudioEventAdapter {
 
     }
 
-    public void setRepeating(boolean repeating) {
-        this.repeating = repeating;
-    }
-
     public void shuffle() {
         if (!queue.isEmpty()) Collections.shuffle((List<?>) queue);
     }
@@ -172,9 +171,12 @@ public class TrackScheduler extends AudioEventAdapter {
 
         StringBuilder sb = new StringBuilder();
         AtomicInteger i = new AtomicInteger();
+        AtomicLong totalLength = new AtomicLong();
 
         queue.forEach(audioTrack -> {
+            totalLength.getAndAdd(audioTrack.getDuration());
             i.getAndIncrement();
+
             sb.append("**`").append(String.format("%02d", i.get())).append("`** | ")
                     .append("`[").append(TimeFormater.milisToFormatedDuration(audioTrack.getDuration()))
                     .append("]` ")
@@ -187,7 +189,7 @@ public class TrackScheduler extends AudioEventAdapter {
 
         EmbedBuilder builder = new EmbedBuilder();
         builder.setTitle(":speaker: Now playing: " + player.getPlayingTrack().getInfo().title)
-                .setFooter("Queue size: " + queue.size() + (isRepeating() ? " :repeat:" : ""))
+                .setFooter("Queue size: " + queue.size() + (isRepeating() ? " :repeat:" : "") + " Total length: " + TimeFormater.milisToFormatedDuration(totalLength.get()))
                 .setColor(QuickColors.CYAN);
 
 
