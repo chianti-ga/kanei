@@ -67,7 +67,7 @@ java {
 test {
     useJUnitPlatform()
 }
-tasks.withType(JavaCompile) {
+tasks.withType(JavaCompile).configureEach {
     options.encoding('UTF-8')
 }
 
@@ -94,7 +94,7 @@ javadoc {
     options.encoding('UTF-8')
 }
 
-task copyJar(type: Copy) {
+tasks.register('copyJar', Copy) {
     dependsOn 'jar'
     from jar.getArchiveFile()
     into file('build/libs/')
@@ -103,7 +103,7 @@ task copyJar(type: Copy) {
     }
 }
 
-task getVersionFromGit() {
+tasks.register('getVersionFromGit') {
     def command = 'git describe --tags'
     def version = command.execute().text.trim()
     println "Application version: ${version}"

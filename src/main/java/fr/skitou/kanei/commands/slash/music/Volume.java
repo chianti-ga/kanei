@@ -24,7 +24,7 @@ public class Volume implements ISlashCommand {
 
     @Override
     public @NotNull String getHelp() {
-        return "Set audio volume (0 to 150)";
+        return "Set audio volume (0 to 300)";
     }
 
     @Override
@@ -47,9 +47,13 @@ public class Volume implements ISlashCommand {
         }
 
         if (MusicManager.guildMusics.containsKey(event.getGuild().getIdLong())) {
-            MusicManager.guildMusics.get(event.getGuild().getIdLong()).player.setVolume(event.getOption("volume").getAsInt());
-        }
-        new GuildMusicSettings(event.getGuild().getIdLong(), event.getOption("volume").getAsInt());
-        event.getHook().sendMessage(KaneiMain.getLangBundle().getString("music.volumeSet") + " " + event.getOption("volume").getAsInt()).queue();
+            if (event.getOption("volume").getAsInt() < 0 || event.getOption("volume").getAsInt() > 300) {
+                event.getHook().sendMessage(KaneiMain.getLangBundle().getString("music.invalidvolume")).queue();
+            } else {
+                MusicManager.guildMusics.get(event.getGuild().getIdLong()).player.setVolume(event.getOption("volume").getAsInt());
+                new GuildMusicSettings(event.getGuild().getIdLong(), event.getOption("volume").getAsInt());
+                event.getHook().sendMessage(KaneiMain.getLangBundle().getString("music.volumeSet") + " " + event.getOption("volume").getAsInt()).queue();
+            }
+        } else event.getHook().sendMessage(KaneiMain.getLangBundle().getString("music.nothingplaying")).queue();
     }
 }
