@@ -50,6 +50,7 @@ public class Queue implements ISlashCommand {
                 event.getChannel().sendMessageEmbeds(MusicManager.guildMusics.get(event.getGuild().getIdLong()).scheduler.nowPlaying()).queue();
             return;
         }
+
         List<MessageEmbed> queueEmbeds = MusicManager.guildMusics.get(event.getGuild().getIdLong()).scheduler.displayQueue();
         event.getHook().sendMessageEmbeds(queueEmbeds.get(0)).queue();
         queueEmbeds.remove(0);
