@@ -192,8 +192,8 @@ public class TrackScheduler extends AudioEventAdapter {
                 .setFooter("Queue size: " + queue.size() + (isRepeating() ? " :repeat:" : "") + " Total length: " + TimeFormater.milisToFormatedDuration(totalLength.get()))
                 .setColor(QuickColors.CYAN);
 
-        while (!trackList.isEmpty()){
-            List<String> prev = trackList.subList(0,Math.min(50, trackList.size()));
+        while (!trackList.isEmpty()) {
+            List<String> prev = trackList.subList(0, Math.min(50, trackList.size()));
             prev.forEach(s -> {
                 if (builder.getDescriptionBuilder().length() + s.length() > 4096 || builder.length() + s.length() > MessageEmbed.EMBED_MAX_LENGTH_BOT) {
                     queueEmbeds.add(builder.build());

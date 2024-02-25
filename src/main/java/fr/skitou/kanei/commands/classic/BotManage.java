@@ -39,14 +39,14 @@ public class BotManage extends AbstractCommand {
                             .addField("guildId", guild.getId(), false)
                             .addField("guildName", guild.getName(), false)
                             .addField("Members", String.valueOf(guild.getMemberCount()), false)
-                            .addField("ownerId",guild.getOwnerId() , false)
+                            .addField("ownerId", guild.getOwnerId(), false)
                             .setColor(QuickColors.DARK_YELLOW);
                     event.getChannel().sendMessageEmbeds(builder.build()).queue();
                 });
-                case "leaveguild" ->{
+                case "leaveguild" -> {
                     if (event.getArgs().size() < 2) {
                         event.getChannel().sendMessage(this.getHelp()).queue();
-                    }else {
+                    } else {
                         event.getJDA().getGuildById(event.getArgs().get(1)).leave().queue();
                         event.getChannel().sendMessage(":thumbsup:").queue();
                     }
