@@ -30,7 +30,7 @@ repositories {
 
 
 dependencies {
-    implementation "fr.skitou.botcore:botcore:1.2.1-62-gffbce80"
+    implementation "fr.skitou.botcore:botcore:1.2.1-62-g5f57f70"
     implementation 'io.sentry:sentry:7.1.0'
 
     implementation group: 'org.knowm.xchart', name: 'xchart', version: '3.8.7'
