@@ -14,6 +14,7 @@ import com.sedmelluq.discord.lavaplayer.source.AudioSourceManagers;
 import fr.skitou.botcore.core.Config;
 import fr.skitou.botcore.hibernate.Database;
 import fr.skitou.kanei.databaseentities.GuildMusicSettings;
+import lombok.Getter;
 import net.dv8tion.jda.api.entities.channel.unions.AudioChannelUnion;
 import net.dv8tion.jda.api.managers.AudioManager;
 
@@ -25,7 +26,8 @@ import java.util.stream.Collectors;
  * Holder for both the player and a track scheduler for one guild.
  */
 public class GuildMusic {
-    public final static AudioPlayerManager playerManager = initPlayerManager();
+    @Getter
+    public static final AudioPlayerManager playerManager = initPlayerManager();
     private static final float[] BASS_BOOST = {
             0.2f,
             0.15f,
