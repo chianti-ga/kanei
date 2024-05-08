@@ -33,8 +33,6 @@ dependencies {
     implementation "fr.skitou.botcore:botcore:1.2.1-62-g5f57f70"
     implementation 'io.sentry:sentry:7.8.0'
 
-    implementation group: 'org.knowm.xchart', name: 'xchart', version: '3.8.7'
-
     //Disc
     implementation 'com.github.lavalink-devs.lavaplayer:lavaplayer:main-SNAPSHOT'
     implementation 'com.github.lavalink-devs.youtube-source:common:1.0.4'
