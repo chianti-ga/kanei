@@ -34,7 +34,7 @@ dependencies {
     implementation 'io.sentry:sentry:7.8.0'
 
     //Disc
-    implementation 'com.github.lavalink-devs.lavaplayer:lavaplayer:main-SNAPSHOT'
+    implementation 'com.github.lavalink-devs.lavaplayer:lavaplayer:2.2.0'
     implementation 'com.github.lavalink-devs.youtube-source:common:1.0.4'
     implementation 'com.github.lavalink-devs.youtube-source:lldevs:1.0.4'
     implementation "com.github.topi314.lavasrc:lavasrc:4.0.1"
