@@ -30,25 +30,28 @@ repositories {
 
 
 dependencies {
-    implementation "fr.skitou.botcore:botcore:1.2.1-56-g1355dbb"
-    implementation 'io.sentry:sentry:7.1.0'
-
-    implementation group: 'org.knowm.xchart', name: 'xchart', version: '3.8.7'
+    implementation "fr.skitou.botcore:botcore:1.2.1-62-g5f57f70"
+    implementation 'io.sentry:sentry:7.8.0'
 
     //Disc
-    implementation 'dev.arbjerg:lavaplayer:2.1.0'
+    implementation 'com.github.lavalink-devs.lavaplayer:lavaplayer:2.2.0'
+    implementation 'com.github.lavalink-devs.youtube-source:common:1.0.4'
+    implementation 'com.github.lavalink-devs.youtube-source:lldevs:1.0.4'
     implementation "com.github.topi314.lavasrc:lavasrc:4.0.1"
-    implementation("net.dv8tion:JDA:5.0.0-beta.20")
 
-    implementation 'ch.qos.logback:logback-classic:1.4.14'
+    implementation("net.dv8tion:JDA:5.0.0-beta.24")
 
-    implementation('org.hibernate.orm:hibernate-core:6.4.1.Final')
-    implementation 'org.hibernate.orm:hibernate-c3p0:6.4.4.Final'
+    implementation 'ch.qos.logback:logback-classic:1.5.6'
+
+    implementation('org.hibernate.orm:hibernate-core:6.5.0.Final')
+    implementation 'org.hibernate.orm:hibernate-c3p0:6.5.2.Final'
     implementation 'org.hibernate.orm:hibernate-community-dialects:6.4.4.Final'
-    implementation group: 'org.xerial', name: 'sqlite-jdbc', version: '3.44.1.0'
+    implementation group: 'org.xerial', name: 'sqlite-jdbc', version: '3.45.3.0'
 
-    testImplementation platform('org.junit:junit-bom:5.10.1')
-    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.2'
+
+    testImplementation platform('org.junit:junit-bom:5.10.2')
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.1'
+
     implementation 'com.google.code.gson:gson:2.10.1'
     implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.14.0'
 }

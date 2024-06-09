@@ -11,9 +11,12 @@ import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.source.AudioSourceManagers;
+import dev.lavalink.youtube.YoutubeAudioSourceManager;
+import dev.lavalink.youtube.clients.WebWithThumbnail;
 import fr.skitou.botcore.core.Config;
 import fr.skitou.botcore.hibernate.Database;
 import fr.skitou.kanei.databaseentities.GuildMusicSettings;
+import lombok.Getter;
 import net.dv8tion.jda.api.entities.channel.unions.AudioChannelUnion;
 import net.dv8tion.jda.api.managers.AudioManager;
 
@@ -25,7 +28,8 @@ import java.util.stream.Collectors;
  * Holder for both the player and a track scheduler for one guild.
  */
 public class GuildMusic {
-    public final static AudioPlayerManager playerManager = initPlayerManager();
+    @Getter
+    public static final AudioPlayerManager playerManager = initPlayerManager();
     private static final float[] BASS_BOOST = {
             0.2f,
             0.15f,
@@ -101,9 +105,13 @@ public class GuildMusic {
     public static AudioPlayerManager initPlayerManager() {
         AudioPlayerManager playerManager = new DefaultAudioPlayerManager();
 
+        //new YouTube source manager
+        playerManager.registerSourceManager(new YoutubeAudioSourceManager(true, new WebWithThumbnail()));
+
         playerManager.registerSourceManager(new SpotifySourceManager(null, Config.CONFIG.getPropertyOrDefault("spotify.id"), Config.CONFIG.getPropertyOrDefault("spotify.secret"), "FR", playerManager));
         playerManager.getConfiguration().setOpusEncodingQuality(AudioConfiguration.OPUS_QUALITY_MAX);
         playerManager.getConfiguration().setResamplingQuality(AudioConfiguration.ResamplingQuality.HIGH);
+        playerManager.getConfiguration().setFilterHotSwapEnabled(true);
 
         AudioSourceManagers.registerRemoteSources(playerManager);
         return playerManager;
