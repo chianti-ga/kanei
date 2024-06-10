@@ -10,6 +10,13 @@ plugins {
     id "com.github.johnrengelman.shadow" version "8.1.1"
 }
 
+idea {
+    module {
+        downloadJavadoc = true
+        downloadSources = true
+    }
+}
+
 group = 'fr.skitou'
 
 repositories {
