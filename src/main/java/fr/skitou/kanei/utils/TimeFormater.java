@@ -22,20 +22,24 @@ public class TimeFormater {
         long minutes = 0;
         long seconds = 0;
 
-        switch (splited.length) {
-            case 1 -> seconds = Long.parseLong(splited[0]);
-            case 2 -> {
-                minutes = Long.parseLong(splited[0]);
-                seconds = Long.parseLong(splited[1]);
+        try {
+            switch (splited.length) {
+                case 1 -> seconds = Long.parseLong(splited[0]);
+                case 2 -> {
+                    minutes = Long.parseLong(splited[0]);
+                    seconds = Long.parseLong(splited[1]);
+                }
+                case 3 -> {
+                    hours = Long.parseLong(splited[0]);
+                    minutes = Long.parseLong(splited[1]);
+                    seconds = Long.parseLong(splited[2]);
+                }
+                default -> {
+                    return 0;
+                }
             }
-            case 3 -> {
-                hours = Long.parseLong(splited[0]);
-                minutes = Long.parseLong(splited[1]);
-                seconds = Long.parseLong(splited[2]);
-            }
-            default -> {
-                return 0;
-            }
+        } catch (NumberFormatException e) {
+            return -1;
         }
 
         return (hours * 60 * 60 * 1000) + (minutes * 60 * 1000) + (seconds * 1000);

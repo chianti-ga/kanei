@@ -4,16 +4,13 @@
 
 package fr.skitou.kanei.utils.lava;
 
-import com.github.topi314.lavasrc.spotify.SpotifySourceManager;
 import com.sedmelluq.discord.lavaplayer.player.AudioPlayer;
 import com.sedmelluq.discord.lavaplayer.player.event.AudioEventAdapter;
-import com.sedmelluq.discord.lavaplayer.tools.JsonBrowser;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackInfo;
 import fr.skitou.botcore.utils.QuickColors;
 import fr.skitou.kanei.utils.TimeFormater;
-import io.sentry.Sentry;
 import lombok.Getter;
 import lombok.Setter;
 import net.dv8tion.jda.api.EmbedBuilder;
@@ -21,7 +18,6 @@ import net.dv8tion.jda.api.entities.MessageEmbed;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
@@ -89,24 +85,10 @@ public class TrackScheduler extends AudioEventAdapter {
         builder.setTitle(track.getInfo().title)
                 .setDescription("**Duration : " + TimeFormater.milisToFormatedDuration(track.getInfo().length) + "**")
                 .setUrl(track.getInfo().uri)
-                .setThumbnail(getThumb(track))
+                .setThumbnail(track.getInfo().artworkUrl)
                 .setColor(QuickColors.LIGHT_BLUE)
                 .setFooter(track.getInfo().author);
         return builder.build();
-    }
-
-    private String getThumb(AudioTrack track) {
-        if (track.getSourceManager().getSourceName().equalsIgnoreCase("spotify")) {
-            try {
-                final JsonBrowser jsonBrowser = ((SpotifySourceManager) track.getSourceManager()).getJson("https://api.spotify.com/v1/tracks/" + track.getIdentifier());
-                return jsonBrowser.get("album").get("images").index(0).get("url").text();
-            } catch (IOException e) {
-                logger.error("Unable to retrieve spotify image {}: {}",
-                        e.getClass().getSimpleName(), e.getMessage());
-                Sentry.captureException(e);
-            }
-        }
-        return "https://img.youtube.com/vi/" + track.getIdentifier() + "/mqdefault.jpg";
     }
 
     public MessageEmbed nowPlaying() {
@@ -133,7 +115,7 @@ public class TrackScheduler extends AudioEventAdapter {
                 .setUrl(info.uri)
                 .setColor(QuickColors.LIGHT_BLUE)
                 .setFooter(info.author)
-                .setThumbnail(getThumb(player.getPlayingTrack()));
+                .setThumbnail(player.getPlayingTrack().getInfo().artworkUrl);
         return builder.build();
     }
 

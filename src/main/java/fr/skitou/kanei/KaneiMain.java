@@ -31,11 +31,11 @@ public class KaneiMain {
                 .setEnabledintents(Set.of(GatewayIntent.DIRECT_MESSAGES, GatewayIntent.GUILD_MESSAGES, GatewayIntent.GUILD_MESSAGE_REACTIONS, GatewayIntent.MESSAGE_CONTENT, GatewayIntent.GUILD_MEMBERS, GatewayIntent.GUILD_VOICE_STATES))
                 .setEnabledcacheFlags(Set.of(CacheFlag.VOICE_STATE))
                 .setDisabledcacheFlags(Collections.singleton(CacheFlag.MEMBER_OVERRIDES))
-                .setDisabledintents(Set.of());
+                .setDisabledintents(Set.of())
+                .setActivity(Activity.listening("some music!"));
         botInstance = builder.build();
         long end = System.currentTimeMillis();
         BotInstance.logger.info("Start time : {}ms", (end - start));
-        BotInstance.getJda().getPresence().setActivity(Activity.listening("some music!"));
     }
 }
 
