@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+@SuppressWarnings("unused")
 
 public class Changelog implements ISlashCommand {
     @Override
@@ -36,19 +37,19 @@ public class Changelog implements ISlashCommand {
     public void onCommandReceived(SlashCommandInteractionEvent event) {
         List<ChangelogEntity> changeloglist = Database.getAll(ChangelogEntity.class).stream().toList();
 
-        if (changeloglist.isEmpty()){
+        if (changeloglist.isEmpty()) {
             event.getHook().editOriginal("No changelog found").queue();
         }
 
         ChangelogEntity changelog;
         if (event.getOption("version") != null) {
-             Optional<ChangelogEntity> specificChangelog = changeloglist.stream().filter(changelogEntity -> changelogEntity.getVersion().equalsIgnoreCase(event.getOption("version").getAsString()))
-                     .findFirst();
-             if (specificChangelog.isEmpty()){
-                 event.reply("Specific changelog found, getting latest").setEphemeral(true).queue();
-                 changelog = changeloglist.get(changeloglist.size()-1);
-             }else changelog = specificChangelog.get();
-        }else changelog = changeloglist.get(changeloglist.size()-1);
+            Optional<ChangelogEntity> specificChangelog = changeloglist.stream().filter(changelogEntity -> changelogEntity.getVersion().equalsIgnoreCase(event.getOption("version").getAsString()))
+                    .findFirst();
+            if (specificChangelog.isEmpty()) {
+                event.reply("Specific changelog found, getting latest").setEphemeral(true).queue();
+                changelog = changeloglist.get(changeloglist.size() - 1);
+            } else changelog = specificChangelog.get();
+        } else changelog = changeloglist.get(changeloglist.size() - 1);
 
         User skitou = event.getJDA().getUserById("374283393799553036");
 
@@ -57,7 +58,7 @@ public class Changelog implements ISlashCommand {
                 .setColor(skitou.retrieveProfile().complete().getAccentColor())
                 .setDescription(changelog.getContent())
                 .setAuthor(skitou.getGlobalName(), "https://skitou.fr/", skitou.getAvatarUrl())
-                .setFooter("@leskitou | "+ DateTimeFormatter.ofPattern("dd/MM/yyyy").format(changelog.getTime())
+                .setFooter("@leskitou | " + DateTimeFormatter.ofPattern("dd/MM/yyyy").format(changelog.getTime())
                         , skitou.getAvatarUrl());
         event.getHook().editOriginalEmbeds(builder.build()).queue();
     }

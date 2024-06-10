@@ -76,6 +76,7 @@ public class GuildMusic {
         Set<GuildMusicSettings> playerSettings = Database.getAll(GuildMusicSettings.class).stream()
                 .filter(settings -> settings.getGuild() == audioChannel.getGuild().getIdLong())
                 .collect(Collectors.toSet());
+
         if (playerSettings.isEmpty()) {
             playerSettings.add(new GuildMusicSettings(guildId, 100));
         }
@@ -107,7 +108,6 @@ public class GuildMusic {
         playerManager.getConfiguration().setOpusEncodingQuality(AudioConfiguration.OPUS_QUALITY_MAX);
         playerManager.getConfiguration().setResamplingQuality(AudioConfiguration.ResamplingQuality.HIGH);
         playerManager.getConfiguration().setFilterHotSwapEnabled(true);
-
         AudioSourceManagers.registerRemoteSources(playerManager);
         return playerManager;
     }

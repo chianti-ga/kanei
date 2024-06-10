@@ -31,7 +31,7 @@ public class Play implements ISlashCommand {
 
     @Override
     public @NotNull String getHelp() {
-        return "Play a track based on URL or name";
+        return "Play a track based on URL or name, type /sources to get all media source available";
     }
 
     @Override
@@ -93,9 +93,7 @@ public class Play implements ISlashCommand {
 
             @Override
             public void loadFailed(FriendlyException exception) {
-                //GuildMusic.playerManager = null;
-                //GuildMusic.playerManager = GuildMusic.initPlayerManager(); //Reset playermanager if error occurred (token expiration, etc...)
-                event.getHook().sendMessage(KaneiMain.getLangBundle().getString("music.cantplay") + exception.getMessage()).queue();
+                event.getHook().sendMessage(KaneiMain.getLangBundle().getString("music.cantplay") + "\n_**" + exception.getMessage() + "**_").queue();
             }
         });
     }

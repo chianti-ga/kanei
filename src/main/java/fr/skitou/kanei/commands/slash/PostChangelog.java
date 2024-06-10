@@ -13,6 +13,8 @@ import java.io.InputStream;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
+@SuppressWarnings("unused")
+
 public class PostChangelog implements ISlashCommand {
     @Override
     public @NotNull String getName() {
@@ -32,7 +34,7 @@ public class PostChangelog implements ISlashCommand {
 
     @Override
     public void onCommandReceived(SlashCommandInteractionEvent event) {
-        if (!IsSenderAllowed.BotAdmin.test(event.getMember())){
+        if (!IsSenderAllowed.BotAdmin.test(event.getMember())) {
             event.getHook().editOriginal("Only botadmin can post a changelog").queue();
             return;
         }
