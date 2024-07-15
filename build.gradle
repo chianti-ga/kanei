@@ -53,7 +53,7 @@ dependencies {
     implementation "dev.lavalink.youtube:v2:1.4.0"
     implementation "com.github.topi314.lavasrc:lavasrc:4.1.1"
 
-    implementation("net.dv8tion:JDA:5.0.0-beta.24")
+    implementation("net.dv8tion:JDA:5.0.0")
 
     implementation 'ch.qos.logback:logback-classic:1.5.6'
 
