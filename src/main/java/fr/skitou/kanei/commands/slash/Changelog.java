@@ -39,6 +39,7 @@ public class Changelog implements ISlashCommand {
 
         if (changeloglist.isEmpty()) {
             event.getHook().editOriginal("No changelog found").queue();
+            return;
         }
 
         ChangelogEntity changelog;
