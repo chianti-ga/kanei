@@ -60,7 +60,7 @@ dependencies {
     implementation('org.hibernate.orm:hibernate-core:6.5.2.Final')
     implementation 'org.hibernate.orm:hibernate-c3p0:6.5.2.Final'
     implementation 'org.hibernate.orm:hibernate-community-dialects:6.5.2.Final'
-    implementation group: 'org.xerial', name: 'sqlite-jdbc', version: '3.46.0.0'
+    implementation group: 'org.xerial', name: 'sqlite-jdbc', version: '3.46.1.0'
 
 
     testImplementation platform('org.junit:junit-bom:5.10.3')
