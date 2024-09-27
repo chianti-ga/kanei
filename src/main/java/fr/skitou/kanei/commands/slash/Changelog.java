@@ -2,6 +2,7 @@ package fr.skitou.kanei.commands.slash;
 
 import fr.skitou.botcore.commands.slash.ISlashCommand;
 import fr.skitou.botcore.hibernate.Database;
+import fr.skitou.kanei.KaneiMain;
 import fr.skitou.kanei.databaseentities.ChangelogEntity;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.User;
@@ -46,7 +47,7 @@ public class Changelog implements ISlashCommand {
             Optional<ChangelogEntity> specificChangelog = changeloglist.stream().filter(changelogEntity -> changelogEntity.getVersion().equalsIgnoreCase(event.getOption("version").getAsString()))
                     .findFirst();
             if (specificChangelog.isEmpty()) {
-                event.reply("Specific changelog found, getting latest").setEphemeral(true).queue();
+                event.reply(KaneiMain.getBundleFromGuild(event.getGuild()).getString("misc.changelog.notfound")).setEphemeral(true).queue();
                 changelog = changeloglist.get(changeloglist.size() - 1);
             } else changelog = specificChangelog.get();
         } else changelog = changeloglist.get(changeloglist.size() - 1);

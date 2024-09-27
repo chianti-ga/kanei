@@ -42,13 +42,13 @@ public class Play implements ISlashCommand {
     @Override
     public void onCommandReceived(SlashCommandInteractionEvent event) {
         if (!event.getMember().getVoiceState().inAudioChannel()) {
-            event.getHook().sendMessage(KaneiMain.getLangBundle().getString("music.notinchanel")).queue();
+            event.getHook().sendMessage(KaneiMain.getBundleFromGuild(event.getGuild()).getString("music.notinchanel")).queue();
             return;
         }
 
         if (event.getGuild().getSelfMember().getVoiceState().getChannel() != null) {
             if (event.getMember().getVoiceState().getChannel().asVoiceChannel() != event.getGuild().getSelfMember().getVoiceState().getChannel().asVoiceChannel()) {
-                event.getHook().sendMessage(KaneiMain.getLangBundle().getString("music.notinchanel")).queue();
+                event.getHook().sendMessage(KaneiMain.getBundleFromGuild(event.getGuild()).getString("music.notinchanel")).queue();
                 return;
             }
         }
@@ -88,12 +88,12 @@ public class Play implements ISlashCommand {
 
             @Override
             public void noMatches() {
-                event.getHook().sendMessage(KaneiMain.getLangBundle().getString("music.noresult") + search).queue();
+                event.getHook().sendMessage(KaneiMain.getBundleFromGuild(event.getGuild()).getString("music.noresult") + search).queue();
             }
 
             @Override
             public void loadFailed(FriendlyException exception) {
-                event.getHook().sendMessage(KaneiMain.getLangBundle().getString("music.cantplay") + "\n_**" + exception.getMessage() + "**_").queue();
+                event.getHook().sendMessage(KaneiMain.getBundleFromGuild(event.getGuild()).getString("music.cantplay") + "\n_**" + exception.getMessage() + "**_").queue();
             }
         });
     }

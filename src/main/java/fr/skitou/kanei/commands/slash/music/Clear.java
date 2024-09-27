@@ -26,13 +26,13 @@ public class Clear implements ISlashCommand {
     @Override
     public void onCommandReceived(SlashCommandInteractionEvent event) {
         if (!event.getMember().getVoiceState().inAudioChannel()) {
-            event.getHook().sendMessage(KaneiMain.getLangBundle().getString("music.notinchanel")).queue();
+            event.getHook().sendMessage(KaneiMain.getBundleFromGuild(event.getGuild()).getString("music.notinchanel")).queue();
             return;
         }
 
         if (event.getGuild().getSelfMember().getVoiceState().getChannel() != null) {
             if (event.getMember().getVoiceState().getChannel().asVoiceChannel() != event.getGuild().getSelfMember().getVoiceState().getChannel().asVoiceChannel()) {
-                event.getHook().sendMessage(KaneiMain.getLangBundle().getString("music.notinchanel")).queue();
+                event.getHook().sendMessage(KaneiMain.getBundleFromGuild(event.getGuild()).getString("music.notinchanel")).queue();
                 return;
             }
         }
@@ -42,13 +42,13 @@ public class Clear implements ISlashCommand {
         if (MusicManager.guildMusics.containsKey(event.getGuild().getIdLong())) {
             guildMusic = MusicManager.guildMusics.get(event.getGuild().getIdLong());
         } else {
-            event.getHook().sendMessage(KaneiMain.getLangBundle().getString("music.nothingplaying")).queue();
+            event.getHook().sendMessage(KaneiMain.getBundleFromGuild(event.getGuild()).getString("music.nothingplaying")).queue();
             return;
         }
 
         if (!guildMusic.scheduler.getQueue().isEmpty()) {
             guildMusic.scheduler.clearQueue();
-            event.getHook().sendMessage(KaneiMain.getLangBundle().getString("music.clearedqueue")).queue();
-        } else event.getHook().sendMessage(KaneiMain.getLangBundle().getString("music.emptyqueue")).queue();
+            event.getHook().sendMessage(KaneiMain.getBundleFromGuild(event.getGuild()).getString("music.clearedqueue")).queue();
+        } else event.getHook().sendMessage(KaneiMain.getBundleFromGuild(event.getGuild()).getString("music.emptyqueue")).queue();
     }
 }

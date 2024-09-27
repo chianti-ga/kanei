@@ -12,6 +12,8 @@ import com.sedmelluq.discord.lavaplayer.player.AudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.source.AudioSourceManagers;
 import dev.lavalink.youtube.YoutubeAudioSourceManager;
+import dev.lavalink.youtube.clients.AndroidMusicWithThumbnail;
+import dev.lavalink.youtube.clients.MusicWithThumbnail;
 import dev.lavalink.youtube.clients.WebWithThumbnail;
 import fr.skitou.botcore.core.Config;
 import fr.skitou.botcore.hibernate.Database;
@@ -80,7 +82,7 @@ public class GuildMusic {
                 .collect(Collectors.toSet());
 
         if (playerSettings.isEmpty()) {
-            playerSettings.add(new GuildMusicSettings(guildId, 100));
+            playerSettings.add(new GuildMusicSettings(guildId, 100, "en"));
         }
 
         player = playerManager.createPlayer();
@@ -107,7 +109,7 @@ public class GuildMusic {
         AudioPlayerManager playerManager = new DefaultAudioPlayerManager();
 
         //new YouTube source manager
-        playerManager.registerSourceManager(new YoutubeAudioSourceManager(true, new WebWithThumbnail()));
+        playerManager.registerSourceManager(new YoutubeAudioSourceManager(true, new WebWithThumbnail(), new MusicWithThumbnail(), new AndroidMusicWithThumbnail()));
 
         playerManager.registerSourceManager(new SpotifySourceManager(null, Config.CONFIG.getPropertyOrDefault("spotify.id"), Config.CONFIG.getPropertyOrDefault("spotify.secret"), "FR", playerManager));
         playerManager.getConfiguration().setOpusEncodingQuality(AudioConfiguration.OPUS_QUALITY_MAX);

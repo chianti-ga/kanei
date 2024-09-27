@@ -8,7 +8,6 @@ import fr.skitou.botcore.hibernate.Database;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -19,16 +18,21 @@ import lombok.ToString;
 @Table(name = "guildMusicSettings")
 public class GuildMusicSettings {
     @Id
-    @Setter(AccessLevel.PRIVATE)
+    @Setter()
     private long guild;
 
     @Getter
-    @Setter(AccessLevel.PRIVATE)
+    @Setter
     private int volume;
 
-    public GuildMusicSettings(long guild, int volume) {
+    @Getter
+    @Setter
+    private String lang;
+
+    public GuildMusicSettings(long guild, int volume, String lang) {
         this.guild = guild;
         this.volume = volume;
+        this.lang = lang;
 
         Database.saveOrUpdate(this);
     }
