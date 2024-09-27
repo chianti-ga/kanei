@@ -1,4 +1,4 @@
-FROM gradle:8.8.0-jdk20 AS builder
+FROM gradle:8.8-jdk-21-and-22 AS builder
 WORKDIR /srv
 
 COPY . .
