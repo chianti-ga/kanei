@@ -24,10 +24,6 @@ repositories {
     maven {
         name "reposiliteRepositoryReleases"
         url "https://reposilite.skitou.fr/releases"
-        credentials(PasswordCredentials)
-        authentication {
-            basic(BasicAuthentication)
-        }
     }
     maven {
         url 'https://jitpack.io'
