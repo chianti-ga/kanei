@@ -16,6 +16,7 @@ import fr.skitou.kanei.utils.TimeFormater;
 import fr.skitou.kanei.utils.lava.GuildMusic;
 import fr.skitou.kanei.utils.lava.MusicManager;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
@@ -47,13 +48,13 @@ public class Search implements ISlashCommand {
     @Override
     public void onCommandReceived(SlashCommandInteractionEvent event) {
         if (!event.getMember().getVoiceState().inAudioChannel()) {
-            event.getHook().sendMessage(KaneiMain.getLangBundle().getString("music.notinchanel")).queue();
+            event.getHook().sendMessage(KaneiMain.getBundleFromGuild(event.getGuild()).getString("music.notinchanel")).queue();
             return;
         }
 
         if (event.getGuild().getSelfMember().getVoiceState().getChannel() != null) {
             if (event.getMember().getVoiceState().getChannel().asVoiceChannel() != event.getGuild().getSelfMember().getVoiceState().getChannel().asVoiceChannel()) {
-                event.getHook().sendMessage(KaneiMain.getLangBundle().getString("music.notinchanel")).queue();
+                event.getHook().sendMessage(KaneiMain.getBundleFromGuild(event.getGuild()).getString("music.notinchanel")).queue();
                 return;
             }
         }
@@ -87,7 +88,7 @@ public class Search implements ISlashCommand {
                     });
                 }
 
-                event.getHook().sendMessageEmbeds(displaySearchResult(playlist.getTracks().subList(0, 4)))
+                event.getHook().sendMessageEmbeds(displaySearchResult(playlist.getTracks().subList(0, 4), event.getGuild()))
                         .addActionRow(ComponentInteractionListener.createStringSelectMenuInteraction(selectMenu.build(), interactionEvent -> {
                             AudioTrack track = playlist.getTracks().get(Integer.parseInt(interactionEvent.getSelectedOptions().get(0).getLabel()) - 1);
                             guildMusic.scheduler.queueTrack(track);
@@ -97,17 +98,17 @@ public class Search implements ISlashCommand {
 
             @Override
             public void noMatches() {
-                event.getHook().sendMessage(KaneiMain.getLangBundle().getString("music.noresult") + event.getOption("search").getAsString()).queue();
+                event.getHook().sendMessage(KaneiMain.getBundleFromGuild(event.getGuild()).getString("music.noresult") + event.getOption("search").getAsString()).queue();
             }
 
             @Override
             public void loadFailed(FriendlyException exception) {
-                event.getHook().sendMessage(KaneiMain.getLangBundle().getString("music.cantplay") + exception.getMessage()).queue();
+                event.getHook().sendMessage(KaneiMain.getBundleFromGuild(event.getGuild()).getString("music.cantplay") + exception.getMessage()).queue();
             }
         });
     }
 
-    private MessageEmbed displaySearchResult(List<AudioTrack> searchTracks) {
+    private MessageEmbed displaySearchResult(List<AudioTrack> searchTracks, Guild guild) {
         StringBuilder sb = new StringBuilder();
         AtomicInteger i = new AtomicInteger();
 
@@ -121,7 +122,7 @@ public class Search implements ISlashCommand {
         });
 
         EmbedBuilder builder = new EmbedBuilder();
-        builder.setTitle(KaneiMain.getLangBundle().getString("music.searchresult"))
+        builder.setTitle(KaneiMain.getBundleFromGuild(guild).getString("music.searchresult"))
                 .setDescription(sb.toString())
                 .setColor(QuickColors.CYAN);
         return builder.build();

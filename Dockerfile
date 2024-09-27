@@ -1,13 +1,11 @@
-FROM gradle:8.4.0-jdk20 AS builder
-ARG REP_USR=foo
-ARG REP_PASS=bar
+FROM gradle:8.8.0-jdk20 AS builder
 WORKDIR /srv
 
 COPY . .
 
 RUN ["apt","install","git", "-y"]
 
-RUN ["gradle", "--no-daemon", "shadowjar", "-PreposiliteRepositoryReleasesUsername=$REP_USR", "-PreposiliteRepositoryReleasesPassword=$REP_PASS"]
+RUN ["gradle", "--no-daemon", "shadowjar"]
 
 RUN ["cp", "./build/libs/kanei-all.jar", "/srv/kanei-all.jar"]
 
@@ -18,4 +16,4 @@ WORKDIR /srv
 COPY --from=builder /srv/kanei-all.jar /srv/
 
 
-CMD ["java", "-XX:+UnlockExperimentalVMOptions","-XX:+OptimizeStringConcat","-XX:+UseZGC","-XX:+UseCompressedOops","-XX:+UseStringDeduplication","-Xms10M", "-Xmx500M", "-jar", "kanei-all.jar"]
+CMD ["java", "-XX:+UnlockExperimentalVMOptions","-XX:+OptimizeStringConcat","-XX:+UseZGC","-XX:+UseCompressedOops","-XX:+UseStringDeduplication","-Xms10M", "-Xmx1G", "-jar", "kanei-all.jar"]

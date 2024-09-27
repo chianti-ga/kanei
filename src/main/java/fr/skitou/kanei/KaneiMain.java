@@ -5,18 +5,31 @@
 package fr.skitou.kanei;
 
 import fr.skitou.botcore.core.BotInstance;
+import fr.skitou.botcore.hibernate.Database;
+import fr.skitou.kanei.databaseentities.GuildMusicSettings;
 import lombok.Getter;
 import net.dv8tion.jda.api.entities.Activity;
+import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 import net.dv8tion.jda.api.utils.cache.CacheFlag;
 
-import java.util.Collections;
-import java.util.ResourceBundle;
-import java.util.Set;
+import java.util.*;
 
 public class KaneiMain {
-    @Getter
-    private static final ResourceBundle langBundle = ResourceBundle.getBundle("lang");
+
+    public static ResourceBundle getBundleFromGuild(Guild guild){
+        long guildId = guild.getIdLong();
+        List<GuildMusicSettings> settings = Database.getAll(GuildMusicSettings.class)
+                .stream().filter(guildMusicSettings -> guildMusicSettings.getGuild()==guildId)
+                .limit(1).toList();
+
+        if (settings.isEmpty()){
+            new GuildMusicSettings(guildId,100, "en");
+            return ResourceBundle.getBundle("lang", Locale.ENGLISH);
+        }else return ResourceBundle.getBundle("lang", Locale.of(settings.get(0).getLang()));
+    }
+
+
     @Getter
     private static final String version = KaneiMain.class.getPackage().getImplementationVersion();
     public static BotInstance botInstance;

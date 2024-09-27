@@ -29,23 +29,23 @@ public class Queue implements ISlashCommand {
     @Override
     public void onCommandReceived(SlashCommandInteractionEvent event) {
         if (!event.getMember().getVoiceState().inAudioChannel()) {
-            event.getHook().sendMessage(KaneiMain.getLangBundle().getString("music.notinchanel")).queue();
+            event.getHook().sendMessage(KaneiMain.getBundleFromGuild(event.getGuild()).getString("music.notinchanel")).queue();
             return;
         }
 
         if (event.getGuild().getSelfMember().getVoiceState().getChannel() != null) {
             if (event.getMember().getVoiceState().getChannel().asVoiceChannel() != event.getGuild().getSelfMember().getVoiceState().getChannel().asVoiceChannel()) {
-                event.getHook().sendMessage(KaneiMain.getLangBundle().getString("music.notinchanel")).queue();
+                event.getHook().sendMessage(KaneiMain.getBundleFromGuild(event.getGuild()).getString("music.notinchanel")).queue();
                 return;
             }
         }
 
         if (!MusicManager.guildMusics.containsKey(event.getGuild().getIdLong())) {
-            event.getHook().sendMessage(KaneiMain.getLangBundle().getString("music.nothingplaying")).queue();
+            event.getHook().sendMessage(KaneiMain.getBundleFromGuild(event.getGuild()).getString("music.nothingplaying")).queue();
             return;
         }
         if (MusicManager.guildMusics.get(event.getGuild().getIdLong()).scheduler.getQueue().isEmpty()) {
-            event.getHook().sendMessage(KaneiMain.getLangBundle().getString("music.emptyqueue")).queue();
+            event.getHook().sendMessage(KaneiMain.getBundleFromGuild(event.getGuild()).getString("music.emptyqueue")).queue();
             if (MusicManager.guildMusics.get(event.getGuild().getIdLong()).player.getPlayingTrack() != null)
                 event.getChannel().sendMessageEmbeds(MusicManager.guildMusics.get(event.getGuild().getIdLong()).scheduler.nowPlaying()).queue();
             return;
