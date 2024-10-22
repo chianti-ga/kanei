@@ -3,6 +3,8 @@ build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
+/data/
+/.idea/sonarlint/
 
 ### IntelliJ IDEA ###
 .idea/modules.xml
@@ -40,5 +42,4 @@ bin/
 
 ### Mac OS ###
 .DS_Store
-/data/
-/.idea/sonarlint/
+
