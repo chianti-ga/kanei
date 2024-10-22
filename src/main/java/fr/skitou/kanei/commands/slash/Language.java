@@ -30,12 +30,12 @@ public class Language implements ISlashCommand {
                 .build();
         event.getHook().editOriginal("Language:").setActionRow(ComponentInteractionListener.createStringSelectMenuInteraction(languageSelect, interactionEvent -> {
             List<GuildMusicSettings> settingsSingleton = Database.getAll(GuildMusicSettings.class)
-                    .stream().filter(guildMusicSettings -> guildMusicSettings.getGuild()==event.getGuild().getIdLong())
+                    .stream().filter(guildMusicSettings -> guildMusicSettings.getGuild() == event.getGuild().getIdLong())
                     .limit(1).toList();
 
             if (settingsSingleton.isEmpty()) {
                 new GuildMusicSettings(event.getGuild().getIdLong(), 100, "en");
-            }else {
+            } else {
                 settingsSingleton.get(0).setLang(interactionEvent.getSelectedOptions().get(0).getValue());
                 Database.saveOrUpdate(settingsSingleton.get(0));
             }

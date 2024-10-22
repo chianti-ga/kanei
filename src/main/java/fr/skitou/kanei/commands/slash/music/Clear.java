@@ -49,6 +49,7 @@ public class Clear implements ISlashCommand {
         if (!guildMusic.scheduler.getQueue().isEmpty()) {
             guildMusic.scheduler.clearQueue();
             event.getHook().sendMessage(KaneiMain.getBundleFromGuild(event.getGuild()).getString("music.clearedqueue")).queue();
-        } else event.getHook().sendMessage(KaneiMain.getBundleFromGuild(event.getGuild()).getString("music.emptyqueue")).queue();
+        } else
+            event.getHook().sendMessage(KaneiMain.getBundleFromGuild(event.getGuild()).getString("music.emptyqueue")).queue();
     }
 }
