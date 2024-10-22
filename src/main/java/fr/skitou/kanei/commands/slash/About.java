@@ -24,7 +24,7 @@ import java.util.jar.Manifest;
 
 @SuppressWarnings("unused")
 public class About implements ISlashCommand {
-    private static String  coreVersion;
+    private static String coreVersion;
 
     @Override
     public @NotNull String getName() {
@@ -39,11 +39,12 @@ public class About implements ISlashCommand {
     @SneakyThrows
     @Override
     public void onCommandReceived(SlashCommandInteractionEvent event) {
-if (coreVersion == null)        coreVersion = new Manifest(ClassLoader.getSystemResourceAsStream("META-INF/MANIFEST.MF")).getMainAttributes().getValue("BotCore-Version");
+        if (coreVersion == null)
+            coreVersion = new Manifest(ClassLoader.getSystemResourceAsStream("META-INF/MANIFEST.MF")).getMainAttributes().getValue("BotCore-Version");
         EmbedBuilder builder = new EmbedBuilder();
         builder.setTitle(BotInstance.getJda().getSelfUser().getName() + " Music Bot Infos")
                 .setDescription("This is a music bot made for me and my friends using JDA and lavaplayer.\n Type `" + ICommand.PREFIX + "help` to see classic commands list!.\n **Bot made by " + User.fromId("374283393799553036").getAsMention() + "**")
-                .addField("Versions:", "JDA5\nCore:" + coreVersion+ "\n" + BotInstance.getJda().getSelfUser().getName() + ":" + KaneiMain.getVersion(), true)
+                .addField("Versions:", "JDA5\nCore:" + coreVersion + "\n" + BotInstance.getJda().getSelfUser().getName() + ":" + KaneiMain.getVersion(), true)
                 .addField("Total servers:", String.valueOf(BotInstance.getJda().getGuilds().size()), true)
                 .addField("Total cached users:", String.valueOf(BotInstance.getJda().getUsers().size()), true)
                 .addField("Total streams:", String.valueOf(MusicManager.guildMusics.size()), true)

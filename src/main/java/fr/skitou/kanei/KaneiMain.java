@@ -17,22 +17,21 @@ import java.util.*;
 
 public class KaneiMain {
 
-    public static ResourceBundle getBundleFromGuild(Guild guild){
-        long guildId = guild.getIdLong();
-        List<GuildMusicSettings> settings = Database.getAll(GuildMusicSettings.class)
-                .stream().filter(guildMusicSettings -> guildMusicSettings.getGuild()==guildId)
-                .limit(1).toList();
-
-        if (settings.isEmpty()){
-            new GuildMusicSettings(guildId,100, "en");
-            return ResourceBundle.getBundle("lang", Locale.ENGLISH);
-        }else return ResourceBundle.getBundle("lang", Locale.of(settings.get(0).getLang()));
-    }
-
-
     @Getter
     private static final String version = KaneiMain.class.getPackage().getImplementationVersion();
     public static BotInstance botInstance;
+
+    public static ResourceBundle getBundleFromGuild(Guild guild) {
+        long guildId = guild.getIdLong();
+        List<GuildMusicSettings> settings = Database.getAll(GuildMusicSettings.class)
+                .stream().filter(guildMusicSettings -> guildMusicSettings.getGuild() == guildId)
+                .limit(1).toList();
+
+        if (settings.isEmpty()) {
+            new GuildMusicSettings(guildId, 100, "en");
+            return ResourceBundle.getBundle("lang", Locale.ENGLISH);
+        } else return ResourceBundle.getBundle("lang", Locale.of(settings.get(0).getLang()));
+    }
 
     public static void main(String[] args) {
         long start = System.currentTimeMillis();

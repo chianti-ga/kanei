@@ -39,7 +39,9 @@ public class NowPlaying implements ISlashCommand {
         if (MusicManager.guildMusics.containsKey(event.getGuild().getIdLong())) {
             if (MusicManager.guildMusics.get(event.getGuild().getIdLong()).player.getPlayingTrack() != null) {
                 event.getHook().sendMessageEmbeds(MusicManager.guildMusics.get(event.getGuild().getIdLong()).scheduler.nowPlaying()).queue();
-            } else event.getHook().sendMessage(KaneiMain.getBundleFromGuild(event.getGuild()).getString("music.nothingplaying")).queue();
-        } else event.getHook().sendMessage(KaneiMain.getBundleFromGuild(event.getGuild()).getString("music.nothingplaying")).queue();
+            } else
+                event.getHook().sendMessage(KaneiMain.getBundleFromGuild(event.getGuild()).getString("music.nothingplaying")).queue();
+        } else
+            event.getHook().sendMessage(KaneiMain.getBundleFromGuild(event.getGuild()).getString("music.nothingplaying")).queue();
     }
 }

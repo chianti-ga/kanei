@@ -57,13 +57,15 @@ public class Volume implements ISlashCommand {
                 Set<GuildMusicSettings> playerSettings = Database.getAll(GuildMusicSettings.class).stream()
                         .filter(settings -> settings.getGuild() == event.getGuild().getIdLong())
                         .collect(Collectors.toSet());
-                if (playerSettings.isEmpty()){
+                if (playerSettings.isEmpty()) {
                     new GuildMusicSettings(event.getGuild().getIdLong(), event.getOption("volume").getAsInt(), "en");
-                }else playerSettings.forEach(guildMusicSettings -> guildMusicSettings.setVolume(event.getOption("volume").getAsInt()));
+                } else
+                    playerSettings.forEach(guildMusicSettings -> guildMusicSettings.setVolume(event.getOption("volume").getAsInt()));
 
 
                 event.getHook().sendMessage(KaneiMain.getBundleFromGuild(event.getGuild()).getString("music.volumeSet") + " " + event.getOption("volume").getAsInt()).queue();
             }
-        } else event.getHook().sendMessage(KaneiMain.getBundleFromGuild(event.getGuild()).getString("music.nothingplaying")).queue();
+        } else
+            event.getHook().sendMessage(KaneiMain.getBundleFromGuild(event.getGuild()).getString("music.nothingplaying")).queue();
     }
 }
