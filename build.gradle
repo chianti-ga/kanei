@@ -51,7 +51,7 @@ dependencies {
 
     implementation("net.dv8tion:JDA:5.1.2")
 
-    implementation 'ch.qos.logback:logback-classic:1.5.8'
+    implementation 'ch.qos.logback:logback-classic:1.5.12'
 
     implementation('org.hibernate.orm:hibernate-core:6.5.2.Final')
     implementation 'org.hibernate.orm:hibernate-c3p0:6.5.2.Final'
