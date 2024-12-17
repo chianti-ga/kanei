@@ -59,7 +59,7 @@ dependencies {
     implementation group: 'org.xerial', name: 'sqlite-jdbc', version: '3.47.1.0'
 
 
-    testImplementation platform('org.junit:junit-bom:5.11.3')
+    testImplementation platform('org.junit:junit-bom:5.11.4')
     testImplementation 'org.junit.jupiter:junit-jupiter:5.11.3'
 
     implementation 'com.google.code.gson:gson:2.11.0'
