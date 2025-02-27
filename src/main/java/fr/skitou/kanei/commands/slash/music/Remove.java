@@ -31,11 +31,6 @@ public class Remove implements ISlashCommand {
     }
 
     @Override
-    public Set<OptionData> getOptionData() {
-        return Set.of(new OptionData(OptionType.STRING, "index", getHelp(), true));
-    }
-
-    @Override
     public void onCommandReceived(SlashCommandInteractionEvent event) {
         if (!event.getMember().getVoiceState().inAudioChannel()) {
             event.getHook().sendMessage(KaneiMain.getBundleFromGuild(event.getGuild()).getString("music.notinchanel")).queue();
@@ -72,5 +67,10 @@ public class Remove implements ISlashCommand {
 
             event.getHook().sendMessage(KaneiMain.getBundleFromGuild(event.getGuild()).getString("music.trackremoved") + " " + title).queue();
         }
+    }
+
+    @Override
+    public Set<OptionData> getOptionData() {
+        return Set.of(new OptionData(OptionType.STRING, "index", getHelp(), true));
     }
 }

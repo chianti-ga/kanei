@@ -28,11 +28,6 @@ public class Foreward implements ISlashCommand {
     }
 
     @Override
-    public Set<OptionData> getOptionData() {
-        return Set.of(new OptionData(OptionType.STRING, "position", "Position in [HH:MM:SS] format", true));
-    }
-
-    @Override
     public void onCommandReceived(SlashCommandInteractionEvent event) {
         if (!event.getMember().getVoiceState().inAudioChannel()) {
             event.getHook().sendMessage(KaneiMain.getBundleFromGuild(event.getGuild()).getString("music.notinchanel")).queue();
@@ -58,5 +53,10 @@ public class Foreward implements ISlashCommand {
         guildMusic.scheduler.foreward(event.getOption("position").getAsString());
         event.getHook().sendMessageEmbeds(guildMusic.scheduler.nowPlaying()).queue();
 
+    }
+
+    @Override
+    public Set<OptionData> getOptionData() {
+        return Set.of(new OptionData(OptionType.STRING, "position", "Position in [HH:MM:SS] format", true));
     }
 }

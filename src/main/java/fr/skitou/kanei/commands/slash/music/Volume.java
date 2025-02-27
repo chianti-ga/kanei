@@ -30,11 +30,6 @@ public class Volume implements ISlashCommand {
     }
 
     @Override
-    public Set<OptionData> getOptionData() {
-        return Set.of(new OptionData(OptionType.INTEGER, "volume", "0 to 300", true));
-    }
-
-    @Override
     public void onCommandReceived(SlashCommandInteractionEvent event) {
         if (!event.getMember().getVoiceState().inAudioChannel()) {
             event.getHook().sendMessage(KaneiMain.getBundleFromGuild(event.getGuild()).getString("music.notinchanel")).queue();
@@ -67,5 +62,10 @@ public class Volume implements ISlashCommand {
             }
         } else
             event.getHook().sendMessage(KaneiMain.getBundleFromGuild(event.getGuild()).getString("music.nothingplaying")).queue();
+    }
+
+    @Override
+    public Set<OptionData> getOptionData() {
+        return Set.of(new OptionData(OptionType.INTEGER, "volume", "0 to 300", true));
     }
 }

@@ -27,11 +27,6 @@ public class Bassboost implements ISlashCommand {
     }
 
     @Override
-    public Set<OptionData> getOptionData() {
-        return Set.of(new OptionData(OptionType.INTEGER, "bassboostlevel", "level", true));
-    }
-
-    @Override
     public void onCommandReceived(SlashCommandInteractionEvent event) {
         if (!event.getMember().getVoiceState().inAudioChannel()) {
             event.getHook().sendMessage(KaneiMain.getBundleFromGuild(event.getGuild()).getString("music.notinchanel")).queue();
@@ -59,5 +54,10 @@ public class Bassboost implements ISlashCommand {
             MusicManager.guildMusics.get(event.getGuild().getIdLong()).bassBoost(event.getOption("bassboostlevel").getAsInt());
         }
         event.getHook().sendMessage(KaneiMain.getBundleFromGuild(event.getGuild()).getString("music.bassbooset") + " " + event.getOption("bassboostlevel").getAsInt()).queue();
+    }
+
+    @Override
+    public Set<OptionData> getOptionData() {
+        return Set.of(new OptionData(OptionType.INTEGER, "bassboostlevel", "level", true));
     }
 }

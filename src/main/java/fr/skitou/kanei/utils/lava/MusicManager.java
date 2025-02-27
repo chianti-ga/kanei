@@ -27,7 +27,7 @@ public class MusicManager {
             public void run() {
                 if (guildMusics.containsKey(guildId)) {
                     GuildMusic guildMusic = guildMusics.get(guildId);
-                    if (guildMusic.scheduler.getQueue().isEmpty() && guildMusic.player.getPlayingTrack() == null) {
+                    if ((guildMusic.scheduler.getQueue().isEmpty() && guildMusic.player.getPlayingTrack() == null) || guildMusic.getAudioManager().getConnectedChannel().getMembers().size() == 1) {
                         guildMusic.destroy();
                     }
                 }

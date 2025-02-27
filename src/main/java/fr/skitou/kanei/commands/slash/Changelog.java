@@ -30,11 +30,6 @@ public class Changelog implements ISlashCommand {
     }
 
     @Override
-    public Set<OptionData> getOptionData() {
-        return Set.of(new OptionData(OptionType.STRING, "version", "Specific changelog version", false));
-    }
-
-    @Override
     public void onCommandReceived(SlashCommandInteractionEvent event) {
         List<ChangelogEntity> changeloglist = Database.getAll(ChangelogEntity.class).stream().toList();
 
@@ -63,6 +58,11 @@ public class Changelog implements ISlashCommand {
                 .setFooter("@leskitou | " + DateTimeFormatter.ofPattern("dd/MM/yyyy").format(changelog.getTime())
                         , skitou.getAvatarUrl());
         event.getHook().editOriginalEmbeds(builder.build()).queue();
+    }
+
+    @Override
+    public Set<OptionData> getOptionData() {
+        return Set.of(new OptionData(OptionType.STRING, "version", "Specific changelog version", false));
     }
 }
 

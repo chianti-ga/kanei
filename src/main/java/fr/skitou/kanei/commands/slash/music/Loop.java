@@ -27,11 +27,6 @@ public class Loop implements ISlashCommand {
     }
 
     @Override
-    public Set<OptionData> getOptionData() {
-        return Set.of(new OptionData(OptionType.BOOLEAN, "loop", getHelp(), true));
-    }
-
-    @Override
     public void onCommandReceived(SlashCommandInteractionEvent event) {
         if (!event.getMember().getVoiceState().inAudioChannel()) {
             event.getHook().sendMessage(KaneiMain.getBundleFromGuild(event.getGuild()).getString("music.notinchanel")).queue();
@@ -59,5 +54,10 @@ public class Loop implements ISlashCommand {
         } else {
             event.getHook().sendMessage(KaneiMain.getBundleFromGuild(event.getGuild()).getString("music.loopoff")).queue();
         }
+    }
+
+    @Override
+    public Set<OptionData> getOptionData() {
+        return Set.of(new OptionData(OptionType.BOOLEAN, "loop", getHelp(), true));
     }
 }

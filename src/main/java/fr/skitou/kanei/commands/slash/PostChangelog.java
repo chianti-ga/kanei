@@ -27,12 +27,6 @@ public class PostChangelog implements ISlashCommand {
     }
 
     @Override
-    public Set<OptionData> getOptionData() {
-        return Set.of(new OptionData(OptionType.ATTACHMENT, "attachment", "txt of the changelog", true),
-                new OptionData(OptionType.STRING, "version", "version", true));
-    }
-
-    @Override
     public void onCommandReceived(SlashCommandInteractionEvent event) {
         if (!IsSenderAllowed.BotAdmin.test(event.getMember())) {
             event.getHook().editOriginal("Only botadmin can post a changelog").queue();
@@ -53,5 +47,11 @@ public class PostChangelog implements ISlashCommand {
         } catch (InterruptedException | ExecutionException | IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public Set<OptionData> getOptionData() {
+        return Set.of(new OptionData(OptionType.ATTACHMENT, "attachment", "txt of the changelog", true),
+                new OptionData(OptionType.STRING, "version", "version", true));
     }
 }
