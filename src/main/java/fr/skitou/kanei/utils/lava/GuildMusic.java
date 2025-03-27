@@ -62,6 +62,7 @@ public class GuildMusic {
      * Wrapper around AudioPlayer to use it as an AudioSendHandler.
      */
     public final AudioPlayerSendHandler sendHandler;
+    @Getter
     private final AudioManager audioManager;
 
     private final EqualizerFactory equalizer = new EqualizerFactory();

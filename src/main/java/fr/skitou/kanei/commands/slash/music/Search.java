@@ -41,11 +41,6 @@ public class Search implements ISlashCommand {
     }
 
     @Override
-    public Set<OptionData> getOptionData() {
-        return Set.of(new OptionData(OptionType.STRING, "search", "Search a track on Youtube.", true));
-    }
-
-    @Override
     public void onCommandReceived(SlashCommandInteractionEvent event) {
         if (!event.getMember().getVoiceState().inAudioChannel()) {
             event.getHook().sendMessage(KaneiMain.getBundleFromGuild(event.getGuild()).getString("music.notinchanel")).queue();
@@ -106,6 +101,11 @@ public class Search implements ISlashCommand {
                 event.getHook().sendMessage(KaneiMain.getBundleFromGuild(event.getGuild()).getString("music.cantplay") + exception.getMessage()).queue();
             }
         });
+    }
+
+    @Override
+    public Set<OptionData> getOptionData() {
+        return Set.of(new OptionData(OptionType.STRING, "search", "Search a track on Youtube.", true));
     }
 
     private MessageEmbed displaySearchResult(List<AudioTrack> searchTracks, Guild guild) {
