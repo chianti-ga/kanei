@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) Chianti Gally 2024 - 2025.
+ */
+
 package fr.skitou.kanei.commands.classic;
 
 import fr.skitou.botcore.commands.classic.AbstractCommand;
