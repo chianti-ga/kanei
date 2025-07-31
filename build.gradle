@@ -49,7 +49,8 @@ dependencies {
 
     //Disc
     implementation 'dev.arbjerg:lavaplayer:2.2.3'
-    implementation "dev.lavalink.youtube:v2:1.13.3"
+    //implementation "dev.lavalink.youtube:v2:1.13.3"
+    implementation 'com.github.lavalink-devs:youtube-source:35ec2adb49'
     implementation "com.github.topi314.lavasrc:lavasrc:4.6.0"
 
     implementation("net.dv8tion:JDA:5.2.1")
@@ -65,7 +66,7 @@ dependencies {
     testImplementation platform('org.junit:junit-bom:5.11.3')
     testImplementation 'org.junit.jupiter:junit-jupiter:5.12.0'
 
-    implementation 'com.google.code.gson:gson:2.11.0'
+    implementation 'com.google.code.gson:gson:2.13.1'
     implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.17.0'
 }
 

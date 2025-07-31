@@ -20,6 +20,7 @@ import fr.skitou.botcore.core.Config;
 import fr.skitou.botcore.hibernate.Database;
 import fr.skitou.kanei.databaseentities.GuildMusicSettings;
 import lombok.Getter;
+import lombok.Setter;
 import net.dv8tion.jda.api.entities.channel.unions.AudioChannelUnion;
 import net.dv8tion.jda.api.managers.AudioManager;
 
@@ -50,6 +51,10 @@ public class GuildMusic {
             -0.1f,
             -0.1f
     };
+
+    @Setter
+    @Getter
+    private static int opusQuality = AudioConfiguration.OPUS_QUALITY_MAX;
     public final long guildId;
     /**
      * Audio player for the guild.
@@ -114,7 +119,7 @@ public class GuildMusic {
         playerManager.registerSourceManager(new YoutubeAudioSourceManager(true, new MWebWithThumbnail(), new WebEmbeddedWithThumbnail(), new MusicWithThumbnail(), new AndroidMusicWithThumbnail()));
 
         playerManager.registerSourceManager(new SpotifySourceManager(null, Config.CONFIG.getPropertyOrDefault("spotify.id"), Config.CONFIG.getPropertyOrDefault("spotify.secret"), "FR", playerManager));
-        playerManager.getConfiguration().setOpusEncodingQuality(AudioConfiguration.OPUS_QUALITY_MAX);
+        playerManager.getConfiguration().setOpusEncodingQuality(opusQuality);
         playerManager.getConfiguration().setResamplingQuality(AudioConfiguration.ResamplingQuality.HIGH);
         playerManager.getConfiguration().setFilterHotSwapEnabled(true);
         AudioSourceManagers.registerRemoteSources(playerManager);
