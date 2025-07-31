@@ -24,7 +24,7 @@ public class Quality implements ISlashCommand {
     @NotNull
     @Override
     public String getHelp() {
-        return "Change the quality of the music played by the bot globally. From 0 to 10, the higher the number, the better the quality. Default is 10.";
+        return "Change the quality of the music played by the bot globally.";
     }
 
     @Override
