@@ -24,7 +24,7 @@ public class Quality implements ISlashCommand {
     @NotNull
     @Override
     public String getHelp() {
-        return "Change the quality of the music played by the bot globally.";
+        return "ChangeOpus quality";
     }
 
     @Override
@@ -49,7 +49,7 @@ public class Quality implements ISlashCommand {
     @Override
     public Set<OptionData> getOptionData() {
         return Set.of(
-                new OptionData(OptionType.INTEGER, "quality", "Quality of the music played by the bot. From 0 to 10, the higher the number, the better the quality. Default is 10.")
+                new OptionData(OptionType.INTEGER, "quality", "0 to 10")
                         .setRequired(true)
                         .setMinValue(0)
                         .setMaxValue(10)
