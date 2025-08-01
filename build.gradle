@@ -51,7 +51,7 @@ dependencies {
     implementation 'dev.arbjerg:lavaplayer:2.2.3'
     //implementation "dev.lavalink.youtube:v2:1.13.3"
     implementation 'com.github.lavalink-devs:youtube-source:35ec2adb49'
-    implementation "com.github.topi314.lavasrc:lavasrc:4.6.0"
+    implementation "com.github.topi314.lavasrc:lavasrc:4.7.3"
 
     implementation("net.dv8tion:JDA:5.2.1")
 
