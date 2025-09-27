@@ -34,6 +34,10 @@ repositories {
     maven {
         url 'https://maven.lavalink.dev/releases'
     }
+    maven {
+        name "arbjergDevSnapshots"
+        url "https://maven.lavalink.dev/snapshots"
+    }
     //mavenLocal()
     repositories {
         maven {
