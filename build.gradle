@@ -50,7 +50,7 @@ dependencies {
     //Disc
     implementation 'dev.arbjerg:lavaplayer:2.2.3'
     //implementation "dev.lavalink.youtube:v2:1.13.3"
-    implementation 'com.github.lavalink-devs:youtube-source:4e1af56'
+    implementation "dev.lavalink.youtube:v2:cb234c7fd8b6b26e6a0bee7729f539ff77cfa3b9-SNAPSHOT"
     implementation "com.github.topi314.lavasrc:lavasrc:4.8.1"
 
     implementation("net.dv8tion:JDA:5.2.1")
