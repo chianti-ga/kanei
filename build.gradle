@@ -1,9 +1,6 @@
 /*
  * Copyright (c) Chianti Gally 2024 - 2025.
  */
-
-import java.util.jar.JarFile
-
 plugins {
     id 'java'
     id 'idea'
@@ -44,18 +41,17 @@ repositories {
 
 
 dependencies {
-    implementation "fr.skitou.botcore:botcore:1.2.1-162-g8dc4aa8"
+    implementation "fr.skitou.botcore:botcore:1.2.1-172-g1b1b7bb"
     implementation 'io.sentry:sentry:7.18.0'
 
     //Disc
-    implementation 'dev.arbjerg:lavaplayer:2.2.3'
-    //implementation "dev.lavalink.youtube:v2:1.13.3"
-    implementation 'com.github.lavalink-devs:youtube-source:35ec2adb49'
-    implementation "com.github.topi314.lavasrc:lavasrc:4.6.0"
+    implementation "dev.arbjerg:lavaplayer:2.2.4"
+    implementation "dev.lavalink.youtube:v2:1.14.0"
+    implementation "com.github.topi314.lavasrc:lavasrc:4.8.1"
 
     implementation("net.dv8tion:JDA:5.2.1")
 
-    implementation 'ch.qos.logback:logback-classic:1.5.18'
+    implementation 'ch.qos.logback:logback-classic:1.5.19'
 
     implementation('org.hibernate.orm:hibernate-core:6.6.3.Final')
     implementation 'org.hibernate.orm:hibernate-c3p0:6.6.3.Final'
@@ -67,7 +63,7 @@ dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter:5.12.0'
 
     implementation 'com.google.code.gson:gson:2.13.1'
-    implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.17.0'
+    implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.18.0'
 }
 
 idea {
@@ -103,8 +99,7 @@ jar {
     manifest {
         attributes(
                 'Main-Class': 'fr.skitou.kanei.KaneiMain',
-                'Implementation-Title': project.name,
-                'BotCore-Version': getBotCoreVersion()
+                'Implementation-Title': 'KaneiBot',
         )
     }
 
@@ -139,22 +134,4 @@ tasks.named('build') {
 shadowJar {
     dependsOn 'build'
     archiveFileName = "kanei-all.jar"
-}
-
-def getBotCoreVersion() {
-    def artifactId = "botcore"
-    def dependency = configurations.compileClasspath
-            .getFiles()
-            .find { it.name.contains(artifactId) }
-
-    if (dependency) {
-        def jarFile = new JarFile(dependency)
-        def manifest = jarFile.getManifest()
-        def botCoreVersion = manifest.mainAttributes.getValue("BotCore-Version")
-        jarFile.close()
-
-        return botCoreVersion
-    } else {
-        throw new GradleException("Dependency not found: $artifactId")
-    }
 }
