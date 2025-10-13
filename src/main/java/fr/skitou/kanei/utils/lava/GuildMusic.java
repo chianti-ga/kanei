@@ -116,8 +116,13 @@ public class GuildMusic {
     public static AudioPlayerManager initPlayerManager() {
         AudioPlayerManager playerManager = new DefaultAudioPlayerManager();
 
-        YoutubeSourceOptions options = new YoutubeSourceOptions().setRemoteCipherUrl(Config.CONFIG.getPropertyOrDefault("cipher.url"), Config.CONFIG.getPropertyOrDefault("cipher.pwd"));
-        playerManager.registerSourceManager(new YoutubeAudioSourceManager(options, new AndroidMusicWithThumbnail(), new WebWithThumbnail(), new WebEmbeddedWithThumbnail(), new MusicWithThumbnail()));
+        YoutubeSourceOptions options = new YoutubeSourceOptions()
+                .setRemoteCipherUrl(Config.CONFIG.getPropertyOrDefault("cipher.url"), Config.CONFIG.getPropertyOrDefault("cipher.pwd"))
+                .setAllowSearch(true)
+                .setAllowDirectVideoIds(true)
+                .setAllowDirectPlaylistIds(true);
+
+        playerManager.registerSourceManager(new YoutubeAudioSourceManager(options, new WebWithThumbnail(), new AndroidMusicWithThumbnail(), new WebEmbeddedWithThumbnail(), new MusicWithThumbnail()));
 
         playerManager.registerSourceManager(new SpotifySourceManager(null, Config.CONFIG.getPropertyOrDefault("spotify.id"), Config.CONFIG.getPropertyOrDefault("spotify.secret"), "FR", playerManager));
         playerManager.getConfiguration().setOpusEncodingQuality(opusQuality);
