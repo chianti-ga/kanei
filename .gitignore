@@ -159,4 +159,5 @@ gradle-app.setting
 /build/
 /data/
 /.idea/
+!/.idea/copyright/
 /gradle/
