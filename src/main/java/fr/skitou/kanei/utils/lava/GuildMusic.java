@@ -116,7 +116,7 @@ public class GuildMusic {
         AudioPlayerManager playerManager = new DefaultAudioPlayerManager();
 
         YoutubeSourceOptions options = new YoutubeSourceOptions()
-                .setRemoteCipherUrl(Config.CONFIG.getPropertyOrDefault("cipher.url"), Config.CONFIG.getPropertyOrDefault("cipher.pwd"))
+                .setRemoteCipher(Config.CONFIG.getPropertyOrDefault("cipher.url"), Config.CONFIG.getPropertyOrDefault("cipher.pwd"), null)
                 .setAllowSearch(true)
                 .setAllowDirectVideoIds(true)
                 .setAllowDirectPlaylistIds(true);
