@@ -11,7 +11,7 @@
             </pattern>
         </encoder>
     </appender>
-    <appender name="Discord" class="fr.skitou.botcore.utils.reporter.DiscordLogger"/>
+    <appender name="Discord" class="fr.skitou.kanei.utils.reporter.DiscordLogger"/>
 
     <root level="info">
         <appender-ref ref="STDOUT"/>

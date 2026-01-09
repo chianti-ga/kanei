@@ -4,9 +4,9 @@
 
 package fr.skitou.kanei.commands.slash;
 
-import fr.skitou.botcore.commands.slash.ISlashCommand;
-import fr.skitou.botcore.utils.IsSenderAllowed;
-import fr.skitou.kanei.databaseentities.ChangelogEntity;
+import fr.skitou.kanei.hibernate.entities.ChangelogEntity;
+import fr.skitou.kanei.utils.IsSenderAllowed;
+import io.sentry.Sentry;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
@@ -49,7 +49,8 @@ public class PostChangelog implements ISlashCommand {
 
             new ChangelogEntity(event.getOption("version").getAsString(), content);
         } catch (InterruptedException | ExecutionException | IOException e) {
-            throw new RuntimeException(e);
+            event.getHook().editOriginal("Error : " + e.getMessage()).queue();
+            Sentry.captureException(e);
         }
     }
 

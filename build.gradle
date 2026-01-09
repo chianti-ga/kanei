@@ -4,8 +4,6 @@
 plugins {
     id 'java'
     id 'idea'
-    id "com.github.ben-manes.versions" version "0.51.0"
-
     id "io.freefair.lombok" version "9.0.0"
     id "com.github.johnrengelman.shadow" version "8.1.1"
 }
@@ -22,10 +20,6 @@ group = 'fr.skitou'
 repositories {
     mavenCentral()
     maven {
-        name "reposiliteRepositoryReleases"
-        url "https://reposilite.skitou.fr/releases"
-    }
-    maven {
         url 'https://jitpack.io'
     }
     maven {
@@ -41,29 +35,38 @@ repositories {
 
 
 dependencies {
-    implementation "fr.skitou.botcore:botcore:1.2.1-172-g1b1b7bb"
     implementation 'io.sentry:sentry:8.25.0'
+    implementation 'com.google.guava:guava:33.3.1-jre'
 
     //Disc
-    implementation "dev.arbjerg:lavaplayer:2.2.4"
+    implementation "dev.arbjerg:lavaplayer:2.2.6"
     implementation "dev.lavalink.youtube:v2:1.16.0"
     implementation "com.github.topi314.lavasrc:lavasrc:4.8.1"
+    implementation group: 'club.minnced', name: 'discord-webhooks', version: '0.8.4'
+    implementation("net.dv8tion:JDA:6.2.1")
 
-    implementation("net.dv8tion:JDA:5.2.1")
+    // Logging
+    implementation group: 'org.slf4j', name: 'slf4j-api', version: '2.0.17'
+    implementation group: 'ch.qos.logback', name: 'logback-classic', version: '1.5.24'
 
-    implementation 'ch.qos.logback:logback-classic:1.5.19'
+    // Utils
+    implementation group: 'org.reflections', name: 'reflections', version: '0.10.2'
+    implementation group: 'org.jetbrains', name: 'annotations', version: '26.0.2-1'
+    implementation 'org.apache.commons:commons-lang3:3.20.0'
 
-    implementation('org.hibernate.orm:hibernate-core:7.1.1.Final')
-    implementation 'org.hibernate.orm:hibernate-c3p0:7.1.1.Final'
-    implementation 'org.hibernate.orm:hibernate-community-dialects:7.1.5.Final'
-    implementation group: 'org.xerial', name: 'sqlite-jdbc', version: '3.47.1.0'
+    implementation group: 'commons-io', name: 'commons-io', version: '2.21.0'
+
+    //Java Persistence API
+    implementation('org.hibernate.orm:hibernate-core:7.2.0.Final')
+    implementation 'org.hibernate.orm:hibernate-c3p0:7.2.0.Final'
+    implementation 'org.hibernate.orm:hibernate-community-dialects:7.2.0.Final'
+    implementation group: 'org.xerial', name: 'sqlite-jdbc', version: '3.51.1.0'
 
 
-    testImplementation platform('org.junit:junit-bom:5.13.4')
-    testImplementation 'org.junit.jupiter:junit-jupiter:6.0.0'
+    testImplementation platform('org.junit:junit-bom:6.0.2')
+    testImplementation 'org.junit.jupiter:junit-jupiter:6.0.2'
 
-    implementation 'com.google.code.gson:gson:2.13.1'
-    implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.19.0'
+    implementation 'com.google.code.gson:gson:2.13.2'
 }
 
 idea {
@@ -72,9 +75,7 @@ idea {
         downloadSources = true
     }
 }
-dependencyUpdates {
-    revision = "dev"
-}
+
 java {
     withJavadocJar()
     withSourcesJar()
@@ -97,9 +98,13 @@ compileTestJava {
 
 jar {
     manifest {
+        def command = 'git describe --tags'
+        def version = command.execute().text.trim()
+        println "Application version: ${version}"
         attributes(
                 'Main-Class': 'fr.skitou.kanei.KaneiMain',
-                'Implementation-Title': 'KaneiBot',
+                'Implementation-Title': project.name,
+                'Implementation-Version': version
         )
     }
 

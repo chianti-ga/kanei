@@ -4,8 +4,6 @@
 
 package fr.skitou.kanei.commands.classic;
 
-import fr.skitou.botcore.commands.classic.AbstractCommand;
-import fr.skitou.botcore.commands.classic.CommandReceivedEvent;
 import org.jetbrains.annotations.NotNull;
 
 public class Del extends AbstractCommand {

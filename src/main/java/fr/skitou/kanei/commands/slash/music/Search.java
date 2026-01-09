@@ -8,20 +8,21 @@ import com.sedmelluq.discord.lavaplayer.player.AudioLoadResultHandler;
 import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
 import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
-import fr.skitou.botcore.commands.slash.ISlashCommand;
-import fr.skitou.botcore.subsystems.internal.ComponentInteractionListener;
-import fr.skitou.botcore.utils.QuickColors;
-import fr.skitou.kanei.KaneiMain;
+import fr.skitou.kanei.commands.slash.ISlashCommand;
+import fr.skitou.kanei.core.BotInstance;
+import fr.skitou.kanei.subsystems.internal.ComponentInteractionListener;
+import fr.skitou.kanei.utils.QuickColors;
 import fr.skitou.kanei.utils.TimeFormater;
 import fr.skitou.kanei.utils.lava.GuildMusic;
 import fr.skitou.kanei.utils.lava.MusicManager;
 import net.dv8tion.jda.api.EmbedBuilder;
+import net.dv8tion.jda.api.components.actionrow.ActionRow;
+import net.dv8tion.jda.api.components.selections.StringSelectMenu;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
-import net.dv8tion.jda.api.interactions.components.selections.StringSelectMenu;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -43,16 +44,15 @@ public class Search implements ISlashCommand {
     @Override
     public void onCommandReceived(SlashCommandInteractionEvent event) {
         if (!event.getMember().getVoiceState().inAudioChannel()) {
-            event.getHook().sendMessage(KaneiMain.getBundleFromGuild(event.getGuild()).getString("music.notinchanel")).queue();
+            event.getHook().sendMessage(BotInstance.getBundleFromGuild(event.getGuild()).getString("music.notinchanel")).queue();
             return;
         }
 
-        if (event.getGuild().getSelfMember().getVoiceState().getChannel() != null) {
-            if (event.getMember().getVoiceState().getChannel().asVoiceChannel() != event.getGuild().getSelfMember().getVoiceState().getChannel().asVoiceChannel()) {
-                event.getHook().sendMessage(KaneiMain.getBundleFromGuild(event.getGuild()).getString("music.notinchanel")).queue();
+        if (event.getGuild().getSelfMember().getVoiceState().getChannel() != null && event.getMember().getVoiceState().getChannel().asVoiceChannel() != event.getGuild().getSelfMember().getVoiceState().getChannel().asVoiceChannel()) {
+            event.getHook().sendMessage(BotInstance.getBundleFromGuild(event.getGuild()).getString("music.notinchanel")).queue();
                 return;
             }
-        }
+
 
         GuildMusic guildMusic;
 
@@ -84,21 +84,21 @@ public class Search implements ISlashCommand {
                 }
 
                 event.getHook().sendMessageEmbeds(displaySearchResult(playlist.getTracks().subList(0, 4), event.getGuild()))
-                        .addActionRow(ComponentInteractionListener.createStringSelectMenuInteraction(selectMenu.build(), interactionEvent -> {
+                        .addComponents(ActionRow.of(ComponentInteractionListener.createStringSelectMenuInteraction(selectMenu.build(), interactionEvent -> {
                             AudioTrack track = playlist.getTracks().get(Integer.parseInt(interactionEvent.getSelectedOptions().get(0).getLabel()) - 1);
                             guildMusic.scheduler.queueTrack(track);
                             interactionEvent.replyEmbeds(guildMusic.scheduler.embedTracInfo(track)).queue();
-                        })).queue();
+                        }))).queue();
             }
 
             @Override
             public void noMatches() {
-                event.getHook().sendMessage(KaneiMain.getBundleFromGuild(event.getGuild()).getString("music.noresult") + event.getOption("search").getAsString()).queue();
+                event.getHook().sendMessage(BotInstance.getBundleFromGuild(event.getGuild()).getString("music.noresult") + event.getOption("search").getAsString()).queue();
             }
 
             @Override
             public void loadFailed(FriendlyException exception) {
-                event.getHook().sendMessage(KaneiMain.getBundleFromGuild(event.getGuild()).getString("music.cantplay") + exception.getMessage()).queue();
+                event.getHook().sendMessage(BotInstance.getBundleFromGuild(event.getGuild()).getString("music.cantplay") + exception.getMessage()).queue();
             }
         });
     }
@@ -122,7 +122,7 @@ public class Search implements ISlashCommand {
         });
 
         EmbedBuilder builder = new EmbedBuilder();
-        builder.setTitle(KaneiMain.getBundleFromGuild(guild).getString("music.searchresult"))
+        builder.setTitle(BotInstance.getBundleFromGuild(guild).getString("music.searchresult"))
                 .setDescription(sb.toString())
                 .setColor(QuickColors.CYAN);
         return builder.build();

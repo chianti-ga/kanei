@@ -9,23 +9,19 @@ import com.sedmelluq.discord.lavaplayer.player.event.AudioEventAdapter;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackEndReason;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrackInfo;
-import fr.skitou.botcore.utils.QuickColors;
+import fr.skitou.kanei.utils.QuickColors;
 import fr.skitou.kanei.utils.TimeFormater;
 import lombok.Getter;
 import lombok.Setter;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.MessageEmbed;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicLong;
 
 
-// TODO: DOCUMENTATION
 public class TrackScheduler extends AudioEventAdapter {
-    private static final Logger logger = LoggerFactory.getLogger(TrackScheduler.class);
     final long guildId;
 
     private final AudioPlayer player;

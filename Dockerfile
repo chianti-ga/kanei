@@ -9,7 +9,7 @@ RUN ["gradle", "--no-daemon", "shadowjar"]
 
 RUN ["cp", "./build/libs/kanei-all.jar", "/srv/kanei-all.jar"]
 
-FROM eclipse-temurin:22-jre
+FROM eclipse-temurin:25-jre
 
 WORKDIR /srv
 

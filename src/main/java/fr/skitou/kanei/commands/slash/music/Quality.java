@@ -4,8 +4,8 @@
 
 package fr.skitou.kanei.commands.slash.music;
 
-import fr.skitou.botcore.commands.slash.ISlashCommand;
-import fr.skitou.botcore.utils.IsSenderAllowed;
+import fr.skitou.kanei.commands.slash.ISlashCommand;
+import fr.skitou.kanei.utils.IsSenderAllowed;
 import fr.skitou.kanei.utils.lava.GuildMusic;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.OptionType;

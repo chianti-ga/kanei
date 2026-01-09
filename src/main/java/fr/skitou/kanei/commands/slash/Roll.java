@@ -4,7 +4,6 @@
 
 package fr.skitou.kanei.commands.slash;
 
-import fr.skitou.botcore.commands.slash.ISlashCommand;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 import org.jetbrains.annotations.NotNull;

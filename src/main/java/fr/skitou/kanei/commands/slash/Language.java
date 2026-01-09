@@ -4,12 +4,12 @@
 
 package fr.skitou.kanei.commands.slash;
 
-import fr.skitou.botcore.commands.slash.ISlashCommand;
-import fr.skitou.botcore.hibernate.Database;
-import fr.skitou.botcore.subsystems.internal.ComponentInteractionListener;
-import fr.skitou.kanei.databaseentities.GuildMusicSettings;
+import fr.skitou.kanei.hibernate.Database;
+import fr.skitou.kanei.hibernate.entities.GuildMusicSettings;
+import fr.skitou.kanei.subsystems.internal.ComponentInteractionListener;
+import net.dv8tion.jda.api.components.actionrow.ActionRow;
+import net.dv8tion.jda.api.components.selections.StringSelectMenu;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
-import net.dv8tion.jda.api.interactions.components.selections.StringSelectMenu;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -32,7 +32,7 @@ public class Language implements ISlashCommand {
                 .addOption("English", "en")
                 .addOption("Français", "fr")
                 .build();
-        event.getHook().editOriginal("Language:").setActionRow(ComponentInteractionListener.createStringSelectMenuInteraction(languageSelect, interactionEvent -> {
+        event.getHook().editOriginal("Language:").setComponents(ActionRow.of(ComponentInteractionListener.createStringSelectMenuInteraction(languageSelect, interactionEvent -> {
             List<GuildMusicSettings> settingsSingleton = Database.getAll(GuildMusicSettings.class)
                     .stream().filter(guildMusicSettings -> guildMusicSettings.getGuild() == event.getGuild().getIdLong())
                     .limit(1).toList();
@@ -44,6 +44,6 @@ public class Language implements ISlashCommand {
                 Database.saveOrUpdate(settingsSingleton.get(0));
             }
             interactionEvent.reply(":thumbsup:").queue();
-        })).queue();
+        }))).queue();
     }
 }

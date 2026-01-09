@@ -1,10 +1,10 @@
 /*
- * Copyright (c) Chianti Gally 2024 - 2025.
+ * Copyright (c) Chianti Gally 2024 - 2026.
  */
 
-package fr.skitou.kanei.databaseentities;
+package fr.skitou.kanei.hibernate.entities;
 
-import fr.skitou.botcore.hibernate.Database;
+import fr.skitou.kanei.hibernate.Database;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;

@@ -8,8 +8,8 @@ import com.sedmelluq.discord.lavaplayer.player.AudioLoadResultHandler;
 import com.sedmelluq.discord.lavaplayer.tools.FriendlyException;
 import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
-import fr.skitou.botcore.commands.slash.ISlashCommand;
-import fr.skitou.kanei.KaneiMain;
+import fr.skitou.kanei.commands.slash.ISlashCommand;
+import fr.skitou.kanei.core.BotInstance;
 import fr.skitou.kanei.utils.lava.GuildMusic;
 import fr.skitou.kanei.utils.lava.MusicManager;
 import net.dv8tion.jda.api.entities.MessageEmbed;
@@ -37,16 +37,14 @@ public class Play implements ISlashCommand {
     @Override
     public void onCommandReceived(SlashCommandInteractionEvent event) {
         if (!event.getMember().getVoiceState().inAudioChannel()) {
-            event.getHook().sendMessage(KaneiMain.getBundleFromGuild(event.getGuild()).getString("music.notinchanel")).queue();
+            event.getHook().sendMessage(BotInstance.getBundleFromGuild(event.getGuild()).getString("music.notinchanel")).queue();
             return;
         }
 
-        if (event.getGuild().getSelfMember().getVoiceState().getChannel() != null) {
-            if (event.getMember().getVoiceState().getChannel().asVoiceChannel() != event.getGuild().getSelfMember().getVoiceState().getChannel().asVoiceChannel()) {
-                event.getHook().sendMessage(KaneiMain.getBundleFromGuild(event.getGuild()).getString("music.notinchanel")).queue();
+        if (event.getGuild().getSelfMember().getVoiceState().getChannel() != null && event.getMember().getVoiceState().getChannel().asVoiceChannel() != event.getGuild().getSelfMember().getVoiceState().getChannel().asVoiceChannel()) {
+            event.getHook().sendMessage(BotInstance.getBundleFromGuild(event.getGuild()).getString("music.notinchanel")).queue();
                 return;
             }
-        }
 
 
         GuildMusic guildMusic;
@@ -83,12 +81,12 @@ public class Play implements ISlashCommand {
 
             @Override
             public void noMatches() {
-                event.getHook().sendMessage(KaneiMain.getBundleFromGuild(event.getGuild()).getString("music.noresult") + search).queue();
+                event.getHook().sendMessage(BotInstance.getBundleFromGuild(event.getGuild()).getString("music.noresult") + search).queue();
             }
 
             @Override
             public void loadFailed(FriendlyException exception) {
-                event.getHook().sendMessage(KaneiMain.getBundleFromGuild(event.getGuild()).getString("music.cantplay") + "\n_**" + exception.getMessage() + "**_").queue();
+                event.getHook().sendMessage(BotInstance.getBundleFromGuild(event.getGuild()).getString("music.cantplay") + "\n_**" + exception.getMessage() + "**_").queue();
             }
         });
     }

@@ -4,9 +4,7 @@
 
 package fr.skitou.kanei.commands.classic;
 
-import fr.skitou.botcore.commands.classic.AbstractCommand;
-import fr.skitou.botcore.commands.classic.CommandReceivedEvent;
-import fr.skitou.botcore.utils.IsSenderAllowed;
+import fr.skitou.kanei.utils.IsSenderAllowed;
 import net.dv8tion.jda.api.entities.Member;
 import org.jetbrains.annotations.NotNull;
 

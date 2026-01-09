@@ -10,5 +10,7 @@
   "loggerUrl": "",
   "sentryDns": "",
   "spotify.id": "",
-  "spotify.secret": ""
+  "spotify.secret": "",
+  "cipher.url": "",
+  "cipher.pwd": ""
 }

@@ -4,7 +4,6 @@
 
 package fr.skitou.kanei.subsystems;
 
-import fr.skitou.botcore.subsystems.AbstractSubsystem;
 import fr.skitou.kanei.utils.lava.MusicManager;
 import net.dv8tion.jda.api.events.guild.voice.GuildVoiceUpdateEvent;
 import org.jetbrains.annotations.NotNull;
