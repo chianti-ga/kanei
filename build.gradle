@@ -4,8 +4,8 @@
 plugins {
     id 'java'
     id 'idea'
-    id "io.freefair.lombok" version "9.0.0"
-    id "com.github.johnrengelman.shadow" version "8.1.1"
+    id("io.freefair.lombok") version "9.1.0"
+    id "com.gradleup.shadow" version "9.3.1"
 }
 
 idea {
@@ -104,7 +104,8 @@ jar {
         attributes(
                 'Main-Class': 'fr.skitou.kanei.KaneiMain',
                 'Implementation-Title': project.name,
-                'Implementation-Version': version
+                'Implementation-Version': project.version,
+                'Kanei-Version': version
         )
     }
 
@@ -121,19 +122,6 @@ tasks.register('copyJar', Copy) {
     rename { String fileName ->
         fileName.replace(this.version as CharSequence, "")
     }
-}
-
-tasks.register('getVersionFromGit') {
-    def command = 'git describe --tags'
-    def version = command.execute().text.trim()
-    println "Application version: ${version}"
-
-    project.version = version
-    jar.manifest.attributes['Implementation-Version'] = version
-
-}
-tasks.named('build') {
-    dependsOn('getVersionFromGit')
 }
 
 shadowJar {
