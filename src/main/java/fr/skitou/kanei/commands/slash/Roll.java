@@ -56,7 +56,7 @@ public class Roll implements ISlashCommand {
         int numberOfDices = Integer.parseInt(split[0]);
         int numberOfSides = Integer.parseInt(split[1]);
 
-        if ((numberOfDices <= 0 || numberOfSides <= 0)) {
+        if ((numberOfDices <= 0 || numberOfSides <= 0) && (numberOfDices > 10000 || numberOfSides <= 10000)) {
             event.getHook().sendMessage(bundle.getString("roll.invalid")).queue();
             return;
         }
