@@ -155,7 +155,7 @@ public class BotInstance {
                 logger.info("Using config as the token provider.");
                 return opToken.get();
             } else {
-                logger.warn("No token found 😕.");
+                logger.warn("No token found.");
             }
         }
         return token;

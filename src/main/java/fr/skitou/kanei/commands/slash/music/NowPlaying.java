@@ -31,8 +31,8 @@ public class NowPlaying implements ISlashCommand {
 
         if (event.getGuild().getSelfMember().getVoiceState().getChannel() != null && event.getMember().getVoiceState().getChannel().asVoiceChannel() != event.getGuild().getSelfMember().getVoiceState().getChannel().asVoiceChannel()) {
             event.getHook().sendMessage(BotInstance.getBundleFromGuild(event.getGuild()).getString("music.notinchanel")).queue();
-                return;
-            }
+            return;
+        }
 
 
         if (MusicManager.guildMusics.containsKey(event.getGuild().getIdLong())) {

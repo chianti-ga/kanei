@@ -4,20 +4,22 @@
 
 package fr.skitou.kanei.commands.slash;
 
+import fr.skitou.kanei.core.BotInstance;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
 import java.util.Random;
+import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.regex.Pattern;
 
 @SuppressWarnings("unused")
 public class Roll implements ISlashCommand {
 
+    private static ResourceBundle bundle = null;
     private final Random random = new Random();
-
 
     @NotNull
     @Override
@@ -41,9 +43,12 @@ public class Roll implements ISlashCommand {
     @Override
     public void onCommandReceived(net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent event) {
         String roll = Objects.requireNonNull(event.getOption("roll")).getAsString();
+        if (bundle == null) {
+            bundle = BotInstance.getBundleFromGuild(Objects.requireNonNull(event.getGuild()));
+        }
 
         if (!roll.matches("^\\d+d\\d+$")) {
-            event.getHook().sendMessage("Invalid roll format.\n`<number_of_dices>d<number_of_sides>`").queue();
+            event.getHook().sendMessage(bundle.getString("roll.wrongformat")).queue();
             return;
         }
 
@@ -51,17 +56,17 @@ public class Roll implements ISlashCommand {
         int numberOfDices = Integer.parseInt(split[0]);
         int numberOfSides = Integer.parseInt(split[1]);
 
-        if (numberOfDices <= 0 || numberOfSides <= 0) {
-            event.getHook().sendMessage("Number of dices and sides must be greater than 0.").queue();
+        if ((numberOfDices <= 0 || numberOfSides <= 0)) {
+            event.getHook().sendMessage(bundle.getString("roll.invalid")).queue();
             return;
         }
 
-        int sum = 0;
+        long sum = 0;
 
         StringBuilder sb = new StringBuilder();
         sb.append("**Roll ").append(roll).append("**").append('\n');
         sb.append("```").append('\n');
-        sb.append(String.format("%-6s | %-5s%n", "Dé n°", "Résultat"));
+        sb.append(String.format("%-6s | %-5s%n", bundle.getString("roll.dicenumber"), bundle.getString("roll.result")));
         sb.append("-----------------").append('\n');
 
         for (int i = 0; i < numberOfDices; i++) {
@@ -71,7 +76,7 @@ public class Roll implements ISlashCommand {
         }
 
         sb.append("-----------------").append('\n');
-        sb.append(String.format("%-6s | %-5d%n", "Somme", sum));
+        sb.append(String.format("%-6s | %-5d%n", bundle.getString("roll.sum"), sum));
         sb.append("```").append('\n');
         sb.append("Lancé par ").append(event.getUser().getAsMention());
 
