@@ -1,5 +1,5 @@
 /*
- * Copyright (c) Chianti Gally 2024 - 2025.
+ * Copyright (c) Chianti Gally 2024 - 2026.
  */
 
 package fr.skitou.kanei.commands.slash;
@@ -53,8 +53,15 @@ public class Roll implements ISlashCommand {
         }
 
         String[] split = roll.split(Pattern.quote("d"));
-        int numberOfDices = Integer.parseInt(split[0]);
-        int numberOfSides = Integer.parseInt(split[1]);
+        long numberOfDices;
+        long numberOfSides;
+        try {
+            numberOfDices = Long.parseLong(split[0]);
+            numberOfSides = Long.parseLong(split[1]);
+        } catch (NumberFormatException e) {
+            event.getHook().sendMessage("values must be between " + Long.MIN_VALUE + " and " + Long.MAX_VALUE + ".").queue();
+            return;
+        }
 
         if ((numberOfDices <= 0 || numberOfSides <= 0) && (numberOfDices > 10000 || numberOfSides <= 10000)) {
             event.getHook().sendMessage(bundle.getString("roll.invalid")).queue();
@@ -70,7 +77,7 @@ public class Roll implements ISlashCommand {
         sb.append("-----------------").append('\n');
 
         for (int i = 0; i < numberOfDices; i++) {
-            int result = random.nextInt(numberOfSides) + 1;
+            long result = random.nextLong(1, numberOfSides);
             sum += result;
             sb.append(String.format("%-6d | %-5d%n", i + 1, result));
         }
