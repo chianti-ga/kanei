@@ -40,7 +40,7 @@ dependencies {
 
     //Disc
     implementation "dev.arbjerg:lavaplayer:2.2.6"
-    implementation "dev.lavalink.youtube:v2:1.16.0"
+    implementation "dev.lavalink.youtube:v2:1.17.0"
     implementation "com.github.topi314.lavasrc:lavasrc:4.8.1"
     implementation group: 'club.minnced', name: 'discord-webhooks', version: '0.8.4'
     implementation("net.dv8tion:JDA:6.2.1")
