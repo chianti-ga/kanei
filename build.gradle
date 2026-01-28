@@ -43,7 +43,7 @@ dependencies {
     implementation "dev.lavalink.youtube:v2:1.17.0"
     implementation "com.github.topi314.lavasrc:lavasrc:4.8.1"
     implementation group: 'club.minnced', name: 'discord-webhooks', version: '0.8.4'
-    implementation("net.dv8tion:JDA:6.2.1")
+    implementation("net.dv8tion:JDA:6.3.0")
 
     // Logging
     implementation group: 'org.slf4j', name: 'slf4j-api', version: '2.0.17'
