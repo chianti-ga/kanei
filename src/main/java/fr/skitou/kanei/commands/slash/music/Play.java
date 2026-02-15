@@ -1,5 +1,5 @@
 /*
- * Copyright (c) Chianti Gally 2024 - 2025.
+ * Copyright (c) Chianti Gally 2024 - 2026.
  */
 
 package fr.skitou.kanei.commands.slash.music;
@@ -10,8 +10,8 @@ import com.sedmelluq.discord.lavaplayer.track.AudioPlaylist;
 import com.sedmelluq.discord.lavaplayer.track.AudioTrack;
 import fr.skitou.kanei.commands.slash.ISlashCommand;
 import fr.skitou.kanei.core.BotInstance;
-import fr.skitou.kanei.utils.lava.GuildMusic;
-import fr.skitou.kanei.utils.lava.MusicManager;
+import fr.skitou.kanei.lava.GuildMusic;
+import fr.skitou.kanei.lava.MusicManager;
 import net.dv8tion.jda.api.entities.MessageEmbed;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.OptionType;

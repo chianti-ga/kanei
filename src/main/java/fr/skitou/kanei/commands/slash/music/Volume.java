@@ -1,5 +1,5 @@
 /*
- * Copyright (c) Chianti Gally 2024 - 2025.
+ * Copyright (c) Chianti Gally 2024 - 2026.
  */
 
 package fr.skitou.kanei.commands.slash.music;
@@ -8,7 +8,7 @@ import fr.skitou.kanei.commands.slash.ISlashCommand;
 import fr.skitou.kanei.core.BotInstance;
 import fr.skitou.kanei.hibernate.Database;
 import fr.skitou.kanei.hibernate.entities.GuildMusicSettings;
-import fr.skitou.kanei.utils.lava.MusicManager;
+import fr.skitou.kanei.lava.MusicManager;
 import net.dv8tion.jda.api.events.interaction.command.SlashCommandInteractionEvent;
 import net.dv8tion.jda.api.interactions.commands.OptionType;
 import net.dv8tion.jda.api.interactions.commands.build.OptionData;

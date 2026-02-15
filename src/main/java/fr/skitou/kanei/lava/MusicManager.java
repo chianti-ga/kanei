@@ -1,8 +1,8 @@
 /*
- * Copyright (c) Chianti Gally 2024 - 2025.
+ * Copyright (c) Chianti Gally 2024 - 2026.
  */
 
-package fr.skitou.kanei.utils.lava;
+package fr.skitou.kanei.lava;
 
 import java.time.Duration;
 import java.time.Instant;

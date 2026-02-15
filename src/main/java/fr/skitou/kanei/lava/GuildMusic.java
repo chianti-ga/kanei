@@ -1,8 +1,8 @@
 /*
- * Copyright (c) Chianti Gally 2024 - 2025.
+ * Copyright (c) Chianti Gally 2024 - 2026.
  */
 
-package fr.skitou.kanei.utils.lava;
+package fr.skitou.kanei.lava;
 
 import com.github.topi314.lavasrc.spotify.SpotifySourceManager;
 import com.sedmelluq.discord.lavaplayer.filter.equalizer.EqualizerFactory;
@@ -14,8 +14,8 @@ import com.sedmelluq.discord.lavaplayer.source.AudioSourceManagers;
 import dev.lavalink.youtube.YoutubeAudioSourceManager;
 import dev.lavalink.youtube.YoutubeSourceOptions;
 import dev.lavalink.youtube.clients.AndroidMusicWithThumbnail;
+import dev.lavalink.youtube.clients.AndroidVrWithThumbnail;
 import dev.lavalink.youtube.clients.MusicWithThumbnail;
-import dev.lavalink.youtube.clients.WebEmbeddedWithThumbnail;
 import dev.lavalink.youtube.clients.WebWithThumbnail;
 import fr.skitou.kanei.core.Config;
 import fr.skitou.kanei.hibernate.Database;
@@ -121,7 +121,7 @@ public class GuildMusic {
                 .setAllowDirectVideoIds(true)
                 .setAllowDirectPlaylistIds(true);
 
-        playerManager.registerSourceManager(new YoutubeAudioSourceManager(options, new WebWithThumbnail(), new AndroidMusicWithThumbnail(), new WebEmbeddedWithThumbnail(), new MusicWithThumbnail()));
+        playerManager.registerSourceManager(new YoutubeAudioSourceManager(options, new MusicWithThumbnail(), new WebWithThumbnail(), new AndroidMusicWithThumbnail(), new AndroidVrWithThumbnail()));
 
         playerManager.registerSourceManager(new SpotifySourceManager(null, Config.CONFIG.getPropertyOrDefault("spotify.id"), Config.CONFIG.getPropertyOrDefault("spotify.secret"), "FR", playerManager));
         playerManager.getConfiguration().setOpusEncodingQuality(opusQuality);

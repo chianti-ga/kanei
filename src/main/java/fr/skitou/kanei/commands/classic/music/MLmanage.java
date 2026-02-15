@@ -1,14 +1,14 @@
 /*
- * Copyright (c) Chianti Gally 2024 - 2025.
+ * Copyright (c) Chianti Gally 2024 - 2026.
  */
 
 package fr.skitou.kanei.commands.classic.music;
 
 import fr.skitou.kanei.commands.classic.AbstractCommand;
 import fr.skitou.kanei.commands.classic.CommandReceivedEvent;
+import fr.skitou.kanei.lava.MusicManager;
 import fr.skitou.kanei.utils.IsSenderAllowed;
 import fr.skitou.kanei.utils.QuickColors;
-import fr.skitou.kanei.utils.lava.MusicManager;
 import net.dv8tion.jda.api.EmbedBuilder;
 import net.dv8tion.jda.api.entities.Member;
 import org.jetbrains.annotations.NotNull;
