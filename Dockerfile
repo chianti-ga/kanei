@@ -15,4 +15,15 @@ WORKDIR /srv
 
 COPY --from=builder /srv/kanei-all.jar /srv/
 
-CMD ["java", "-XX:+UnlockExperimentalVMOptions", "-XX:+OptimizeStringConcat", "-XX:+UseZGC", "-XX:+UseCompressedOops", "-XX:+UseStringDeduplication", "-Xms${INITIAL_HEAP_SIZE:-10M}", "-Xmx${MAX_HEAP_SIZE:-1G}", "-jar", "kanei-all.jar"]
+ENV INITIAL_HEAP_SIZE=10M
+ENV MAX_HEAP_SIZE=2G
+
+CMD java \
+    -XX:+UnlockExperimentalVMOptions \
+    -XX:+OptimizeStringConcat \
+    -XX:+UseZGC \
+    -XX:+UseStringDeduplication \
+    -XX:+UseCompressedOops \
+    -Xms"${INITIAL_HEAP_SIZE}" \
+    -Xmx"${MAX_HEAP_SIZE}" \
+    -jar kanei-all.jar
