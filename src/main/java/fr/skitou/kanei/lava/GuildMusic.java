@@ -121,7 +121,7 @@ public class GuildMusic {
                 .setAllowDirectVideoIds(true)
                 .setAllowDirectPlaylistIds(true);
 
-        ClientOptions webClientOption = ClientOptions.DEFAULT;
+        ClientOptions webClientOption = new ClientOptions();
         webClientOption.setPlayback(false);
         YoutubeAudioSourceManager sourceManager = new YoutubeAudioSourceManager(options, new Tv(), new WebWithThumbnail(webClientOption));
         String refreshToken = Config.CONFIG.getPropertyOrDefault("oauth.refresh");
