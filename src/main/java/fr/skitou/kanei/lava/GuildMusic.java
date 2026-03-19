@@ -17,6 +17,7 @@ import dev.lavalink.youtube.clients.AndroidVrWithThumbnail;
 import dev.lavalink.youtube.clients.IosWithThumbnail;
 import dev.lavalink.youtube.clients.MusicWithThumbnail;
 import dev.lavalink.youtube.clients.WebWithThumbnail;
+import fr.skitou.kanei.core.BotInstance;
 import fr.skitou.kanei.core.Config;
 import fr.skitou.kanei.hibernate.Database;
 import fr.skitou.kanei.hibernate.entities.GuildMusicSettings;
@@ -121,7 +122,23 @@ public class GuildMusic {
                 .setAllowDirectVideoIds(true)
                 .setAllowDirectPlaylistIds(true);
 
-        playerManager.registerSourceManager(new YoutubeAudioSourceManager(options, new WebWithThumbnail(), new MusicWithThumbnail(), new IosWithThumbnail(), new AndroidVrWithThumbnail()));
+        YoutubeAudioSourceManager sourceManager = new YoutubeAudioSourceManager(options, new WebWithThumbnail(), new MusicWithThumbnail(), new IosWithThumbnail(), new AndroidVrWithThumbnail());
+        String refreshToken = Config.CONFIG.getPropertyOrDefault("oauth.refresh");
+        if (refreshToken.equals("null") || refreshToken.isBlank()) {
+            sourceManager.useOauth2(null, false);
+
+            Thread.ofVirtual().start(() -> {
+                try {
+                    Thread.sleep(10000);
+                    Config.CONFIG.setProperty("oauth.refresh", sourceManager.getOauth2RefreshToken());
+                } catch (InterruptedException _) {
+                    BotInstance.logger.warn("Can't save refresh token for youtube.");
+                }
+            });
+        } else {
+            sourceManager.useOauth2(refreshToken, true);
+        }
+        playerManager.registerSourceManager(sourceManager);
 
         playerManager.registerSourceManager(new SpotifySourceManager(null, Config.CONFIG.getPropertyOrDefault("spotify.id"), Config.CONFIG.getPropertyOrDefault("spotify.secret"), "FR", playerManager));
         playerManager.getConfiguration().setOpusEncodingQuality(opusQuality);

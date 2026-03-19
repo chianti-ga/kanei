@@ -13,7 +13,7 @@
     </appender>
     <appender name="Discord" class="fr.skitou.kanei.utils.reporter.DiscordLogger"/>
 
-    <root info="debug">
+    <root level="info">
         <appender-ref ref="STDOUT"/>
         <appender-ref ref="Discord"/>
     </root>
