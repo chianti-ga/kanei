@@ -13,8 +13,6 @@ import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.source.AudioSourceManagers;
 import dev.lavalink.youtube.YoutubeAudioSourceManager;
 import dev.lavalink.youtube.YoutubeSourceOptions;
-import dev.lavalink.youtube.clients.IosWithThumbnail;
-import dev.lavalink.youtube.clients.MusicWithThumbnail;
 import dev.lavalink.youtube.clients.Tv;
 import dev.lavalink.youtube.clients.WebWithThumbnail;
 import fr.skitou.kanei.core.BotInstance;
@@ -122,7 +120,7 @@ public class GuildMusic {
                 .setAllowDirectVideoIds(true)
                 .setAllowDirectPlaylistIds(true);
 
-        YoutubeAudioSourceManager sourceManager = new YoutubeAudioSourceManager(options, new Tv(), new WebWithThumbnail(), new MusicWithThumbnail(), new IosWithThumbnail());
+        YoutubeAudioSourceManager sourceManager = new YoutubeAudioSourceManager(options, new Tv(), new WebWithThumbnail());
         String refreshToken = Config.CONFIG.getPropertyOrDefault("oauth.refresh");
         if (refreshToken.equals("null") || refreshToken.isBlank()) {
             sourceManager.useOauth2(null, false);
