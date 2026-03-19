@@ -26,4 +26,5 @@ CMD java \
     -XX:+UseCompressedOops \
     -Xms"${INITIAL_HEAP_SIZE}" \
     -Xmx"${MAX_HEAP_SIZE}" \
+    --enable-native-access=ALL-UNNAMED \
     -jar kanei-all.jar

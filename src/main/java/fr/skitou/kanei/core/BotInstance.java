@@ -18,6 +18,8 @@
 
 package fr.skitou.kanei.core;
 
+import club.minnced.discord.jdave.interop.JDaveSessionFactory;
+import com.sedmelluq.discord.lavaplayer.jdaudp.NativeAudioSendFactory;
 import fr.skitou.kanei.commands.classic.CommandAdapter;
 import fr.skitou.kanei.commands.slash.ISlashCommand;
 import fr.skitou.kanei.hibernate.Database;
@@ -29,6 +31,7 @@ import io.sentry.Sentry;
 import lombok.Getter;
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.audio.AudioModuleConfig;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.hooks.EventListener;
@@ -78,6 +81,10 @@ public class BotInstance {
                     .disableCache(Collections.singleton(CacheFlag.MEMBER_OVERRIDES))
                     .enableIntents(Set.of(GatewayIntent.DIRECT_MESSAGES, GatewayIntent.GUILD_MESSAGES, GatewayIntent.GUILD_MESSAGE_REACTIONS, GatewayIntent.MESSAGE_CONTENT, GatewayIntent.GUILD_MEMBERS, GatewayIntent.GUILD_VOICE_STATES))
                     .disableIntents(Set.of())
+                    .setAudioModuleConfig(
+                            new AudioModuleConfig()
+                                    .withDaveSessionFactory(new JDaveSessionFactory())
+                                    .withAudioSendFactory(new NativeAudioSendFactory()))
                     .build();
         } catch (NullPointerException e) {
             e.getCause();
