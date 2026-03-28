@@ -13,9 +13,7 @@ import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.source.AudioSourceManagers;
 import dev.lavalink.youtube.YoutubeAudioSourceManager;
 import dev.lavalink.youtube.YoutubeSourceOptions;
-import dev.lavalink.youtube.clients.ClientOptions;
-import dev.lavalink.youtube.clients.Tv;
-import dev.lavalink.youtube.clients.WebWithThumbnail;
+import dev.lavalink.youtube.clients.*;
 import fr.skitou.kanei.core.BotInstance;
 import fr.skitou.kanei.core.Config;
 import fr.skitou.kanei.hibernate.Database;
@@ -123,7 +121,7 @@ public class GuildMusic {
 
         ClientOptions webClientOption = new ClientOptions();
         webClientOption.setPlayback(false);
-        YoutubeAudioSourceManager sourceManager = new YoutubeAudioSourceManager(options, new Tv(), new WebWithThumbnail(webClientOption));
+        YoutubeAudioSourceManager sourceManager = new YoutubeAudioSourceManager(options, new Tv(), new TvHtml5EmbeddedWithThumbnail(), new MusicWithThumbnail(), new WebWithThumbnail(webClientOption));
         String refreshToken = Config.CONFIG.getPropertyOrDefault("oauth.refresh");
         if (refreshToken.equals("null") || refreshToken.isBlank()) {
             sourceManager.useOauth2(null, false);
