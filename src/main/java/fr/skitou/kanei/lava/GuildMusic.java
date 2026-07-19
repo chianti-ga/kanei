@@ -112,16 +112,16 @@ public class GuildMusic {
      */
     public static AudioPlayerManager initPlayerManager() {
         AudioPlayerManager playerManager = new DefaultAudioPlayerManager();
-
+/*
         YoutubeSourceOptions options = new YoutubeSourceOptions()
                 .setRemoteCipher(Config.CONFIG.getPropertyOrDefault("cipher.url"), Config.CONFIG.getPropertyOrDefault("cipher.pwd"), null)
                 .setAllowSearch(true)
                 .setAllowDirectVideoIds(true)
                 .setAllowDirectPlaylistIds(true);
 
-        ClientOptions webClientOption = new ClientOptions();
-        webClientOption.setPlayback(false);
-        YoutubeAudioSourceManager sourceManager = new YoutubeAudioSourceManager(options, new Tv(), new TvHtml5EmbeddedWithThumbnail(), new MusicWithThumbnail(), new WebWithThumbnail(webClientOption));
+        //ClientOptions webClientOption = new ClientOptions();
+        //webClientOption.setPlayback(false);
+        //YoutubeAudioSourceManager sourceManager = new YoutubeAudioSourceManager(options, new Tv(), new TvHtml5EmbeddedWithThumbnail(), new MusicWithThumbnail(), new WebWithThumbnail(webClientOption));
         String refreshToken = Config.CONFIG.getPropertyOrDefault("oauth.refresh");
         if (refreshToken.equals("null") || refreshToken.isBlank()) {
             sourceManager.useOauth2(null, false);
@@ -137,8 +137,8 @@ public class GuildMusic {
         } else {
             sourceManager.useOauth2(refreshToken, true);
         }
-        playerManager.registerSourceManager(sourceManager);
-
+        //playerManager.registerSourceManager(sourceManager);
+*/
         playerManager.registerSourceManager(new SpotifySourceManager(null, Config.CONFIG.getPropertyOrDefault("spotify.id"), Config.CONFIG.getPropertyOrDefault("spotify.secret"), "FR", playerManager));
         playerManager.getConfiguration().setOpusEncodingQuality(opusQuality);
         playerManager.getConfiguration().setResamplingQuality(AudioConfiguration.ResamplingQuality.HIGH);
