@@ -36,7 +36,7 @@ repositories {
 
 dependencies {
     implementation 'io.sentry:sentry:8.25.0'
-    implementation 'com.google.guava:guava:33.3.1-jre'
+    implementation 'com.google.guava:guava:33.5.0-jre'
 
     //Disc
     implementation "dev.arbjerg:lavaplayer:2.2.6"
