@@ -13,8 +13,10 @@ import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.source.AudioSourceManagers;
 import dev.lavalink.youtube.YoutubeAudioSourceManager;
 import dev.lavalink.youtube.YoutubeSourceOptions;
-import dev.lavalink.youtube.clients.*;
-import fr.skitou.kanei.core.BotInstance;
+import dev.lavalink.youtube.clients.AndroidVrWithThumbnail;
+import dev.lavalink.youtube.clients.IosWithThumbnail;
+import dev.lavalink.youtube.clients.MusicWithThumbnail;
+import dev.lavalink.youtube.clients.WebWithThumbnail;
 import fr.skitou.kanei.core.Config;
 import fr.skitou.kanei.hibernate.Database;
 import fr.skitou.kanei.hibernate.entities.GuildMusicSettings;
@@ -112,31 +114,14 @@ public class GuildMusic {
      */
     public static AudioPlayerManager initPlayerManager() {
         AudioPlayerManager playerManager = new DefaultAudioPlayerManager();
+
         YoutubeSourceOptions options = new YoutubeSourceOptions()
                 .setRemoteCipher(Config.CONFIG.getPropertyOrDefault("cipher.url"), Config.CONFIG.getPropertyOrDefault("cipher.pwd"), null)
                 .setAllowSearch(true)
                 .setAllowDirectVideoIds(true)
                 .setAllowDirectPlaylistIds(true);
 
-        ClientOptions webClientOption = new ClientOptions();
-        webClientOption.setPlayback(false);
-        YoutubeAudioSourceManager sourceManager = new YoutubeAudioSourceManager(options, new Tv(), new TvHtml5EmbeddedWithThumbnail(), new MusicWithThumbnail(), new WebWithThumbnail(webClientOption));
-        String refreshToken = Config.CONFIG.getPropertyOrDefault("oauth.refresh");
-        if (refreshToken.equals("null") || refreshToken.isBlank()) {
-            sourceManager.useOauth2(null, false);
-
-            Thread.ofVirtual().start(() -> {
-                try {
-                    Thread.sleep(10000);
-                    Config.CONFIG.setProperty("oauth.refresh", sourceManager.getOauth2RefreshToken());
-                } catch (InterruptedException _) {
-                    BotInstance.logger.warn("Can't save refresh token for youtube.");
-                }
-            });
-        } else {
-            sourceManager.useOauth2(refreshToken, true);
-        }
-        playerManager.registerSourceManager(sourceManager);
+        playerManager.registerSourceManager(new YoutubeAudioSourceManager(options, new WebWithThumbnail(), new MusicWithThumbnail(), new IosWithThumbnail(), new AndroidVrWithThumbnail()));
 
         playerManager.registerSourceManager(new SpotifySourceManager(null, Config.CONFIG.getPropertyOrDefault("spotify.id"), Config.CONFIG.getPropertyOrDefault("spotify.secret"), "FR", playerManager));
         playerManager.getConfiguration().setOpusEncodingQuality(opusQuality);
