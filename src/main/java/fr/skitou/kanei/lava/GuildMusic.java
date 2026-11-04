@@ -13,10 +13,7 @@ import com.sedmelluq.discord.lavaplayer.player.DefaultAudioPlayerManager;
 import com.sedmelluq.discord.lavaplayer.source.AudioSourceManagers;
 import dev.lavalink.youtube.YoutubeAudioSourceManager;
 import dev.lavalink.youtube.YoutubeSourceOptions;
-import dev.lavalink.youtube.clients.AndroidVrWithThumbnail;
-import dev.lavalink.youtube.clients.IosWithThumbnail;
-import dev.lavalink.youtube.clients.MusicWithThumbnail;
-import dev.lavalink.youtube.clients.WebWithThumbnail;
+import dev.lavalink.youtube.clients.*;
 import fr.skitou.kanei.core.Config;
 import fr.skitou.kanei.hibernate.Database;
 import fr.skitou.kanei.hibernate.entities.GuildMusicSettings;
@@ -121,9 +118,9 @@ public class GuildMusic {
                 .setAllowDirectVideoIds(true)
                 .setAllowDirectPlaylistIds(true);
 
-        playerManager.registerSourceManager(new YoutubeAudioSourceManager(options, new WebWithThumbnail(), new MusicWithThumbnail(), new IosWithThumbnail(), new AndroidVrWithThumbnail()));
+        playerManager.registerSourceManager(new YoutubeAudioSourceManager(options, new WebWithThumbnail(), new MusicWithThumbnail(), new TvHtml5EmbeddedWithThumbnail()));
 
-        playerManager.registerSourceManager(new SpotifySourceManager(null, Config.CONFIG.getPropertyOrDefault("spotify.id"), Config.CONFIG.getPropertyOrDefault("spotify.secret"), "FR", playerManager));
+        //playerManager.registerSourceManager(new SpotifySourceManager(null, Config.CONFIG.getPropertyOrDefault("spotify.id"), Config.CONFIG.getPropertyOrDefault("spotify.secret"), "FR", playerManager));
         playerManager.getConfiguration().setOpusEncodingQuality(opusQuality);
         playerManager.getConfiguration().setResamplingQuality(AudioConfiguration.ResamplingQuality.HIGH);
         playerManager.getConfiguration().setFilterHotSwapEnabled(true);

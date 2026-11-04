@@ -77,7 +77,7 @@ public class Roll implements ISlashCommand {
         sb.append("-----------------").append('\n');
 
         for (int i = 0; i < numberOfDices; i++) {
-            long result = random.nextLong(1, numberOfSides);
+            long result = random.nextLong(1, numberOfSides+1);
             sum += result;
             sb.append(String.format("%-6d | %-5d%n", i + 1, result));
         }
